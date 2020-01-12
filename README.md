@@ -53,6 +53,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 Your ideas and wishes are welcome via [issues](https://github.com/ARtoriouSs/squadster-frontend/issues) and [pull requets](https://github.com/ARtoriouSs/squadster-frontend/pulls).
 
+Check [contributing guidelines](CONTRIBUTING.md) for more info.
+
+List of contributors available in the [main API repo](https://github.com/ARtoriouSs/squadster-api).
+
 ## License
 
 [CC BY-NC-SA](http://creativecommons.org/licenses/by-nc/4.0)
