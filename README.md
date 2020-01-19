@@ -1,6 +1,6 @@
 # Squadster frontend
 
-Frontend repository for Squadster. Check the main (API) repo [here](https://github.com/ARtoriouSs/squadster-api) for more info.
+Frontend repository for Squadster. Check the main (API) repo [here](https://github.com/squadster/squadster-api) for more info.
 
 ## Installation guides
 
@@ -51,11 +51,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 ## Contributing
 
-Your ideas and wishes are welcome via [issues](https://github.com/ARtoriouSs/squadster-frontend/issues) and [pull requets](https://github.com/ARtoriouSs/squadster-frontend/pulls).
+Your ideas and wishes are welcome via [issues](https://github.com/squadster/squadster-frontend/issues) and [pull requets](https://github.com/squadster/squadster-frontend/pulls).
 
 Check [contributing guidelines](CONTRIBUTING.md) for more info.
 
-List of contributors available in the [main API repo](https://github.com/ARtoriouSs/squadster-api).
+List of contributors available in the [main API repo](https://github.com/squadster/squadster-api).
 
 ## License
 
