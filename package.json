@@ -1,5 +1,6 @@
 {
   "name": "squadster-frontend",
+  "description": "Squads management application for the university military departments",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
