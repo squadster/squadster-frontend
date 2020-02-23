@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import Navbar from './Navbar';
 
 import Login from "./auth/Login.jsx";
 import AuthCallback from "./auth/AuthCallback.jsx";
@@ -18,21 +19,18 @@ function setAxiosInterceptors() {
 export default function App() {
   setAxiosInterceptors();
 
+  // const [redirect, setRedirect] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
+
+  // if (redirect) {
+  //   return <Redirect to={redirect} />
+  // };
+
   return (
     <Router>
       <div>
         <nav>
-          <ul>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/squads">Squads</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
+          <Navbar />
         </nav>
 
         <Switch>
