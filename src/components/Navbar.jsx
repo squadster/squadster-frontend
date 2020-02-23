@@ -23,7 +23,7 @@ export default function Navbar() {
     </Toolbar>
   ) : (
     <Toolbar className={classes.toolbar}>
-      <Button onClick={() => window.location.href = '/login'} color="inherit">
+      <Button onClick={() => window.location.href = 'http://squadster.io:4000/api/auth/vk'} color="inherit">
         <VKLogo width='50px'/>
         Login with VK
       </Button>
