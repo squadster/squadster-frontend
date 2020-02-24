@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Navbar from './Navbar';
 import PrivateRoute from './PrivateRoute'
 import AuthCallback from "./auth/AuthCallback.jsx";
@@ -29,6 +29,7 @@ export default function App() {
           <Route path="/about" component={About} />
           <PrivateRoute path="/squads" component={Squads} />
           <Route path="/auth_callback" component={AuthCallback} />
+          <Route path='*' exact={true} component={() => <Redirect to='/' />} />
         </Switch>
       </div>
     </Router>

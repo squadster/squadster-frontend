@@ -1,5 +1,5 @@
 function isLoggedIn() {
-  window.localStorage.getItem('authToken')
+  return !(window.localStorage.getItem('authToken') === null)
 }
 
 export { isLoggedIn };
