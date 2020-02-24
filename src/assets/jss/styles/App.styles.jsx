@@ -1,10 +1,14 @@
-import { flexbox } from "@material-ui/system";
-
 const AppStyles = {
   root: { },
   toolbar: {
     display: 'flex',
-    justifyContent: 'flex-end' 
+    justifyContent: 'flex-end',
+    height: '10vh'
+  },
+
+  button: {
+    marginTop: 'auto',
+    marginBottm: 'auto'
   }
 }
 

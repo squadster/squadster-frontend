@@ -26,13 +26,13 @@ export default function Navbar() {
   
   return (
     <div className={classes.navbar}>
-      <AppBar position="static">
+      <AppBar height='10vh' position="static">
         {loggedIn ? (
           <Toolbar className={classes.toolbar}>
-            <Button onClick={() => <Redirect to='/squads' />} color="inherit">
+            <Button onClick={() => window.location.href = '/squads'} color="inherit">
               Squads
             </Button>
-            <Button onClick={() => <Redirect to='/about' />} color="inherit">
+            <Button onClick={() => window.location.href = '/about'} color="inherit">
               About
             </Button>
             <Button onClick={() => logout()} color="inherit">
