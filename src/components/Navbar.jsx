@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import VKLogo from '-!svg-react-loader!../assets/images/icons/VK_Blue_Logo.svg';
 import { API_HOST } from '../constants'
 import { Redirect } from 'react-router-dom';
