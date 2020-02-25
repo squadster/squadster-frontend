@@ -6,17 +6,19 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
-import VKLogo from '-!svg-react-loader!../assets/images/icons/VK_Blue_Logo.svg';
+import SVG from 'react-inlinesvg';
 import { API_HOST } from '../constants'
 import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(AppStyles);
 
 function logout() {
-  axios.delete(`${API_HOST}/api/auth`).then(() => {
-    window.localStorage.removeItem('authToken')
-    return <Redirect to='/' />
-  })
+  axios({ method: 'DELETE', url: `${API_HOST}/api/auth`,
+                headers: { Authentication: "Bearer " +  window.localStorage.getItem('authToken')} })
+       .then(() => {
+          window.localStorage.removeItem('authToken')
+          return <Redirect to='/' />
+        })
 }
 
 export default function Navbar() {
@@ -41,7 +43,7 @@ export default function Navbar() {
           ) : (
           <Toolbar className={classes.toolbar}>
             <Button onClick={() => window.location.href = `${API_HOST}/api/auth/vk`} color="inherit">
-              <VKLogo width='50px'/>
+              <SVG src='VK_Blue_Logo.svg' width='50px'/>
               Login with VK
             </Button>
           </Toolbar>
