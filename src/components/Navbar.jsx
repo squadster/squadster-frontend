@@ -13,8 +13,7 @@ import { Redirect } from 'react-router-dom';
 const useStyles = makeStyles(AppStyles);
 
 function logout() {
-  axios({ method: 'DELETE', url: `${API_HOST}/api/auth`,
-                headers: { Authentication: "Bearer " +  window.localStorage.getItem('authToken')} })
+  axios({ method: 'DELETE', url: `${API_HOST}/api/auth`})
        .then(() => {
           window.localStorage.removeItem('authToken')
           return <Redirect to='/' />
@@ -24,7 +23,7 @@ function logout() {
 export default function Navbar() {
   const classes = useStyles();
   const loggedIn = useSelector(state => state.isLoggedIn)
-  
+
   return (
     <div className={classes.navbar}>
       <AppBar height='10vh' position="static">

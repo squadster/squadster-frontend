@@ -10,7 +10,7 @@ import About from "./About.jsx";
 function setAxiosInterceptors() {
   axios.interceptors.request.use(function (config) {
     const token = localStorage.authToken;
-    config.headers['Authorization'] = token;
+    config.headers['Authorization'] = 'Bearer ' + token;
     return config;
   });
 }
