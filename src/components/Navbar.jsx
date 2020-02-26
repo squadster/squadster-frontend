@@ -9,13 +9,18 @@ import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
 import { API_HOST } from '../constants'
 import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../actions';
+
 
 const useStyles = makeStyles(AppStyles);
 
-function logout() {
+function logout(reducer) {
   axios({ method: 'DELETE', url: `${API_HOST}/api/auth`})
        .then(() => {
           window.localStorage.removeItem('authToken')
+          reducer(signOut());
+
           return <Redirect to='/' />
         })
 }
@@ -23,6 +28,7 @@ function logout() {
 export default function Navbar() {
   const classes = useStyles();
   const loggedIn = useSelector(state => state.isLoggedIn)
+  const dispatch = useDispatch()
 
   return (
     <div className={classes.navbar}>
@@ -35,7 +41,7 @@ export default function Navbar() {
             <Button onClick={() => window.location.href = '/about'} color="inherit">
               About
             </Button>
-            <Button onClick={() => logout()} color="inherit">
+            <Button onClick={() => logout(dispatch)} color="inherit">
               Logout
             </Button>
           </Toolbar>
