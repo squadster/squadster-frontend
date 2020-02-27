@@ -1,6 +1,8 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
+import { signIn } from '../../actions';
+import { useDispatch } from 'react-redux';
 
 function setToken() {
   window.localStorage.setItem('authToken', tokenFromParams());
@@ -16,15 +18,18 @@ function isTokenPresent() {
 }
 
 export default function AuthCallback(props) {
+  const dispatch = useDispatch();
+
   if (isTokenPresent()) {
     setToken();
+    dispatch(signIn())
     return(
       <Redirect to='/squads' />
     );
   } else {
     return(
       // TODO: add flush error message
-      <Redirect to='/login' />
+      <Redirect to='/' />
     );
   }
 }

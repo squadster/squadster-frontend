@@ -1,16 +1,8 @@
-import { ADD_ARTICLE } from "../constants/actionTypes"
+import loggedReducer from "./isLogged"
+import { combineReducers } from 'redux'
 
-const initialState = {
-  articles: []
-};
-
-function rootReducer(state = initialState, action) {
-  if (action.type === ADD_ARTICLE) {
-    return Object.assign({}, state, {
-      articles: state.articles.concat(action.payload)
-    });
-  }
-  return state;
-};
+const rootReducer = combineReducers({
+  isLoggedIn: loggedReducer
+})
 
 export default rootReducer;
