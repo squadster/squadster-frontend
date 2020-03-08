@@ -1,28 +1,28 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { signIn } from '../../actions';
+import { signIn, setCurrentUser } from '../../actions';
 import { useDispatch } from 'react-redux';
 
-function setToken() {
-  window.localStorage.setItem('authToken', tokenFromParams());
-}
-
-function tokenFromParams() {
-  let params = queryString.parse(window.location.search);
-  return params.token;
-}
-
-function isTokenPresent() {
-  return !!tokenFromParams();
+function userFromParams() {
+  const params = queryString.parse(window.location.search);
+  if (params.user) {
+    localStorage.setItem('currentUser', params.user)
+    const user = JSON.parse(params.user)
+    localStorage.setItem('authToken', user.auth_token)
+    
+    return user
+  }
 }
 
 export default function AuthCallback(props) {
   const dispatch = useDispatch();
 
-  if (isTokenPresent()) {
-    setToken();
+  const user = userFromParams();
+  if (user) {
     dispatch(signIn())
+    dispatch(setCurrentUser(user))
+
     return(
       <Redirect to='/squads' />
     );

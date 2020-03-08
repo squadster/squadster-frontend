@@ -1,10 +1,10 @@
-import { isLoggedIn } from '../helpers/application_helper';
+import { isLoggedIn } from '../helpers';
 
 const loggedReducer = (state = isLoggedIn(), action) => {
   switch (action.type) {
-    case 'SIGN_IN':
+    case 'SIGN IN':
       return true;
-    case 'SIGN_OUT':
+    case 'SIGN OUT':
       return false;
     default:
       return state;

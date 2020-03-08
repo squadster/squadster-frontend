@@ -8,9 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
 import { API_HOST } from '../constants'
-import { Redirect } from 'react-router-dom';
+import { getCurrentUser } from '../helpers'
 import { useDispatch } from 'react-redux';
-import { signOut } from '../actions';
+import { signOut, setCurrentUser } from '../actions';
 
 
 const useStyles = makeStyles(AppStyles);
@@ -18,10 +18,11 @@ const useStyles = makeStyles(AppStyles);
 function logout(reducer) {
   axios({ method: 'DELETE', url: `${API_HOST}/api/auth`})
        .then(() => {
-          window.localStorage.removeItem('authToken')
+          localStorage.removeItem('authToken')
+          localStorage.removeItem('currentUser')
           reducer(signOut());
 
-          return <Redirect to='/' />
+          window.location.href = '/'
         })
 }
 
