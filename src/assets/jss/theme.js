@@ -2,11 +2,10 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 export default createMuiTheme({
   overrides: {
-    MuiButton: {
-      root: {
-        fontWeight: "bold",
-        margin: "10px"
-      }
-    }
-  }
+    body: {
+      fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+      backgroundColor: '#eaeff1',
+      fontWeight: '300',
+    },
+  },
 });

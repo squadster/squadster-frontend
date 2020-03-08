@@ -33,9 +33,16 @@ export default function Navbar() {
 
   return (
     <div className={classes.navbar}>
-      <AppBar height='10vh' position="static">
+      <AppBar position='static' color='#fff'>
         {loggedIn ? (
-          <Toolbar className={classes.toolbar}>
+          <Toolbar>
+            <div className={classes.grow} />
+            <Button color="inherit">
+              Создать взвод
+            </Button>
+            <Button color="inherit">
+              Мой взвод
+            </Button>
             <Button onClick={() => window.location.href = '/squads'} color="inherit">
               Squads
             </Button>
