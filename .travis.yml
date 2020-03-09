@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "stable"
+
+cache:
+  directories:
+  - node_modules
+
+stages:
+  - test
+  - name: build
+    if: branch = release
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - npm test
+    - stage: build
+      script: ./scripts/build.sh
