@@ -1,8 +1,22 @@
 {
   "name": "squadster-frontend",
   "description": "Squads management application for the university military departments",
+  "keywords": [
+    "react",
+    "squadster"
+  ],
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/squadster/squadster-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/squadster/squadster-frontend/issues"
+  },
+  "homepage": "https://github.com/squadster/squadster-frontend#readme",
+  "license": "CC BY-NC-SA",
+
   "dependencies": {
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.9.1",
@@ -24,6 +38,17 @@
     "react-scripts": "3.3.0",
     "svg-react-loader": "^0.4.6"
   },
+  "devDependencies": {
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5"
+  },
+  "resolutions": {
+    "react-scripts/**/serialize-javascript": "^2.1.1",
+    "react-scripts/**/acorn": "^7.1.1",
+    "react-scripts/**/kind-of": "^6.0.3",
+    "react-scripts/**/@hapi/hoek": "^9.0.3"
+  },
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -44,9 +69,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "react-redux": "^7.1.3",
-    "redux": "^4.0.5"
   }
 }
