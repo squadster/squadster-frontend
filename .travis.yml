@@ -9,12 +9,13 @@ cache:
 stages:
   - test
   - name: build
-    if: branch = release
+    if: branch = dockerizing
 
 jobs:
   include:
     - stage: test
       script:
-        - npm test
+        - echo "No tests yet"
+        # - yarn test
     - stage: build
       script: ./scripts/build.sh
