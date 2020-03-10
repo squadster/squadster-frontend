@@ -1,6 +1,6 @@
 # Squadster frontend
 
-Frontend repository for Squadster. Check the main (API) repo [here](https://github.com/squadster/squadster-api) for more info.
+Frontend repository for Squadster. Check the [API repo](https://github.com/squadster/squadster-api) for more info.
 
 ## Installation guides
 
