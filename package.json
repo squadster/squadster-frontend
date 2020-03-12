@@ -14,8 +14,8 @@
   "bugs": {
     "url": "https://github.com/squadster/squadster-frontend/issues"
   },
-  "homepage": "https://github.com/squadster/squadster-frontend#readme",
   "license": "CC BY-NC-SA",
+  "homepage": ".",
 
   "dependencies": {
     "@material-ui/core": "^4.9.0",
