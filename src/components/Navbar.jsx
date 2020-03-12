@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
-import { API_HOST } from '../constants'
+import { API_URL } from '../constants'
 import { getCurrentUser } from '../helpers'
 import { useDispatch } from 'react-redux';
 import { signOut, setCurrentUser } from '../actions';
@@ -16,7 +16,7 @@ import { signOut, setCurrentUser } from '../actions';
 const useStyles = makeStyles(AppStyles);
 
 function logout(reducer) {
-  axios({ method: 'DELETE', url: `${API_HOST}/api/auth`})
+  axios({ method: 'DELETE', url: `${API_URL}/api/auth`})
        .then(() => {
           localStorage.removeItem('authToken')
           localStorage.removeItem('currentUser')
@@ -48,7 +48,7 @@ export default function Navbar() {
           </Toolbar>
           ) : (
           <Toolbar className={classes.toolbar}>
-            <Button onClick={() => window.location.href = `${API_HOST}/api/auth/vk`} color="inherit">
+            <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
               <SVG src='VK_Blue_Logo.svg' width='50px'/>
               Login with VK
             </Button>
