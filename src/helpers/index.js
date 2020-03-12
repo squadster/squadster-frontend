@@ -1,8 +1,8 @@
 import ApolloClient from 'apollo-boost'
-import { API_HOST } from '../constants'
+import { API_URL } from '../constants'
 
 const apolloClient = new ApolloClient({
-  uri: API_HOST + '/api/query',
+  uri: API_URL + '/api/query',
   request: (operation) => {
     const token = localStorage.authToken
     operation.setContext({

@@ -1,3 +1,3 @@
-const API_HOST = 'http://squadster.io:4000'
+const API_URL = process.env.REACT_APP_API_URL;
 
-export { API_HOST }
+export { API_URL }
