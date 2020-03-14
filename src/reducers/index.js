@@ -1,5 +1,5 @@
-import loggedReducer from "./is_logged"
-import currentUserReducer from  "./current_user"
+import loggedReducer from "./logged_reducer"
+import currentUserReducer from  "./current_user_reducer"
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({

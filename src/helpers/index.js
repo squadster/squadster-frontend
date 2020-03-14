@@ -18,8 +18,8 @@ function isLoggedIn() {
 }
 
 function getCurrentUser() {
-  if (localStorage.user)
-    return JSON.parse(localStorage.user)
+  if (localStorage.currentUser)
+    return JSON.parse(localStorage.currentUser)
 }
 
 export {apolloClient, isLoggedIn, getCurrentUser };
