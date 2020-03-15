@@ -7,7 +7,7 @@ const currentUserReducer = (state, action) => {
       return state
     default:
       const currentUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
-      return currentUser;
+      return currentUser
   }
 }
 

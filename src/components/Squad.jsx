@@ -37,15 +37,17 @@ function squadPage(classes) {
 
 export default function Squad() {
   const user = useSelector(state => state.currentUser)
-  const dispatch = useDispatch();
-  const classes = useStyles();
+  const dispatch = useDispatch()
+  const classes = useStyles()
+  console.log(user.squad)
+  window.user = user
   const { loading, data } = useQuery(GET_USER_SQUAD, { skip: user.squad, variables: { id: user.id } } )
 
   if (!user.squad && loading) {
     return <Spinner/>
   } else {
-    if (!user.squad && data.squadMember) {
-      dispatch(setUserSquad(data.squadMember.squad))
+    if (!user.squad && data.user.squadMember) {
+      dispatch(setUserSquad(data.user.squadMember.squad))
       return squadPage(user)
     } else {
       if (user.squad)

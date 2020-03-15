@@ -10,6 +10,7 @@ import SVG from 'react-inlinesvg';
 import { API_URL } from '../constants'
 import { useDispatch } from 'react-redux';
 import { signOut } from '../actions';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles(AppStyles);
@@ -35,15 +36,15 @@ export default function Navbar() {
       <AppBar height='10vh' position="static">
         {loggedIn ? (
           <Toolbar className={classes.toolbar}>
-            <Button onClick={() => window.location.href = '/my-squad'} color='inherit'>
-              Мой взвод
-            </Button>
-            <Button onClick={() => window.location.href = '/squads'} color="inherit">
-              Взводы
-            </Button>
-            <Button onClick={() => window.location.href = '/about'} color="inherit">
-              О сайте
-            </Button>
+            <Link to='/my-squad'>
+              <Button className={classes.navbarLink}>Мой взвод</Button>
+            </Link>
+            <Link to='/squads'>
+              <Button className={classes.navbarLink}>Взводы</Button>
+            </Link>
+            <Link to='/about'>
+              <Button className={classes.navbarLink}>О сайте</Button>
+            </Link>
             <Button onClick={() => logout(dispatch)} color="inherit">
               Выйти
             </Button>

@@ -6,9 +6,9 @@ const AppStyles = {
     height: '10vh'
   },
 
-  button: {
-    marginTop: 'auto',
-    marginBottm: 'auto'
+  navbarLink: {
+    color: 'white !important',    
+
   }
 }
 
