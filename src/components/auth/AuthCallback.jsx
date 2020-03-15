@@ -30,8 +30,8 @@ export default function AuthCallback(props) {
       dispatch(signIn())
       dispatch(setCurrentUser(user))
 
-      if (data.squadMember) {
-        dispatch(setUserSquad(data.squadMember.squad))
+      if (data.user.squadMember) {
+        dispatch(setUserSquad(data.user.squadMember))
         return <Redirect to='/squad'/>
       } else {
         return <Redirect to='/squads'/>
