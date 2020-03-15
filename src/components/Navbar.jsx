@@ -36,23 +36,23 @@ export default function Navbar() {
         {loggedIn ? (
           <Toolbar className={classes.toolbar}>
             <Button onClick={() => window.location.href = '/my-squad'} color='inherit'>
-              My squad
+              Мой взвод
             </Button>
             <Button onClick={() => window.location.href = '/squads'} color="inherit">
-              Squads
+              Взводы
             </Button>
             <Button onClick={() => window.location.href = '/about'} color="inherit">
-              About
+              О сайте
             </Button>
             <Button onClick={() => logout(dispatch)} color="inherit">
-              Logout
+              Выйти
             </Button>
           </Toolbar>
           ) : (
           <Toolbar className={classes.toolbar}>
             <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
               <SVG src='VK_Blue_Logo.svg' width='50px'/>
-              Login with VK
+              Войти
             </Button>
           </Toolbar>
           )}
