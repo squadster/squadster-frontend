@@ -47,24 +47,24 @@ export default function Squads() {
   return (
     <div className='row rounded'>
       <Paper className={classes.paper}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
+        <div className={classes.searchArea}>
+          <SearchIcon className={classes.searchIcon}/>
+          <InputBase
+            placeholder='Поиск'
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
         </div>
-        <InputBase
-          placeholder='Поиск'
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ 'aria-label': 'search' }}
-        />
         {!loading &&
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="sticky table">
-              <TableHead>
+            <Table className={classes.table} aria-label='sticky table'>
+              <TableHead >
                 <TableRow>
-                  <TableCell>Номер взвода</TableCell>
-                  <TableCell>Командир</TableCell>
+                  <TableCell className={classes.TableCell}>Номер взвода</TableCell>
+                  <TableCell className={classes.TableCell}>Командир</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

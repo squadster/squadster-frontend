@@ -3,8 +3,8 @@ import { fade } from '@material-ui/core/styles';
 const SquadsStyles= (theme) => ({
 
   paper: {
-    padding: '5%',
-    margin: '10%',
+    padding: '3%',
+    margin: '5% 25%',
   },
 
   h2: {
@@ -67,6 +67,15 @@ const SquadsStyles= (theme) => ({
       width: 200,
     },
   },
+
+  TableCell: {
+    backgroundColor: '#3f51b5',
+    color: theme.palette.common.white,
+  },
+
+  searchArea: {
+    padding: 'inherit',
+  }
 });
 
 export default SquadsStyles;
