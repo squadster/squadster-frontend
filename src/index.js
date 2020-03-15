@@ -11,6 +11,7 @@ import App from "./components/App";
 import { apolloClient } from './helpers';
 import { ApolloProvider } from 'react-apollo'
 
+
 window.store = store;
 
 render(

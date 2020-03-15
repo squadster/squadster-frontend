@@ -8,4 +8,4 @@ export const signOut = () => {
 
 export const setCurrentUser = (user) => {
   return { type: "SET CURRENT USER", user: user }
-}
+};

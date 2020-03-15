@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.navbar}>
-      <AppBar position='static' color='#fff'>
+      <AppBar position='static'>
         {loggedIn ? (
           <Toolbar>
             <div className={classes.grow} />
