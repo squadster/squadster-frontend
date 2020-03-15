@@ -16,7 +16,6 @@
   },
   "license": "CC BY-NC-SA",
   "homepage": ".",
-
   "dependencies": {
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.9.1",
@@ -36,6 +35,7 @@
     "react-inlinesvg": "^1.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "styled-components": "^5.0.1",
     "svg-react-loader": "^0.4.6"
   },
   "devDependencies": {
@@ -48,7 +48,6 @@
     "react-scripts/**/kind-of": "^6.0.3",
     "react-scripts/**/@hapi/hoek": "^9.0.3"
   },
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

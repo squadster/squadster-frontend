@@ -4,7 +4,8 @@ import queryString from 'query-string';
 import { signIn, setCurrentUser, setUserSquad } from '../../actions';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
-import { GET_USER_SQUAD } from '../../requests'; 
+import { GET_USER_SQUAD } from '../../requests';
+import Spinner from '../Spinner'
 
 function userFromParams() {
   const params = queryString.parse(window.location.search);
@@ -20,10 +21,10 @@ function userFromParams() {
 export default function AuthCallback(props) {
   const dispatch = useDispatch();
   const user = userFromParams();
-  const { loading, error, data } = useQuery(GET_USER_SQUAD, { variables: { id: user.id } } )
+  const { loading, data } = useQuery(GET_USER_SQUAD, { variables: { id: user.id } } )
 
   if (loading) {
-    return <h1> LOADING </h1>
+    return <Spinner/>
   } else { 
     if (user) {
       dispatch(signIn())
@@ -33,7 +34,7 @@ export default function AuthCallback(props) {
         dispatch(setUserSquad(data.squadMember.squad))
         return <Redirect to='/squad'/>
       } else {
-        return <Redirect to='/squads' />
+        return <Redirect to='/squads'/>
       }
     } else {
       return(

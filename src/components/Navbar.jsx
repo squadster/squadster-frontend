@@ -8,9 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
 import { API_URL } from '../constants'
-import { getCurrentUser } from '../helpers'
 import { useDispatch } from 'react-redux';
-import { signOut, setCurrentUser } from '../actions';
+import { signOut } from '../actions';
 
 
 const useStyles = makeStyles(AppStyles);
@@ -36,6 +35,9 @@ export default function Navbar() {
       <AppBar height='10vh' position="static">
         {loggedIn ? (
           <Toolbar className={classes.toolbar}>
+            <Button onClick={() => window.location.href = '/my-squad'} color='inherit'>
+              My squad
+            </Button>
             <Button onClick={() => window.location.href = '/squads'} color="inherit">
               Squads
             </Button>
