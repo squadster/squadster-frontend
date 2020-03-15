@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SquadsStyles from '../assets/jss/styles/Squads.styles.jsx'
@@ -19,7 +19,6 @@ const useStyles = makeStyles(SquadsStyles);
 const GET_SQUADS = gql`
   {
     squads {
-      id
       squadNumber
       members {
         role
@@ -39,9 +38,15 @@ const commanderName = (squad) => {
 
 export default function Squads() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(GET_SQUADS);
-  const squads = data ? data.squads : [];
+  const [squads, setSquads] = useState([]);
+  const { loading, error, data } = useQuery(GET_SQUADS, {onCompleted: () => setSquads(data.squads)});
+  const findSquad = ({ target: { value } }) => {
+    if (value === '') return  setSquads(prevSquads => data.squads);
 
+    setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
+  }
+
+  if (loading) return 'Loading...';
   if (error) return(<div>{error}</div>)
 
   return (
@@ -56,28 +61,27 @@ export default function Squads() {
               input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
+            onChange={findSquad}
           />
         </div>
-        {!loading &&
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='sticky table'>
-              <TableHead >
-                <TableRow>
-                  <TableCell className={classes.TableCell}>Номер взвода</TableCell>
-                  <TableCell className={classes.TableCell}>Командир</TableCell>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label='sticky table'>
+            <TableHead >
+              <TableRow>
+                <TableCell className={classes.TableCell}>Номер взвода</TableCell>
+                <TableCell className={classes.TableCell}>Командир</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {squads && squads.map(squad => (
+                <TableRow key={squad.id}>
+                  <TableCell>{squad.squadNumber}</TableCell>
+                  <TableCell>{commanderName(squad)}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {squads.map(squad => (
-                  <TableRow key={squad.id}>
-                    <TableCell>{squad.squadNumber}</TableCell>
-                    <TableCell>{commanderName(squad)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        }
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Paper>
     </div>
   );
