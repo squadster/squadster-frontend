@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-boost'
-import { API_URL } from '../constants'
+import { API_URL } from './src/constants'
 
 const apolloClient = new ApolloClient({
   uri: API_URL + '/api/query',
@@ -17,11 +17,16 @@ function isLoggedIn() {
   return !!window.localStorage.getItem('authToken');
 }
 
+function getCurrentUser() {
+  if (localStorage.currentUser)
+    return JSON.parse(localStorage.currentUser)
+}
+
 function getWeekDay(day) {
   switch (day) {
     case 'monday':
       return 'Понедельник'
-    case 'tuesday':
+    case 'tuesday': 
       return 'Вторник'
     case 'wednesday':
       return 'Среда'
@@ -29,28 +34,7 @@ function getWeekDay(day) {
       return 'Четверг'
     case 'friday':
       return 'Пятница'
-    default:
-      break;
-  }
-} 
-
-function getMemberRole(role) {
-  switch (role) {
-    case 'commander':
-      return 'Командир взвода'
-    case 'deputy_commander':
-      return 'Зам. Командира взвода'
-    case 'student':
-      return 'Студент'
-    case 'journalist':
-      return 'Журналист'
-    default: break
   }
 }
 
-function getCurrentUser() {
-  if (localStorage.currentUser)
-    return JSON.parse(localStorage.currentUser)
-}
-
-export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser };
+export {apolloClient, getWeekDay, isLoggedIn, getCurrentUser };

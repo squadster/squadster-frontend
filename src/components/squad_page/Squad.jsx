@@ -2,12 +2,13 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 import { useSelector } from 'react-redux';
-import { GET_USER_SQUAD } from '../requests';
-import { setUserSquad } from '../actions';
-import Spinner from './Spinner'
+import { GET_USER_SQUAD } from '../../requests';
+import { setUserSquad } from '../../actions';
+import Spinner from '../Spinner'
 import { Container, Typography, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SquadStyles from '../assets/jss/styles/Squad.styles'
+import SquadStyles from '../../assets/jss/styles/Squad.styles'
+import SquadPageContent from './SquadPageContent'
 import SVG from 'react-inlinesvg';
 import { Link } from 'react-router-dom'
 
@@ -34,36 +35,6 @@ function squadPageEmpty(classes) {
   </Container> 
 }
 
-function squadPage(user, classes) {
-  return <Paper>
-  <Container className='d-flex flex-column'>
-    <Typography className='mx-auto pt-4' variant='h3' component='h1'>
-      Взвод № {user.squad.squadNumber}
-    </Typography>
-    <Paper className='py-3 px-4 w-75 mt-5 mx-auto' variant="outlined" square>
-      <Typography variant='h5'>
-        Oбъявление:
-      </Typography>
-      <Typography variant='body1'>
-        {user.squad.advertisment}
-      </Typography>
-    </Paper> 
-    {/* <Paper square>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-        aria-label="disabled tabs example">
-        <Tab label="Active" />
-        <Tab label="Disabled" disabled />
-        <Tab label="Active" />
-      </Tabs>
-    </Paper> */}
-  </Container>
-</Paper> 
-}
-
 export default function Squad() {
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
@@ -76,10 +47,11 @@ export default function Squad() {
   } else {
     if (!user.squad && data.user.squadMember) {
       dispatch(setUserSquad(data.user.squadMember))
-      return squadPage(user, classes)
+      return <SquadPageContent user={user}/>
     } else {
-      if (user.squad)
-        return squadPage(user, classes)
+      if (user.squad) {
+        return <SquadPageContent user={user}/>
+      }
       else
         return squadPageEmpty(classes) 
     }
