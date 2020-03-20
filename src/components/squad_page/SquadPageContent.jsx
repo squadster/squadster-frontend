@@ -8,16 +8,18 @@ import SquadMemberCard from './SquadMemberCard'
 function filterMembers(members, filterCriteria) {
   switch (filterCriteria) {
     case 0:
-      return members.filter((member) => {
-        return member.role === 'commander' || member.role === 'deputy_commander'
-      })
+      return members
     case 1:
       return members.filter((member) => {
-        return member.role === 'student'
+        return member.role === 'commander' || member.role === 'deputy_commander'
       })
     case 2:
       return members.filter((member) => {
         return member.role === 'journalist'
+      })
+    case 3:
+      return members.filter((member) => {
+        return member.role === 'student'
       })
     default:
       return []
@@ -53,7 +55,7 @@ export default function SquadPageContent(props) {
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
     <div className='w-75 d-flex flex-column flex-xl-row justify-content-xl-between justify-content-center mx-auto'>
-      <Typography className='mb-auto pt-4 align-self-center align-self-xl-left' variant='h4' component='h1'>
+      <Typography className='mb-auto pt-4 mr-xl-3 align-self-center align-self-xl-left' variant='h4' component='h1' style={{fontSize: '30px'}}>
         Взвод № {user.squad.squadNumber}
       </Typography>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
@@ -101,9 +103,10 @@ export default function SquadPageContent(props) {
             indicatorColor="primary"
             textColor="primary"
             onChange={handleTabsChange}>
-        <Tab label="Командный состав"  />
-        <Tab label="Студенты"  />
-        <Tab label="Журналисты" />
+        <Tab className='px-3' label="Все члены взвода"  />
+        <Tab className='px-3' label="Командный состав"  />
+        <Tab className='px-3' label="Журналисты"  />
+        <Tab className='px-3' label="Студенты" />
       </Tabs>
       { shownMembers.length ? shownMembers.map((member, index) => {
         return <SquadMemberCard key={index} member={member}/>  
