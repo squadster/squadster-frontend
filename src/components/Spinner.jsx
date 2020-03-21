@@ -4,16 +4,16 @@ import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
     0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    100% { transform: rotate(359deg); }
 `;
 
 const StyledImage = styled.img`
-    width: 140px;
-    height: 100px;
+    width: 100px;
+    height: 83.7px;
 
     @media only screen and (max-width: 992px) {
       width: 80px;
-      height: 50px; 
+      height: 67px; 
     }
 
     position: absolute;
