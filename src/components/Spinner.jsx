@@ -10,6 +10,12 @@ const spin = keyframes`
 const StyledImage = styled.img`
     width: 140px;
     height: 100px;
+
+    @media only screen and (max-width: 992px) {
+      width: 80px;
+      height: 50px; 
+    }
+
     position: absolute;
     left: 45%;
     top: 45%;
