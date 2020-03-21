@@ -2,7 +2,7 @@ import React from 'react'
 import { Paper, Avatar, Typography, Chip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import SquadMemberCardStyles from '../../assets/jss/styles/SquadMemberCard.styles' 
-import { getMemberRole } from '../../helpers'
+import { getMemberRole, isMobile } from '../../helpers'
 
 const useStyles = makeStyles(SquadMemberCardStyles)
 
@@ -13,11 +13,12 @@ export default function SquadMemberCard(props) {
   const classes = useStyles()
 
   return <Paper square variant='outlined'>
-  <div className='my-4 w-75 mx-auto py-2'>
-    <div className='position-relative d-flex flex-row justify-content-between'>
-      <div className='d-flex flex-md-row  flex-column'>
+  <div className={"my-4 mx-auto py-2 w-75"}>
+    <div className='position-relative d-flex flex-row justify-content-center justify-content-md-between'>
+      <div className='d-flex flex-md-row flex-column align-items-center'>
         <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
-        <div className='d-flex flex-column ml-5 my-auto text-left'>
+        {isMobile ? <Chip className='mt-3 mb-2' color="primary" label={getMemberRole(member.role)}/> : ''}
+        <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
           <Typography variant='subtitle1'>
             {userName}
           </Typography>
@@ -26,7 +27,7 @@ export default function SquadMemberCard(props) {
           </Typography>
         </div>
       </div>
-      <Chip color="primary" label={getMemberRole(member.role)}/>
+      {!isMobile ? <Chip color="primary" label={getMemberRole(member.role)}/> : ''}
     </div>
   </div>
 </Paper>

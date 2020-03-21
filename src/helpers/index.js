@@ -13,6 +13,8 @@ const apolloClient = new ApolloClient({
   }
 })
 
+const isMobile = window.screen.width < 992
+
 function isLoggedIn() {
   return !!window.localStorage.getItem('authToken');
 }
@@ -32,7 +34,7 @@ function getWeekDay(day) {
     default:
       break;
   }
-} 
+}
 
 function getMemberRole(role) {
   switch (role) {
@@ -53,4 +55,5 @@ function getCurrentUser() {
     return JSON.parse(localStorage.currentUser)
 }
 
-export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser };
+
+export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser, isMobile};

@@ -1,14 +1,25 @@
+import theme from "../theme";
+
 const AppStyles = {
   root: { },
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    height: '10vh'
+    minHeight: '10vh',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      justifyContent: 'initial'
+    }
   },
 
   navbarLink: {
-    color: 'white !important',    
+    color: 'white !important',
+  },
 
+  collapsedButton: {
+    width: 'max-content',
+    alignSelf: 'flex-end',
+    marginRight: '0px',
   }
 }
 
