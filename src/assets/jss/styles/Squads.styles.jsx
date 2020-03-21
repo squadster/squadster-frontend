@@ -1,7 +1,6 @@
 import { fade } from '@material-ui/core/styles';
 
 const SquadsStyles= (theme) => ({
-
   paper: {
     padding: '3%',
     margin: '5% 25%',
@@ -75,7 +74,11 @@ const SquadsStyles= (theme) => ({
 
   searchArea: {
     padding: 'inherit',
-  }
+  },
+
+  paginationAction: {
+    display: 'flex',
+  },
 });
 
 export default SquadsStyles;
