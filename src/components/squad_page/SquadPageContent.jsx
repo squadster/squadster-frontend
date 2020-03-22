@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Container, Typography, Paper, Tabs, Tab, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
+import { Container, Typography, Paper, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
 import { getWeekDay } from '../../helpers'
 import SquadMemberCard from './SquadMemberCard'
 import { isMobile } from '../../helpers'
@@ -17,7 +17,7 @@ function noMembers(currentUser) {
     <Typography variant='subtitle1'>
       Во взводе пока нет членов с такими ролями
     </Typography>
-    { currentUser.role == 'commander' || currentUser.role == 'deputy_commander' ?
+    { currentUser.role === 'commander' || currentUser.role === 'deputy_commander' ?
       <Typography variant='subtitle2'>
         Не забывайте обновлять роли членов взвода а также отсылайте приглашения
       </Typography> : "" }
@@ -25,13 +25,9 @@ function noMembers(currentUser) {
 }
 
 export default function SquadPageContent(props) {
-  const [tabIndex, setTabIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const user = props.user
-  
-  const handleTabsChange = (event, newValue) => {
-    setTabIndex(newValue);
-  };
+
   const handleExpandChange = (event, newValue) => {
     setExpanded(newValue)
   }

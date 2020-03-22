@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Button, Toolbar, AppBar, IconButton, Collapse, Box } from '@material-ui/core';
+import { Button, Toolbar, AppBar, IconButton, Collapse } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
