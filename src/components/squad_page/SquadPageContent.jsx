@@ -6,29 +6,14 @@ import SquadMemberCard from './SquadMemberCard'
 import { isMobile } from '../../helpers'
 
 
-function filterMembers(members, filterCriteria) {
-  switch (filterCriteria) {
-    case 0:
-      return members
-    case 1:
-      return members.filter((member) => {
-        return member.role === 'commander' || member.role === 'deputy_commander'
-      })
-    case 2:
-      return members.filter((member) => {
-        return member.role === 'journalist'
-      })
-    case 3:
-      return members.filter((member) => {
-        return member.role === 'student'
-      })
-    default:
-      return []
-  }
+function filterMembers(members, roles) {
+  return members.filter((member) => {
+    return roles.includes(member.role) 
+  })
 }
 
 function noMembers(currentUser) {
-  return <div className='d-flex flex-column text-center' style={{marginTop: '20%'}}>
+  return <div className='d-flex flex-column text-center py-4'>
     <Typography variant='subtitle1'>
       Во взводе пока нет членов с такими ролями
     </Typography>
@@ -51,7 +36,9 @@ export default function SquadPageContent(props) {
     setExpanded(newValue)
   }
 
-  const shownMembers = filterMembers(user.squad.members, tabIndex)
+  const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
+  const members = filterMembers(user.squad.members, ['student'])
+  
   
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
@@ -101,21 +88,23 @@ export default function SquadPageContent(props) {
         {user.squad.advertisment}
       </Typography>
     </Paper> 
-    <Paper className={'mx-auto mt-5 ' + (isMobile ? 'w-100' : 'w-75')} square variant="outlined" style={{minHeight: '500px'}}>
-      <Tabs value={tabIndex}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleTabsChange}
-            variant={isMobile ? 'fullWidth' : null}
-            centered>
-        <Tab className='px-3' style={{fontSize: isMobile ? '10px' : '16px'}} label="Все члены взвода"  />
-        <Tab className='px-3' style={{fontSize: isMobile ? '10px' : '16px'}} label="Командный состав"  />
-        <Tab className='px-3' style={{fontSize: isMobile ? '10px' : '16px'}} label="Журналисты"  />
-        <Tab className='px-3' style={{fontSize: isMobile ? '10px' : '16px'}} label="Студенты" />
-      </Tabs>
-      { shownMembers.length ? shownMembers.map((member, index) => {
-        return <SquadMemberCard key={index} member={member}/>  
-      }) : noMembers(user)}
+    <Paper className={'d-flex flex-column mx-auto mt-5 ' + (isMobile ? 'w-100' : 'w-75')} square variant="outlined" style={{minHeight: '500px'}}>
+      <div className='d-flex flex-column'> 
+        <Typography variant='h4' className='my-4 text-center'>
+          <b>Командный состав</b>
+        </Typography>
+        { commanders.length ? commanders.map((member, index) => {
+          return <SquadMemberCard key={index} member={member}/>  
+        }) : noMembers(user) }
+      </div>
+      <div className='d-flex flex-column'> 
+        <Typography variant='h4' className='my-4 text-center'>
+          <b>Состав</b>
+        </Typography>
+        { members.length ? members.map((member, index) => {
+          return <SquadMemberCard key={index} member={member}/>  
+        }) : noMembers(user) }
+      </div>
     </Paper>
   </Container>
 </Paper> 
