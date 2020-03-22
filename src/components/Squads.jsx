@@ -95,7 +95,7 @@ const commanderName = (squad) => {
 export default function Squads() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [squads, setSquads] = useState([]);
 
   const { loading, error, data } = useQuery(GET_SQUADS, {onCompleted: () => setSquads(data.squads)});
@@ -124,7 +124,7 @@ export default function Squads() {
 
   return (
     <div className='row rounded'>
-      <Paper className={classes.paper}>
+      <Paper>
         <div className={classes.searchArea}>
           <SearchIcon className={classes.searchIcon}/>
           <InputBase
@@ -137,7 +137,7 @@ export default function Squads() {
             onChange={findSquad}
           />
         </div>
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table className={classes.table} aria-label='sticky table'>
             <TableHead >
               <TableRow>
@@ -168,7 +168,7 @@ export default function Squads() {
                 <TablePagination
                   labelRowsPerPage={'Записей на странице'}
                   labelDisplayedRows={labelDisplayedRows}
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  rowsPerPageOptions={[10]}
                   count={squads.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

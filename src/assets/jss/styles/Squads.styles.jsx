@@ -1,11 +1,6 @@
 import { fade } from '@material-ui/core/styles';
 
 const SquadsStyles= (theme) => ({
-  paper: {
-    padding: '3%',
-    margin: '5% 25%',
-  },
-
   h2: {
     fontSize: '2.25rem',
     lineHeight: '1.5em',
