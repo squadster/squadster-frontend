@@ -56,7 +56,7 @@ export default function SquadPageContent(props) {
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
     <div className={'d-flex flex-column flex-xl-row justify-content-xl-between justify-content-center mx-auto ' + (isMobile ? 'w-100' : 'w-75')}>
-      <Typography className='mb-auto pt-4 mr-xl-3 align-self-center align-self-xl-left' variant='h4' component='h1' style={{fontSize: '30px'}}>
+      <Typography className='pt-4 mr-xl-3 align-self-center align-self-xl-left' variant='h4' component='h1' style={{fontSize: '28px'}}>
         Взвод № {user.squad.squadNumber}
       </Typography>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>

@@ -17,13 +17,13 @@ const useStyles = makeStyles(SquadStyles)
 function squadPageEmpty(classes) {
   return <Container maxWidth='md'>
     <Paper className={classes.emptySquadMessageRoot} variant="outlined" square>
-      <div className='d-flex flex-row'>
+      <div className='d-flex flex-column flex-sm-row'>
         <SVG className={classes.emptySquadMessageIcon} src='icons/soldier.svg' width='50%'/>
-        <div className='d-flex flex-column'>
-          <Typography className='mb-3' variant='h4' component='h1'>
+        <div className='d-flex flex-column ml-sm-4 mt-4 mt-sm-0'>
+          <Typography className={classes.emptySquadMessageTitle} variant='h4' component='h1'>
             Похоже что вы ещё не вступили ни в один взвод...
           </Typography>
-          <Typography variant='h6' component='h2'>
+          <Typography className={classes.emptySquadMessageText} variant='h6' component='h2'>
             Отправляйте запросы на вступление и ожидайте подтверждения командира взвода. Мы уведомим вас как только ваша заявка будет подтверждена.
           </Typography>
           <Link to='/squads'>

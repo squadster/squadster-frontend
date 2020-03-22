@@ -1,3 +1,5 @@
+import theme from '../theme'
+
 const SquadsStyles = {  
   emptySquadMessageRoot: {
     marginTop: '10%',
@@ -5,10 +7,14 @@ const SquadsStyles = {
   },
 
   emptySquadMessageIcon: {
-    height: 'max-content',
-    marginRight: '24px',
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+    height: 'initial',
+
+    [theme.breakpoints.down('xs')]: {
+      marginRight: 'auto',
+      marginLeft: 'auto',
+    }
   },
 
   emptySquadMessageLink: {
@@ -16,7 +22,25 @@ const SquadsStyles = {
     width: '100px',
     marginLeft: 'auto',
     marginTop: '16px',
-    color: 'white !important'
+    color: 'white !important',
+
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '24px',
+      width: '100%'
+    }
+  },
+
+  emptySquadMessageTitle: {
+    marginBottom: '16px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '27px'
+    }
+  },
+
+  emptySquadMessageText: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '16px'
+    }
   }
 }
 
