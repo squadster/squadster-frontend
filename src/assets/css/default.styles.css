@@ -23,13 +23,3 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #9ea5b2;
 }
-
-.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
-   padding: 3%;
-   margin: 3% 25%;
-}
-
-@media only screen and (max-width: 992px) {
-  .MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded {
-    margin: 0%;
- } }

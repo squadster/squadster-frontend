@@ -124,7 +124,7 @@ export default function Squads() {
 
   return (
     <div className='row rounded'>
-      <Paper>
+      <Paper className={classes.paper}>
         <div className={classes.searchArea}>
           <SearchIcon className={classes.searchIcon}/>
           <InputBase
