@@ -16,15 +16,16 @@
   },
   "license": "CC BY-NC-SA",
   "homepage": ".",
-
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/system": "^4.9.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "apollo-boost": "^0.4.7",
     "axios": "^0.19.2",
+    "bootstrap-css-only": "^4.4.1",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "prop-types": "^15.7.2",
@@ -36,6 +37,7 @@
     "react-inlinesvg": "^1.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "styled-components": "^5.0.1",
     "svg-react-loader": "^0.4.6"
   },
   "devDependencies": {

@@ -1,8 +1,11 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { signIn, setCurrentUser } from '../../actions';
+import { signIn, setCurrentUser, setUserSquad } from '../../actions';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/react-hooks';
+import { GET_USER_SQUAD } from '../../requests';
+import Spinner from '../Spinner'
 
 function userFromParams() {
   const params = queryString.parse(window.location.search);
@@ -17,19 +20,27 @@ function userFromParams() {
 
 export default function AuthCallback(props) {
   const dispatch = useDispatch();
-
   const user = userFromParams();
-  if (user) {
-    dispatch(signIn())
-    dispatch(setCurrentUser(user))
+  const { loading, data } = useQuery(GET_USER_SQUAD, { variables: { id: user.id } } )
 
-    return(
-      <Redirect to='/squads' />
-    );
-  } else {
-    return(
-      // TODO: add flush error message
-      <Redirect to='/' />
-    );
+  if (loading) {
+    return <Spinner/>
+  } else { 
+    if (user) {
+      dispatch(signIn())
+      dispatch(setCurrentUser(user))
+
+      if (data.user.squadMember) {
+        dispatch(setUserSquad(data.user.squadMember))
+        return <Redirect to='/squad'/>
+      } else {
+        return <Redirect to='/squads'/>
+      }
+    } else {
+      return(
+        // TODO: add flush error message
+        <Redirect to='/' />
+      );
+    }
   }
 }

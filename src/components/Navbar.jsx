@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import { Button, Toolbar, AppBar, IconButton, Collapse } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
 import { API_URL } from '../constants'
-import { getCurrentUser } from '../helpers'
 import { useDispatch } from 'react-redux';
-import { signOut, setCurrentUser } from '../actions';
-
+import { signOut } from '../actions';
+import { Link } from 'react-router-dom';
+import { isMobile } from '../helpers'
 
 const useStyles = makeStyles(AppStyles);
 
@@ -27,40 +26,43 @@ function logout(reducer) {
 }
 
 export default function Navbar() {
-  const classes = useStyles();
+  const classes = useStyles()
   const loggedIn = useSelector(state => state.isLoggedIn)
   const dispatch = useDispatch()
+  const [expanded, setExpanded] = useState(isMobile ? false : true);
 
   return (
     <div className={classes.navbar}>
-      <AppBar position='static'>
-        {loggedIn ? (
-          <Toolbar>
-            <div className={classes.grow} />
-            <Button color="inherit">
-              Создать взвод
-            </Button>
-            <Button color="inherit">
-              Мой взвод
-            </Button>
-            <Button onClick={() => window.location.href = '/squads'} color="inherit">
-              Squads
-            </Button>
-            <Button onClick={() => window.location.href = '/about'} color="inherit">
-              About
-            </Button>
-            <Button onClick={() => logout(dispatch)} color="inherit">
-              Logout
-            </Button>
-          </Toolbar>
-          ) : (
-          <Toolbar className={classes.toolbar}>
-            <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
-              <SVG src='VK_Blue_Logo.svg' width='50px'/>
-              Login with VK
-            </Button>
-          </Toolbar>
-          )}
+      <AppBar height='10vh' position="static">
+        { isMobile ? 
+          <IconButton onClick={() => setExpanded(!expanded)} className={classes.collapsedButton} edge="end"  color="inherit">
+            <MenuIcon />
+          </IconButton> : ''}
+        <Collapse in={expanded}>
+          {loggedIn ? (
+            <Toolbar className={classes.toolbar}>
+              <Link to='/my-squad'>
+                <Button className={classes.navbarLink}>Мой взвод</Button>
+              </Link>
+              <Link to='/squads'>
+                <Button className={classes.navbarLink}>Взводы</Button>
+              </Link>
+              <Link to='/about'>
+                <Button className={classes.navbarLink}>О сайте</Button>
+              </Link>
+              <Button className={classes.navbarLink} onClick={() => logout(dispatch)} color="inherit">
+                Выйти
+              </Button>
+            </Toolbar>
+            ) : (
+            <Toolbar className={classes.toolbar}>
+              <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
+                <SVG src='VK_Blue_Logo.svg' width='50px'/>
+                Войти
+              </Button>
+            </Toolbar>
+            )}
+        </Collapse>
       </AppBar>
     </div>
   );

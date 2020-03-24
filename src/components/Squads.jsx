@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Table, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, IconButton } from '@material-ui/core';
+import { Paper, Table, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, IconButton, Container } from '@material-ui/core';
 import SquadsStyles from '../assets/jss/styles/Squads.styles.jsx'
 import SearchIcon from '@material-ui/icons/Search';
 import { useQuery } from '@apollo/react-hooks';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import Spinner from './Spinner.jsx'
 import gql from 'graphql-tag';
 
 
@@ -119,11 +120,11 @@ export default function Squads() {
     return `${from}-${to === -1 ? count : to} из ${count}`
   };
 
-  if (loading) return 'Loading...';
+  if (loading) return <Spinner />;
   if (error) return(<div>{error}</div>)
 
   return (
-    <div className='row rounded'>
+    <Container>
       <Paper className={classes.paper}>
         <div className={classes.searchArea}>
           <SearchIcon className={classes.searchIcon}/>
@@ -150,8 +151,8 @@ export default function Squads() {
               (rowsPerPage > 0
                 ? squads.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : squads
-              ).map(squad => (
-                <TableRow key={squad.id}>
+              ).map((squad, i) => (
+                <TableRow key={i}>
                   <TableCell>{squad.squadNumber}</TableCell>
                   <TableCell>{commanderName(squad)}</TableCell>
                 </TableRow>
@@ -185,6 +186,6 @@ export default function Squads() {
           </Table>
         </TableContainer>
       </Paper>
-    </div>
+  </Container>
   );
 }

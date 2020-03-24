@@ -2,9 +2,14 @@ const currentUserReducer = (state, action) => {
   switch (action.type) {
     case 'SET CURRENT USER':
       return action.user || null;
+    case 'SET USER SQUAD':
+      state.squad = action.squadMember.squad
+      state.queueNumber = action.squadMember.queueNumber
+      state.role = action.squadMember.role
+      return state
     default:
       const currentUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
-      return currentUser;
+      return currentUser
   }
 }
 
