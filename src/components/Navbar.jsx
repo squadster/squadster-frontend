@@ -50,7 +50,7 @@ export default function Navbar() {
               <Link to='/about'>
                 <Button className={classes.navbarLink}>О сайте</Button>
               </Link>
-              <Button onClick={() => logout(dispatch)} color="inherit">
+              <Button className={classes.navbarLink} onClick={() => logout(dispatch)} color="inherit">
                 Выйти
               </Button>
             </Toolbar>

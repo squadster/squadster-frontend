@@ -13,7 +13,7 @@ function userFromParams() {
     localStorage.setItem('currentUser', params.user)
     const user = JSON.parse(params.user)
     localStorage.setItem('authToken', user.auth_token)
-    
+
     return user
   }
 }

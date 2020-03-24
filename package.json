@@ -17,7 +17,7 @@
   "license": "CC BY-NC-SA",
   "homepage": ".",
   "dependencies": {
-    "@material-ui/core": "^4.9.0",
+    "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/system": "^4.9.6",
     "@testing-library/jest-dom": "^4.2.4",

@@ -22,9 +22,7 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <Navbar />
-        </nav>
+        <Navbar />
 
         <Switch>
           <Route path="/about" component={About} />

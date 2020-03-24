@@ -1,7 +1,12 @@
-import theme from "../theme";
-
-const AppStyles = {
+const AppStyles = (theme) => ({
   root: { },
+
+  body: {
+    fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+    backgroundColor: '#eaeff1',
+    fontWeight: '300',
+  },
+
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -14,13 +19,35 @@ const AppStyles = {
 
   navbarLink: {
     color: 'white !important',
+    marginLeft: theme.spacing(3)
   },
 
   collapsedButton: {
     width: 'max-content',
     alignSelf: 'flex-end',
     marginRight: '0px',
-  }
-}
+  },
+
+  button: {
+    marginTop: 'auto',
+    marginBottm: 'auto'
+  },
+
+  grow: {
+    flexGrow: 1,
+  },
+
+  menuButton: {
+    marginRight: 2,
+  },
+
+  title: {
+    display: 'none',
+    breakpoints: {
+      display: 'block',
+    },
+  },
+});
+
 
 export default AppStyles;
