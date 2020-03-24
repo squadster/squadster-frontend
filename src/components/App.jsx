@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute'
 import AuthCallback from "./auth/AuthCallback.jsx";
 import Squads from "./Squads.jsx";
 import About from "./About.jsx";
+import { gql } from 'apollo-boost';
 
 function setAxiosInterceptors() {
   axios.interceptors.request.use(function (config) {
@@ -21,9 +22,7 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <Navbar />
-        </nav>
+        <Navbar />
 
         <Switch>
           <Route path="/about" component={About} />
