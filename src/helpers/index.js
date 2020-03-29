@@ -49,6 +49,8 @@ function getWeekDay(day) {
       return 'Четверг'
     case 'friday':
       return 'Пятница'
+    case 'saturday':
+      return 'Суббота'
     default:
       break;
   }

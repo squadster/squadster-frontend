@@ -17,6 +17,16 @@ const SquadsStyles = {
     }
   },
 
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    width: '-webkit-fit-content',
+  },
+
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+
   newSquadMessageLink: {
     textDecoration: 'none',
     marginLeft: 'auto',
@@ -39,7 +49,7 @@ const SquadsStyles = {
   },
 
   inputInput: {
-    padding: theme.spacing(2, 1, 1, 7),
+    padding: theme.spacing(2, 1, 1, 0),
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
