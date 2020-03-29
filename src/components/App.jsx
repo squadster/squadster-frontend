@@ -12,6 +12,7 @@ import { useQuery } from '@apollo/react-hooks'
 import Spinner from './Spinner'
 import { setCurrentUser } from '../actions'
 import { setAxiosInterceptors, logout } from '../helpers'
+import NewSquad from "./NewSquad.jsx";
 
 export default function App() {
   setAxiosInterceptors();
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/about" component={About} />
           <PrivateRoute path="/squads" component={Squads} />
           <PrivateRoute path="/my-squad" component={Squad} />
+          <PrivateRoute path="/new_squad" component={NewSquad} />
           <Route path="/auth_callback" component={AuthCallback} />
           <Route path='*' exact={true} component={() => <Redirect to='/' />} />
         </Switch>

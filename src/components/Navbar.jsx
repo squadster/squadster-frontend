@@ -32,7 +32,7 @@ export default function Navbar() {
               <Link to='/my-squad'>
                 <Button className={classes.navbarLink}>Мой взвод</Button>
               </Link> :
-              <Link to='/my-squad'>
+              <Link to='/new_squad'>
                 <Button className={classes.navbarLink}>Создать взвод</Button>
               </Link>
               }
