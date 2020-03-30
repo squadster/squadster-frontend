@@ -7,6 +7,9 @@ const currentUserReducer = (state, action) => {
       state.queueNumber = action.squadMember.queueNumber
       state.role = action.squadMember.role
       return state
+    case 'UPDATE SQUAD ADVERTISMENT':
+      state.squad.advertisment = action.value
+      return state
     default:
       const currentUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
       return currentUser

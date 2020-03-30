@@ -3,7 +3,7 @@ import { fade } from '@material-ui/core/styles';
 const SquadsStyles= (theme) => ({
   paper: {
     padding: '2%',
-    margin: '3% 25%',
+    margin: '3%',
     [theme.breakpoints.down('xs')]: {
       margin: '3%'
     },

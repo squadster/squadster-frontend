@@ -55,5 +55,9 @@ function getCurrentUser() {
     return JSON.parse(localStorage.currentUser)
 }
 
+function inCommandSquad(user) {
+  return ['commander', 'deputy_commander', 'journalist'].includes(user.role)
+}
 
-export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser, isMobile};
+
+export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser, isMobile, inCommandSquad };

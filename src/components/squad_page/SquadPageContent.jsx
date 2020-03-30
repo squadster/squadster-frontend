@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Container, Typography, Paper, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
 import { getWeekDay } from '../../helpers'
 import SquadMemberCard from './SquadMemberCard'
-import { isMobile } from '../../helpers'
+import Advertisment from './Advertisment'
 
 
 function filterMembers(members, roles) {
@@ -25,7 +25,7 @@ function noMembers(currentUser) {
 }
 
 export default function SquadPageContent(props) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
   const user = props.user
 
   const handleExpandChange = (event, newValue) => {
@@ -38,8 +38,8 @@ export default function SquadPageContent(props) {
   
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
-    <div className={'d-flex flex-column flex-xl-row justify-content-xl-between justify-content-center mx-auto ' + (isMobile ? 'w-100' : 'w-75')}>
-      <Typography className='pt-4 mr-xl-3 align-self-center align-self-xl-left' variant='h4' component='h1' style={{fontSize: '28px'}}>
+    <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
+      <Typography className='pt-4 mr-lg-3 align-self-center align-self-lg-left' variant='h4' component='h1' style={{fontSize: '28px'}}>
         Взвод № {user.squad.squadNumber}
       </Typography>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
@@ -76,15 +76,8 @@ export default function SquadPageContent(props) {
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>
-    <Paper className={'py-3 px-4 mt-5 mx-auto ' + (isMobile ? 'w-100' : 'w-75')} square>
-      <Typography variant='h5'>
-        Oбъявление:
-      </Typography>
-      <Typography variant='body1'>
-        {user.squad.advertisment}
-      </Typography>
-    </Paper> 
-    <Paper className={'d-flex flex-column mx-auto mt-5 ' + (isMobile ? 'w-100' : 'w-75')} square variant="outlined" style={{minHeight: '500px'}}>
+    <Advertisment user={user}/>
+    <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
       <div className='d-flex flex-column'> 
         <Typography variant='h4' className='my-4 text-center'>
           <b>Командный состав</b>

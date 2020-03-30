@@ -7,6 +7,7 @@ const GET_USER_SQUAD = gql`
         role
         queueNumber
         squad {
+          id
           advertisment
           classDay
           squadNumber
@@ -31,4 +32,16 @@ const GET_USER_SQUAD = gql`
   }
 `
 
-export { GET_USER_SQUAD }
+const UPDATE_ADVERTISMENT = gql`mutation updateSquad($id: Int, $advertisment: String) {
+  updateSquad(
+    id: $id,
+    advertisment: $advertisment
+  ) {
+    advertisment
+  }
+}`
+
+
+
+export { GET_USER_SQUAD, UPDATE_ADVERTISMENT }
+

@@ -13,3 +13,7 @@ export const setCurrentUser = (user) => {
 export const setUserSquad = (squadMember) => {
   return { type: "SET USER SQUAD", squadMember: squadMember }  
 }
+
+export const updateSquadAdvertisment = (value) => {
+  return { type: "UPDATE SQUAD ADVERTISMENT", value: value }
+}

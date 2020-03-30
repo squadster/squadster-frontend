@@ -17,12 +17,14 @@ const useStyles = makeStyles(AppStyles);
 function logout(reducer) {
   axios({ method: 'DELETE', url: `${API_URL}/api/auth`})
        .then(() => {
-          localStorage.removeItem('authToken')
-          localStorage.removeItem('currentUser')
           reducer(signOut());
 
           window.location.href = '/'
         })
+       .finally(() => {
+        localStorage.removeItem('authToken')
+        localStorage.removeItem('currentUser')
+       })
 }
 
 export default function Navbar() {
