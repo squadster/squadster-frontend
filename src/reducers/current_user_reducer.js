@@ -10,6 +10,10 @@ const currentUserReducer = (state, action) => {
     case 'UPDATE SQUAD ADVERTISMENT':
       state.squad.advertisment = action.value
       return state
+    case 'DELETE SQUAD MEMBER':
+      const members = state.squad.members
+      state.squad.members = members.filter(member => member != action.member)
+      return state
     default:
       const currentUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
       return currentUser

@@ -12,9 +12,11 @@ const GET_USER_SQUAD = gql`
           classDay
           squadNumber
           members {
+            id
             role
             queueNumber
             user {
+              id
               firstName
               lastName
               mobilePhone
@@ -41,7 +43,15 @@ const UPDATE_ADVERTISMENT = gql`mutation updateSquad($id: Int, $advertisment: St
   }
 }`
 
+const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
+  deleteSquadMember(
+    id: $id
+  ){
+    id
+  }
+}`
 
 
-export { GET_USER_SQUAD, UPDATE_ADVERTISMENT }
+
+export { GET_USER_SQUAD, UPDATE_ADVERTISMENT, DELETE_SQUAD_MEMBER }
 

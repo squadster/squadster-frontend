@@ -5,7 +5,6 @@ import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ADVERTISMENT } from '../../requests'
 import { useDispatch } from 'react-redux'
 import { updateSquadAdvertisment } from '../../actions'
-import { inCommandSquad } from '../../helpers'
 
 export default function Advertisment(props) {
   const user = props.user
@@ -21,7 +20,7 @@ export default function Advertisment(props) {
           Oбъявление:
         </Typography>
         { 
-          inCommandSquad(user) ? 
+          props.manage ? 
           <div title="Изменить">
             <EditIcon onClick={() => setEditMode(!editMode)}></EditIcon>
           </div> 

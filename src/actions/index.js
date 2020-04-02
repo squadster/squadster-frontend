@@ -17,3 +17,7 @@ export const setUserSquad = (squadMember) => {
 export const updateSquadAdvertisment = (value) => {
   return { type: "UPDATE SQUAD ADVERTISMENT", value: value }
 }
+
+export const deleteSquadMember = member => {
+  return { type: "DELETE SQUAD MEMBER", member: member }
+}
