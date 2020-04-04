@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Container, Typography, Paper, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core'
-import { getWeekDay } from '../../helpers'
+import { getWeekDay, inCommandSquad } from '../../helpers'
 import SquadMemberCard from './SquadMemberCard'
 import Advertisment from './Advertisment'
-import { inCommandSquad } from '../../helpers'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import { makeStyles } from '@material-ui/core/styles'
 import RemoveFromSquadModal from './RemoveFromSquadModal'
-import SquadPageContentStyles from '../../assets/jss/styles/SquadPageContentStyles.styles'
+import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
 import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { deleteSquadMember } from '../../actions'
@@ -130,7 +129,7 @@ export default function SquadPageContent(props) {
           <b>Состав</b>
         </Typography>
         { members.length ? members.map((member, index) => {
-          return <SquadMemberCard manage={manage} openDeleteModal={openDeleteModal} key={index} member={member}/>  
+          return <SquadMemberCard manage={manage} openDeleteModal={openDeleteModal} currentUser={user} key={index} member={member}/>  
         }) : noMembers(user) }
       </div>
     </Paper>

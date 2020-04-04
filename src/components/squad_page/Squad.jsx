@@ -7,7 +7,7 @@ import { setUserSquad } from '../../actions';
 import Spinner from '../Spinner'
 import { Container, Typography, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SquadStyles from '../../assets/jss/styles/Squad.styles'
+import SquadStyles from '../../assets/jss/styles/squad_page/Squad.styles'
 import SquadPageContent from './SquadPageContent'
 import SVG from 'react-inlinesvg';
 import { Link } from 'react-router-dom'

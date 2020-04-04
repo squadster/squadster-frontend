@@ -7,6 +7,7 @@ const SquadMemberCardStyles = {
   removeFromSquadIcon: {
     position: 'absolute',
     right: '16px',
+    top: '35px',
     fill: 'red',
     cursor: 'pointer'
   }
