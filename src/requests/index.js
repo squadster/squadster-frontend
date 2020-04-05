@@ -51,7 +51,17 @@ const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
   }
 }`
 
+const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: String, $quequeNumber: Int) {
+  updateSquadMember(
+    id: $id,
+    queueNumber: $quequeNumber,
+    role: $role
+  ) {
+    id
+  }
+}`
 
 
-export { GET_USER_SQUAD, UPDATE_ADVERTISMENT, DELETE_SQUAD_MEMBER }
+
+export { GET_USER_SQUAD, UPDATE_ADVERTISMENT, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER }
 

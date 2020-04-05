@@ -7,6 +7,10 @@ import RoleChip from './RoleChip'
 
 const useStyles = makeStyles(SquadMemberCardStyles)
 
+function deleleMemberMessage(user) {
+  return `Вы уверены что хотите исключить пользователя ${user.firstName} ${user.lastName}`
+}
+
 export default function SquadMemberCard(props) {
   const member = props.member
   const user = member.user
@@ -19,7 +23,10 @@ export default function SquadMemberCard(props) {
     <div className='d-flex flex-row justify-content-center justify-content-md-between'>
       <div className='d-flex flex-md-row flex-column align-items-center'>
         <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
-        <RoleChip classes='mt-3 mb-2 d-flex d-md-none' manage={manage} currentUserRole={props.currentUser.role} memberRole={member.role} />
+        <RoleChip classes='mt-3 mb-2 d-flex d-md-none'
+                  manage={manage}
+                  openModal={props.openModal}
+                  member={member} />
         <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
           <Typography variant='subtitle1'>
             {userName}
@@ -29,9 +36,12 @@ export default function SquadMemberCard(props) {
           </Typography>
         </div>
       </div>
-      <RoleChip classes='d-none d-md-flex' manage={manage} currentUserRole={props.currentUser.role} memberRole={member.role} />
+      <RoleChip classes='d-none d-md-flex'
+                manage={manage}
+                openModal={props.openModal}
+                member={member} />
       { manage ? 
-        <PersonAddDisabledIcon onClick={() => props.openDeleteModal(member)} className={classes.removeFromSquadIcon}/>
+        <PersonAddDisabledIcon onClick={() => props.openModal(member, deleleMemberMessage(user), 'deleteMember')} className={classes.removeFromSquadIcon}/>
         :
         ""
       }

@@ -14,6 +14,11 @@ const currentUserReducer = (state, action) => {
       const members = state.squad.members
       state.squad.members = members.filter(member => member !== action.member)
       return state
+    case 'UPDATE SQUAD MEMBER':
+      const member = action.member
+      member.role = member.newAttributes.role
+
+      return state
     default:
       const currentUser = localStorage.currentUser ? JSON.parse(localStorage.currentUser) : null
       return currentUser
