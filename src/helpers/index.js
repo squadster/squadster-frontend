@@ -74,5 +74,4 @@ function isCommander(user) {
   return user.role === 'commander'
 }
 
-
 export { apolloClient, setAxiosInterceptors, logout, getWeekDay, getMemberRole, isMobile, isCommander };
