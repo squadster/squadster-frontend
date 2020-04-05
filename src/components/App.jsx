@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import Squad from './squad_page/Squad';
 import PrivateRoute from './PrivateRoute'
 import AuthCallback from "./auth/AuthCallback.jsx";
-import Squads from "./Squads.jsx";
+import Squads from "./squads_page/Squads.jsx";
 import About from "./About.jsx";
 
 function setAxiosInterceptors() {

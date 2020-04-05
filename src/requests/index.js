@@ -61,7 +61,44 @@ const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: Stri
   }
 }`
 
+const GET_SQUADS = gql`
+  {
+    squads {
+      squadNumber
+      members {
+        role
+        user {
+          lastName
+          firstName
+        }
+      }
+      requests {
+        id
+        user {
+          id
+        }
+      }
+    }
+  }
+`
+
+const DELETE_SQUAD_REQUEST = gql`mutation deleteSquadRequest($id: Int) {
+  deleteSquadRequest(
+    id: $id
+  ) {
+    id
+  }
+}`
+
+const CREATE_SQUAD_REQUEST = gql`mutation createSquadRequest($squadId: Int) {
+  deleteSquadRequest(
+    squadId: $squadId
+  ) {
+    id
+  }
+}`
 
 
-export { GET_USER_SQUAD, UPDATE_ADVERTISMENT, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER }
+
+export { GET_USER_SQUAD, GET_SQUADS, UPDATE_ADVERTISMENT, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST }
 
