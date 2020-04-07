@@ -64,6 +64,7 @@ const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: Stri
 const GET_SQUADS = gql`
   {
     squads {
+      id
       squadNumber
       members {
         role
@@ -91,7 +92,7 @@ const DELETE_SQUAD_REQUEST = gql`mutation deleteSquadRequest($id: Int) {
 }`
 
 const CREATE_SQUAD_REQUEST = gql`mutation createSquadRequest($squadId: Int) {
-  deleteSquadRequest(
+  createSquadRequest(
     squadId: $squadId
   ) {
     id

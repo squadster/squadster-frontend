@@ -61,6 +61,7 @@ export default function SquadPageContent(props) {
               updateSquadMemberQuery({variables: { id: member.id, role: member.newAttributes.role } })
               break
             }
+            default: {}
           }
 
         setOpen(false)

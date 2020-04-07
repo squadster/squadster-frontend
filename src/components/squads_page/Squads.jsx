@@ -98,6 +98,24 @@ export default function Squads() {
     setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
   }
 
+  const deleteRequest = (squad, userRequest) => {
+    const index = squads.indexOf(squad)
+    squad.requests = squad.requests.filter((request => request !== userRequest))
+    squads[index] = squad
+    setSquads(squads)
+  }
+
+  const pushRequest = (squad, userRequest) => {
+    squads.forEach(squad => {
+      squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
+    })
+
+    const index = squads.indexOf(squad)
+    squad.requests.push(userRequest)
+    squads[index] = squad
+    setSquads(squads)
+  }
+
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
@@ -120,8 +138,8 @@ export default function Squads() {
 
   return (
     <Container>
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={alertState.open} autoHideDuration={6000} onClose={() => alertState.open = false}>
-        <Alert onClose={() => alertState.open = false} severity="success">
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={alertState.open} onClose={() => setAlertState({open: false, message: alertState.message})}>
+        <Alert onClose={() => setAlertState({open: false, message: alertState.message})} severity="success">
           {alertState.message}
         </Alert>
       </Snackbar>
@@ -168,7 +186,11 @@ export default function Squads() {
                   <TableCell>{commanderName(squad)}</TableCell>
                   {!user.squad ? 
                     <TableCell>
-                      <SendRequestIcon alertState={alertState} squad={squad} user={user} />
+                      <SendRequestIcon setAlertState={setAlertState}
+                                       deleteRequest={deleteRequest}
+                                       pushRequest={pushRequest}
+                                       squad={squad}
+                                       user={user} />
                     </TableCell>
                     : '' }
                 </TableRow>
