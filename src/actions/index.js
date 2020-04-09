@@ -25,3 +25,13 @@ export const deleteSquadMember = member => {
 export const updateSquadMember = member => {
   return { type: "UPDATE SQUAD MEMBER", member: member }
 }
+
+export const deleteSquadRequest = request => {
+  return { type: "DELETE SQUAD REQUEST", request: request }
+}
+
+export const approveSquadRequest = (members, user) => {
+  const member = members.find((member) => member.user.id == user.id)
+
+  return { type: "APPROVE SQUAD REQUEST", squadMember: member }
+}

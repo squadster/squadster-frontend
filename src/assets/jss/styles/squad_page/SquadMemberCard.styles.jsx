@@ -5,11 +5,13 @@ const SquadMemberCardStyles = {
   },
 
   removeFromSquadIcon: {
+    fill: 'red',
+  },
+
+  removeFromSquadButton: {
     position: 'absolute',
     right: '16px',
-    top: '35px',
-    fill: 'red',
-    cursor: 'pointer'
+    top: '23px',
   }
 }
 

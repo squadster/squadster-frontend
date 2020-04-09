@@ -172,7 +172,7 @@ export default function Squads() {
               <TableRow>
                 <TableCell className={classes.TableCell}>Номер взвода</TableCell>
                 <TableCell className={classes.TableCell}>Командир</TableCell>
-                { !user.squad ? <TableCell className={classes.TableCell}></TableCell> : ''}
+                { !user.squad ? <TableCell className={classes.TableCell}></TableCell> : null}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -192,7 +192,7 @@ export default function Squads() {
                                        squad={squad}
                                        user={user} />
                     </TableCell>
-                    : '' }
+                    : null }
                 </TableRow>
               ))
             }

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Container, Typography, Paper, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core'
+import { Container, Typography, Paper, Badge, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, IconButton } from '@material-ui/core'
 import { getWeekDay, isCommander } from '../../helpers'
 import SquadMemberCard from './SquadMemberCard'
 import Advertisment from './Advertisment'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import { makeStyles } from '@material-ui/core/styles'
 import ConfirmationModal from './ConfirmationModal'
+import RequestsModal from './RequestsModal'
 import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
 import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
@@ -39,9 +40,11 @@ export default function SquadPageContent(props) {
   const [updateSquadMemberQuery, { data2 }] = useMutation(UPDATE_SQUAD_MEMBER)
   const [expanded, setExpanded] = useState(false)
   const [open, setOpen] = useState(false)
+  const [requestsOpen, setRequestsOpen] = useState(false)
   const [confirmationModalOptions, setConfirmationModalOptions] = useState({})
 
   const user = props.user
+  const requests = user.squad.requests
   const manage = isCommander(user)
   const classes = useStyles()
 
@@ -81,14 +84,21 @@ export default function SquadPageContent(props) {
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
     { manage ?
-    <ConfirmationModal open={open} options={confirmationModalOptions} /> : '' }
+      <div>
+        <ConfirmationModal open={open} options={confirmationModalOptions} />
+        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} user={user} />
+      </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-center align-self-lg-left d-flex flex-row' > 
-        <Typography variant='h4' component='h1' style={{fontSize: '28px'}}>
+        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px'}}>
           Взвод № {user.squad.squadNumber}
         </Typography>
         { manage ? 
-          <GroupAddIcon className={classes.requestsIcon}/>
+          <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
+            <Badge badgeContent={requests.length} color="primary">
+              <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
+            </Badge>
+          </IconButton>
           :
           ""
         }
