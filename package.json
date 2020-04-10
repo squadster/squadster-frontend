@@ -50,7 +50,8 @@
     "react-scripts/**/serialize-javascript": "^2.1.1",
     "react-scripts/**/acorn": "^7.1.1",
     "react-scripts/**/kind-of": "^6.0.3",
-    "react-scripts/**/@hapi/hoek": "^9.0.3"
+    "react-scripts/**/@hapi/hoek": "^9.0.3",
+    "react-scripts/**/minimist": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
