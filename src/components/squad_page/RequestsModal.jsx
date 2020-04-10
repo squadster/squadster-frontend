@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Avatar, List, ListItem, ListItemAvatar, Divider, IconButton, ListItemText, ButtonGroup, DialogTitle, Dialog, DialogContent, Typography, Button } from '@material-ui/core'
+import React from 'react'
+import { Avatar, List, ListItem, ListItemAvatar, Divider, IconButton, ListItemText, ButtonGroup, DialogTitle, Dialog, DialogContent, Button } from '@material-ui/core'
 import { useMutation } from '@apollo/react-hooks'
 import { DELETE_SQUAD_REQUEST, APPROVE_SQUAD_REQUEST } from '../../requests'
 import { deleteSquadRequest, approveSquadRequest } from '../../actions'
