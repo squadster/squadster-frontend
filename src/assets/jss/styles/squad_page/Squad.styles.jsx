@@ -39,6 +39,15 @@ const SquadsStyles = {
     }
   },
 
+  selectRoot: {
+    minWidth: '185px',
+    width: '-webkit-fill-available',
+    color: 'inherit',
+    'borderBottom&:focus-within': {
+      borderColor: '#00acc1 !important',
+    },
+  },
+
   inputRoot: {
     width: '-webkit-fit-content',
     color: 'inherit',
@@ -68,7 +77,7 @@ const SquadsStyles = {
     [theme.breakpoints.down('sm')]: {
       fontSize: '16px'
     }
-  }
+  },
 }
 
 export default SquadsStyles;

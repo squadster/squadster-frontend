@@ -37,9 +37,9 @@ export default function NewSquad() {
             <Typography className={classes.newSquadMessageText} variant='h6' component='h2'>
               Отправляйте запросы на вступление и ожидайте подтверждения командира взвода. Мы уведомим вас как только ваша заявка будет подтверждена.
             </Typography>
-            <div className='col-sm'>
+            <div className='row justify-content-center'>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="number-native-simple">Номер взвода</InputLabel>
+                <InputLabel htmlFor='number-native-simple'>Номер взвода</InputLabel>
                 <InputBase
                   classes={{
                     root: classes.inputRoot,
@@ -52,12 +52,23 @@ export default function NewSquad() {
                 />
               </FormControl>
             </div>
-            <div className='col-sm'>
+            <div className='row justify-content-center'>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="day-native-simple">День недели</InputLabel>
+                <InputLabel
+                  htmlFor='day-native-simple'
+                  shrink={true}
+                  disableAnimation={false}>
+                    День занятия
+                </InputLabel>
                 <Select
+                  classes={{
+                    root: classes.selectRoot,
+                  }}
                   value={day}
                   onChange={e => setDay(e.target.value)}
+                  id='day-native-simple'
+                  displayEmpty
+                  className={classes.selectEmpty}
                 >
                   <MenuItem value={1}>Понедельник</MenuItem>
                   <MenuItem value={2}>Вторник</MenuItem>
