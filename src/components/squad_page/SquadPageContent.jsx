@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { deleteSquadMember, updateSquadMember } from '../../actions'
 import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER } from '../../requests'
+import { SheetsManager } from 'jss';
 
 const useStyles = makeStyles(SquadPageContentStyles)
 
@@ -44,8 +45,10 @@ export default function SquadPageContent(props) {
   const [confirmationModalOptions, setConfirmationModalOptions] = useState({})
 
   const user = props.user
+  const [manage, setManage] = useState(isCommander(user))
+
+  const userMember= user.squad.members.find(member => member.user.id == user.id)
   const requests = user.squad.requests
-  const manage = isCommander(user)
   const classes = useStyles()
 
   const openModal = (member, message, operation) => {
@@ -60,7 +63,8 @@ export default function SquadPageContent(props) {
               break
             }
             case 'updateMemberRole': {
-              dispatch(updateSquadMember(member))
+              dispatch(updateSquadMember(member, userMember))
+              setManage(userMember.role === 'commander')
               updateSquadMemberQuery({variables: { id: member.id, role: member.newAttributes.role } })
               break
             }

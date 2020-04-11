@@ -22,8 +22,8 @@ export const deleteSquadMember = member => {
   return { type: "DELETE SQUAD MEMBER", member: member }
 }
 
-export const updateSquadMember = member => {
-  return { type: "UPDATE SQUAD MEMBER", member: member }
+export const updateSquadMember = (member, currentUserMember) => {
+  return { type: "UPDATE SQUAD MEMBER", member: member, currentUserMember: currentUserMember }
 }
 
 export const deleteSquadRequest = request => {

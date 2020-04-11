@@ -16,7 +16,11 @@ const currentUserReducer = (state, action) => {
       return state
     case 'UPDATE SQUAD MEMBER':
       const member = action.member
-      member.role = member.newAttributes.role
+      const newRole = member.newAttributes.role
+      member.role = newRole
+
+      if (newRole === 'commander')
+        action.currentUserMember.role = 'student'
       return state
     case 'DELETE SQUAD REQUEST':
       const squad = state.squad
