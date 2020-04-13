@@ -11,7 +11,7 @@ import RequestModalStyles from '../../assets/jss/styles/squad_page/RequestsModal
 const useStyles = makeStyles(RequestModalStyles)
 
 export default function RequestModal({open, setOpen, user}) {
-  const requests = user.squad.requests
+  const requests = user.squad.requests.filter((request) => !request.approvedAt)
   const dispatch = useDispatch()
   const classes = useStyles()
 

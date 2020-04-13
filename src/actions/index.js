@@ -32,6 +32,6 @@ export const deleteSquadRequest = request => {
 
 export const approveSquadRequest = (members, user) => {
   const member = members.find((member) => member.user.id == user.id)
-
+  
   return { type: "APPROVE SQUAD REQUEST", squadMember: member }
 }
