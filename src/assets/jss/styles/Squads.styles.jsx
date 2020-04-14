@@ -73,6 +73,11 @@ const SquadsStyles= (theme) => ({
   TableCell: {
     backgroundColor: '#3f51b5',
     color: theme.palette.common.white,
+    width: '283px',
+  },
+
+  Table: {
+    width: '566px',
   },
 
   searchArea: {
