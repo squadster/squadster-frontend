@@ -13,6 +13,7 @@ const GET_USER_SQUAD = gql`
           squadNumber
           requests {
             id
+            approvedAt
             user {
               firstName
               lastName
@@ -113,29 +114,22 @@ const APPROVE_SQUAD_REQUEST = gql`mutation approveSquadRequest($id: Int) {
   approveSquadRequest(
     id: $id
   ) {
-    user {
       id
-    }
-    squad {
-      members {
+      role
+      queueNumber
+      user {
         id
-        role
-        queueNumber
-        user {
-          id
-          firstName
-          lastName
-          mobilePhone
-          faculty
-          university
-          imageUrl
-          smallImageUrl
-          vkUrl
-          birthDate
-        }
+        firstName
+        lastName
+        mobilePhone
+        faculty
+        university
+        imageUrl
+        smallImageUrl
+        vkUrl
+        birthDate
       }
-    }
-  }
+    } 
 }`
 
 export { GET_USER_SQUAD, GET_SQUADS, UPDATE_ADVERTISMENT, APPROVE_SQUAD_REQUEST, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST }

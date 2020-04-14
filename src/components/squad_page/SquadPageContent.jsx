@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { deleteSquadMember, updateSquadMember } from '../../actions'
 import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER } from '../../requests'
-import { SheetsManager } from 'jss';
 
 const useStyles = makeStyles(SquadPageContentStyles)
 
@@ -48,7 +47,7 @@ export default function SquadPageContent(props) {
   const [manage, setManage] = useState(isCommander(user))
 
   const userMember= user.squad.members.find(member => member.user.id == user.id)
-  const requests = user.squad.requests
+  const requests = user.squad.requests.filter((request) => !request.approvedAt)
   const classes = useStyles()
 
   const openModal = (member, message, operation) => {
@@ -84,13 +83,12 @@ export default function SquadPageContent(props) {
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
   const members = filterMembers(user.squad.members, ['student'])
   
-  
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
     { manage ?
       <div>
         <ConfirmationModal open={open} options={confirmationModalOptions} />
-        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} user={user} />
+        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} user={user} requests={requests}/>
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-center align-self-lg-left d-flex flex-row' > 

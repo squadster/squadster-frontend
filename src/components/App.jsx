@@ -25,7 +25,7 @@ export default function App() {
   setAxiosInterceptors();
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
-  const { loading, data } = useQuery(GET_USER_SQUAD, { skip: !user && user.squad, variables: { id: user && user.id } } )
+  const { loading, data } = useQuery(GET_USER_SQUAD, { skip: !user || user.squad, variables: { id: user && user.id } } )
 
   if (loading) {
     return <Spinner/>

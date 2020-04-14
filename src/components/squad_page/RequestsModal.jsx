@@ -10,15 +10,13 @@ import RequestModalStyles from '../../assets/jss/styles/squad_page/RequestsModal
 
 const useStyles = makeStyles(RequestModalStyles)
 
-export default function RequestModal({open, setOpen, user}) {
-  const requests = user.squad.requests.filter((request) => !request.approvedAt)
+export default function RequestModal({open, setOpen, user, requests}) {
   const dispatch = useDispatch()
   const classes = useStyles()
 
   const [deleteSquadRequestQuery] = useMutation(DELETE_SQUAD_REQUEST)
   const [approveSquadRequestQuery, { data }] = useMutation(APPROVE_SQUAD_REQUEST, {onCompleted: (data) => { 
-    const request = data.approveSquadRequest
-    dispatch(approveSquadRequest(request.squad.members, request.user))}
+    dispatch(approveSquadRequest(data.approveSquadRequest))}
   })
 
   const cancelRequest = (request) => {
