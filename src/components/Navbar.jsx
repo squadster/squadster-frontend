@@ -1,30 +1,16 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Button, Toolbar, AppBar, IconButton, Collapse } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
-import { API_URL } from '../constants'
 import { useDispatch } from 'react-redux';
-import { setCurrentUser } from '../actions';
-import { Link, Redirect } from 'react-router-dom';
-import { isMobile } from '../helpers'
+import { Link } from 'react-router-dom';
+import { API_URL } from '../constants'
+import { isMobile, logout } from '../helpers'
 
 const useStyles = makeStyles(AppStyles);
-
-function logout(reducer) {
-  axios({ method: 'DELETE', url: `${API_URL}/api/auth`})
-       .then(() => {
-          return <Redirect to='/'/>
-        })
-       .finally(() => {
-        localStorage.removeItem('authToken')
-        localStorage.removeItem('currentUser')
-        reducer(setCurrentUser(null))
-       })
-}
 
 export default function Navbar() {
   const classes = useStyles()

@@ -1,9 +1,11 @@
 export const setCurrentUser = (user) => {
-  return { type: "SET CURRENT USER", user: user }
-}
+  if (user && user.squadMember) {
+    user.squad = user.squadMember.squad
+    user.queueNumber = user.squadMember.queueNumber
+    user.role = user.squadMember.role
+  }
 
-export const setUserSquad = (squadMember) => {
-  return { type: "SET USER SQUAD", squadMember: squadMember }  
+  return { type: "SET CURRENT USER", user: user }
 }
 
 export const updateSquadAdvertisment = (value) => {

@@ -1,8 +1,18 @@
 import gql from  'graphql-tag'
 
-const GET_USER_SQUAD = gql`
-  query getUserSquad($id: ID!) {
-    user(id: $id) {
+const GET_CURRENT_USER = gql`
+  query getCurrentUser {
+    currentUser {
+      id
+      firstName
+      lastName
+      mobilePhone
+      faculty
+      university
+      imageUrl
+      smallImageUrl
+      vkUrl
+      birthDate
       squadMember {
         role
         queueNumber
@@ -132,5 +142,5 @@ const APPROVE_SQUAD_REQUEST = gql`mutation approveSquadRequest($id: Int) {
     } 
 }`
 
-export { GET_USER_SQUAD, GET_SQUADS, UPDATE_ADVERTISMENT, APPROVE_SQUAD_REQUEST, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST }
+export { GET_CURRENT_USER, GET_SQUADS, UPDATE_ADVERTISMENT, APPROVE_SQUAD_REQUEST, DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST }
 

@@ -8,31 +8,26 @@ import AuthCallback from "./auth/AuthCallback.jsx"
 import Squads from "./squads_page/Squads.jsx"
 import About from "./About.jsx"
 import { useSelector, useDispatch } from 'react-redux'
-import { GET_USER_SQUAD } from '../requests'
+import { GET_CURRENT_USER } from '../requests'
 import { useQuery } from '@apollo/react-hooks'
 import Spinner from './Spinner'
-import { setUserSquad } from '../actions'
-
-function setAxiosInterceptors() {
-  axios.interceptors.request.use(function (config) {
-    const token = localStorage.authToken;
-    config.headers['Authorization'] = 'Bearer ' + token;
-    return config;
-  });
-}
+import { setCurrentUser } from '../actions'
+import { setAxiosInterceptors, logout } from '../helpers'
 
 export default function App() {
   setAxiosInterceptors();
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
-  const { loading, data } = useQuery(GET_USER_SQUAD, { skip: !user || user.squad, variables: { id: user && user.id } } )
+  const { loading, data } = useQuery(GET_CURRENT_USER, { skip: !localStorage.authToken, onError: () => logout(dispatch) } )
 
   if (loading) {
     return <Spinner/>
   }
 
-  if (user && !user.squad && data.user.squadMember)
-    dispatch(setUserSquad(data.user.squadMember))
+  if (!user && data && data.currentUser) {
+    dispatch(setCurrentUser(data.currentUser))
+  }
+    
   
   return (
     <Router>

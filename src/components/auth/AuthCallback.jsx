@@ -2,45 +2,46 @@ import React, { useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 import { setCurrentUser, setUserSquad } from '../../actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
-import { GET_USER_SQUAD } from '../../requests';
+import { GET_CURRENT_USER } from '../../requests';
 import Spinner from '../Spinner'
+import { setAxiosInterceptors, apolloClient } from '../../helpers'
 
-function userFromParams() {
+function authToken() {
   const params = queryString.parse(window.location.search);
   if (params.user) {
-    localStorage.setItem('currentUser', params.user)
-    const user = JSON.parse(params.user)
-    localStorage.setItem('authToken', user.auth_token)
+    const token = JSON.parse(params.user).auth_token
 
-    return user
+    localStorage.setItem('authToken', token)
+    setAxiosInterceptors()
+  
+    return token
   }
 }
 
 export default function AuthCallback() {
-  const dispatch = useDispatch();
-  const user = userFromParams();
-  const { loading, data } = useQuery(GET_USER_SQUAD, { skip: !user, variables: { id: user.id } } )
+  const dispatch = useDispatch()
+  const token = authToken()
+  const { data } = useQuery(GET_CURRENT_USER, { skip: !token } )
+  const currentUser = useSelector(state => state.currentUser)
 
   useEffect(() => {
-    if (user) {
-      dispatch(setCurrentUser(user))
-      if (data && data.user.squadMember)
-        dispatch(setUserSquad(data.user.squadMember))
+    if (data) {
+      const user = data.currentUser
+      if (user)
+        dispatch(setCurrentUser(user))
     }
-  }, [data, user])
+  }, [data])
 
-  
-  if (loading)
-    return <Spinner/>
-  else {
-    if (user)
-      if (user.squad)
-        return <Redirect to='/squad'/>
-      else
-        return <Redirect to='/squads'/>
+  if (currentUser)
+    if (currentUser.squad)
+      return <Redirect to='/squad'/>
     else
-      return <Redirect to='/' />
-  }
+      return <Redirect to='/squads'/>
+
+  if (!token)
+    return <Redirect to='/' />
+
+  return <Spinner/>
 }
