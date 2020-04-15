@@ -8,8 +8,8 @@ import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
 import { API_URL } from '../constants'
 import { useDispatch } from 'react-redux';
-import { signOut } from '../actions';
-import { Link } from 'react-router-dom';
+import { setCurrentUser } from '../actions';
+import { Link, Redirect } from 'react-router-dom';
 import { isMobile } from '../helpers'
 
 const useStyles = makeStyles(AppStyles);
@@ -17,20 +17,19 @@ const useStyles = makeStyles(AppStyles);
 function logout(reducer) {
   axios({ method: 'DELETE', url: `${API_URL}/api/auth`})
        .then(() => {
-          reducer(signOut());
-
-          window.location.href = '/'
+          return <Redirect to='/'/>
         })
        .finally(() => {
         localStorage.removeItem('authToken')
         localStorage.removeItem('currentUser')
+        reducer(setCurrentUser(null))
        })
 }
 
 export default function Navbar() {
   const classes = useStyles()
-  const loggedIn = useSelector(state => state.isLoggedIn)
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser)
   const [expanded, setExpanded] = useState(isMobile ? false : true);
 
   return (
@@ -41,7 +40,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton> : ''}
         <Collapse in={expanded}>
-          {loggedIn ? (
+          {currentUser ? (
             <Toolbar className={classes.toolbar}>
               <Link to='/my-squad'>
                 <Button className={classes.navbarLink}>Мой взвод</Button>

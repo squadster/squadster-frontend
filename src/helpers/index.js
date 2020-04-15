@@ -15,10 +15,6 @@ const apolloClient = new ApolloClient({
 
 const isMobile = window.screen.width < 992
 
-function isLoggedIn() {
-  return !!window.localStorage.getItem('authToken');
-}
-
 function getWeekDay(day) {
   switch (day) {
     case 'monday':
@@ -60,4 +56,4 @@ function isCommander(user) {
 }
 
 
-export {apolloClient, isLoggedIn, getWeekDay, getMemberRole, getCurrentUser, isMobile, isCommander };
+export {apolloClient, getWeekDay, getMemberRole, getCurrentUser, isMobile, isCommander };
