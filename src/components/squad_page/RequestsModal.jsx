@@ -10,7 +10,7 @@ import RequestModalStyles from '../../assets/jss/styles/squad_page/RequestsModal
 
 const useStyles = makeStyles(RequestModalStyles)
 
-export default function RequestModal({open, setOpen, user, requests}) {
+export default function RequestModal({open, setOpen, requests}) {
   const dispatch = useDispatch()
   const classes = useStyles()
 
@@ -45,7 +45,7 @@ export default function RequestModal({open, setOpen, user, requests}) {
         { requests.length ? requests.map(({user, id}, index) => (
           <div key={id} className='d-flex flex-column'>
             <ListItem className='d-flex flex-column flex-md-row'>
-              <div className='d-flex flex-row'>
+              <div className='d-flex flex-row mr-3'>
                 <ListItemAvatar className={classes.avatarContainer}>
                   <Avatar className={classes.avatar} src={user.smallImageUrl} />
                 </ListItemAvatar>

@@ -34,5 +34,5 @@ export default function Squad() {
   const user = useSelector(state => state.currentUser)
   const classes = useStyles()
   
-  return user.squad ? <SquadPageContent user={user}/> : squadPageEmpty(classes) 
+  return user.squad ? <SquadPageContent /> : squadPageEmpty(classes) 
 }

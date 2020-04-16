@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import ConfirmationModal from './ConfirmationModal'
 import RequestsModal from './RequestsModal'
 import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { deleteSquadMember, updateSquadMember } from '../../actions'
 import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER } from '../../requests'
@@ -43,11 +43,12 @@ export default function SquadPageContent(props) {
   const [requestsOpen, setRequestsOpen] = useState(false)
   const [confirmationModalOptions, setConfirmationModalOptions] = useState({})
 
-  const user = props.user
+  const user = useSelector(state => state.currentUser)
+  const requests = useSelector(state => state.currentUser.squad.requests.filter((request) => !request.approvedAt))
+  
   const [manage, setManage] = useState(isCommander(user))
 
   const userMember= user.squad.members.find(member => member.user.id == user.id)
-  const requests = user.squad.requests.filter((request) => !request.approvedAt)
   const classes = useStyles()
 
   const openModal = (member, message, operation) => {
@@ -88,7 +89,7 @@ export default function SquadPageContent(props) {
     { manage ?
       <div>
         <ConfirmationModal open={open} options={confirmationModalOptions} />
-        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} user={user} requests={requests}/>
+        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} requests={requests}/>
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-center align-self-lg-left d-flex flex-row' > 

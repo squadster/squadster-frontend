@@ -25,6 +25,7 @@ const GET_CURRENT_USER = gql`
             id
             approvedAt
             user {
+              id
               firstName
               lastName
               faculty
