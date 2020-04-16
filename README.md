@@ -10,7 +10,7 @@ Clone this repo and copy .env:
 
 ```bash
 git clone https://github.com/squadster/squadster-frontend.git
-cd squadster-api
+cd squadster-frontend
 cp .env.sample .env
 ```
 
