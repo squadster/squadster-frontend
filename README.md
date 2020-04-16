@@ -6,21 +6,20 @@ Frontend repository for Squadster. Check the [API repo](https://github.com/squad
 
 ### Prepare development environment
 
-Clone this repo and copy .env:
+Clone this repo:
 
 ```bash
 git clone https://github.com/squadster/squadster-frontend.git
 cd squadster-frontend
-cp .env.sample .env
 ```
 
-Edit `.env` file and specify all variables marked as `# required`, others are optional, some heve default values.
-
-Then install dependencies:
+Install dependencies:
 
 ```bash
 yarn install
 ```
+
+Then edit `.env` file and change variables if needed.
 
 That's all, now you can run development server with `yarn start`.
 
