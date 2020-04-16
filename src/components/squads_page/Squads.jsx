@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Paper, Table, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, IconButton, Container } from '@material-ui/core';
-import SquadsStyles from '../assets/jss/styles/Squads.styles.jsx'
-import SearchIcon from '@material-ui/icons/Search';
-import { useQuery } from '@apollo/react-hooks';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import Spinner from './Spinner.jsx'
-import gql from 'graphql-tag';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Paper, Table, Snackbar, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, IconButton, Container } from '@material-ui/core'
+import SquadsStyles from '../../assets/jss/styles/Squads.styles.jsx'
+import SearchIcon from '@material-ui/icons/Search'
+import { useQuery } from '@apollo/react-hooks'
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
+import FirstPageIcon from '@material-ui/icons/FirstPage'
+import LastPageIcon from '@material-ui/icons/LastPage'
+import Spinner from '../Spinner.jsx'
+import { useSelector } from 'react-redux'
+import { GET_SQUADS } from '../../requests'
+import SendRequestIcon from './SendRequestIcon'
+import MuiAlert from '@material-ui/lab/Alert'
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 const useStyles = makeStyles(SquadsStyles);
@@ -73,21 +80,6 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-const GET_SQUADS = gql`
-  {
-    squads {
-      squadNumber
-      members {
-        role
-        user {
-          lastName
-          firstName
-        }
-      }
-    }
-  }
-`;
-
 const commanderName = (squad) => {
   let commander = squad.members.find((m) => m.role === 'commander');
   return commander ? `${commander.user.lastName} ${commander.user.firstName}` : '';
@@ -98,11 +90,30 @@ export default function Squads() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [squads, setSquads] = useState([]);
+  const user = useSelector(state => state.currentUser)
 
   const { loading, error, data } = useQuery(GET_SQUADS, {onCompleted: () => setSquads(data.squads)});
   const findSquad = ({ target: { value } }) => {
     if (value === '') return  setSquads(prevSquads => data.squads);
     setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
+  }
+
+  const deleteRequest = (squad, userRequest) => {
+    const index = squads.indexOf(squad)
+    squad.requests = squad.requests.filter((request => request !== userRequest))
+    squads[index] = squad
+    setSquads(squads)
+  }
+
+  const pushRequest = (squad, userRequest) => {
+    squads.forEach(squad => {
+      squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
+    })
+
+    const index = squads.indexOf(squad)
+    squad.requests.push(userRequest)
+    squads[index] = squad
+    setSquads(squads)
   }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
@@ -120,12 +131,29 @@ export default function Squads() {
     return `${from}-${to === -1 ? count : to} из ${count}`
   };
 
+  const [alertState, setAlertState] = useState({open: false})
+
   if (loading) return <Spinner />;
   if (error) return(<div>{error}</div>)
 
   return (
     <Container>
-      <Paper className={classes.paper}>
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={alertState.open} onClose={() => setAlertState({open: false, message: alertState.message})}>
+        <Alert onClose={() => setAlertState({open: false, message: alertState.message})} severity="success">
+          {alertState.message}
+        </Alert>
+      </Snackbar>
+      { user.squad ?
+      <Paper className="p-3 mt-4">
+        <Typography variant='h4' component='h1'>
+          Внимание!
+        </Typography>
+        <Typography variant='body1'>
+          Вы уже состоите во взводе, поэтому возможность отправки заявок заблокирована.
+        </Typography>
+      </Paper>
+      : '' } 
+      <Paper className={'p-3 ' + (user.squad ? 'mt-5' : 'mt-4')}>
         <div className={classes.searchArea}>
           <SearchIcon className={classes.searchIcon}/>
           <InputBase
@@ -144,6 +172,7 @@ export default function Squads() {
               <TableRow>
                 <TableCell className={classes.TableCell}>Номер взвода</TableCell>
                 <TableCell className={classes.TableCell}>Командир</TableCell>
+                { !user.squad ? <TableCell className={classes.TableCell}></TableCell> : null}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -155,6 +184,15 @@ export default function Squads() {
                 <TableRow key={i}>
                   <TableCell>{squad.squadNumber}</TableCell>
                   <TableCell>{commanderName(squad)}</TableCell>
+                  {!user.squad ? 
+                    <TableCell>
+                      <SendRequestIcon setAlertState={setAlertState}
+                                       deleteRequest={deleteRequest}
+                                       pushRequest={pushRequest}
+                                       squad={squad}
+                                       user={user} />
+                    </TableCell>
+                    : null }
                 </TableRow>
               ))
             }

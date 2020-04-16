@@ -1,46 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { signIn, setCurrentUser, setUserSquad } from '../../actions';
-import { useDispatch } from 'react-redux';
+import { setCurrentUser, setUserSquad } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
-import { GET_USER_SQUAD } from '../../requests';
+import { GET_CURRENT_USER } from '../../requests';
 import Spinner from '../Spinner'
+import { setAxiosInterceptors, apolloClient } from '../../helpers'
 
-function userFromParams() {
+function authToken() {
   const params = queryString.parse(window.location.search);
   if (params.user) {
-    localStorage.setItem('currentUser', params.user)
-    const user = JSON.parse(params.user)
-    localStorage.setItem('authToken', user.auth_token)
+    const token = JSON.parse(params.user).auth_token
 
-    return user
+    localStorage.setItem('authToken', token)
+    setAxiosInterceptors()
+  
+    return token
   }
 }
 
-export default function AuthCallback(props) {
-  const dispatch = useDispatch();
-  const user = userFromParams();
-  const { loading, data } = useQuery(GET_USER_SQUAD, { variables: { id: user.id } } )
+export default function AuthCallback() {
+  const dispatch = useDispatch()
+  const token = authToken()
+  const { data } = useQuery(GET_CURRENT_USER, { skip: !token } )
+  const currentUser = useSelector(state => state.currentUser)
 
-  if (loading) {
-    return <Spinner/>
-  } else { 
-    if (user) {
-      dispatch(signIn())
-      dispatch(setCurrentUser(user))
-
-      if (data.user.squadMember) {
-        dispatch(setUserSquad(data.user.squadMember))
-        return <Redirect to='/squad'/>
-      } else {
-        return <Redirect to='/squads'/>
-      }
-    } else {
-      return(
-        // TODO: add flush error message
-        <Redirect to='/' />
-      );
+  useEffect(() => {
+    if (data) {
+      const user = data.currentUser
+      if (user)
+        dispatch(setCurrentUser(user))
     }
-  }
+  }, [data])
+
+  if (currentUser)
+    if (currentUser.squad)
+      return <Redirect to='/squad'/>
+    else
+      return <Redirect to='/squads'/>
+
+  if (!token)
+    return <Redirect to='/' />
+
+  return <Spinner/>
 }

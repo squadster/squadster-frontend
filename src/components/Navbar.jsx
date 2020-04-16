@@ -1,34 +1,21 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Button, Toolbar, AppBar, IconButton, Collapse } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../assets/jss/styles/App.styles.jsx'
 import SVG from 'react-inlinesvg';
-import { API_URL } from '../constants'
 import { useDispatch } from 'react-redux';
-import { signOut } from '../actions';
 import { Link } from 'react-router-dom';
-import { isMobile } from '../helpers'
+import { API_URL } from '../constants'
+import { isMobile, logout } from '../helpers'
 
 const useStyles = makeStyles(AppStyles);
 
-function logout(reducer) {
-  axios({ method: 'DELETE', url: `${API_URL}/api/auth`})
-       .then(() => {
-          localStorage.removeItem('authToken')
-          localStorage.removeItem('currentUser')
-          reducer(signOut());
-
-          window.location.href = '/'
-        })
-}
-
 export default function Navbar() {
   const classes = useStyles()
-  const loggedIn = useSelector(state => state.isLoggedIn)
   const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.currentUser)
   const [expanded, setExpanded] = useState(isMobile ? false : true);
 
   return (
@@ -39,7 +26,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton> : ''}
         <Collapse in={expanded}>
-          {loggedIn ? (
+          {currentUser ? (
             <Toolbar className={classes.toolbar}>
               <Link to='/my-squad'>
                 <Button className={classes.navbarLink}>Мой взвод</Button>

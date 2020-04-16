@@ -1,10 +1,20 @@
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Container, Typography, Paper, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
-import { getWeekDay } from '../../helpers'
+import { Container, Typography, Paper, Badge, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, IconButton } from '@material-ui/core'
+import { getWeekDay, isCommander } from '../../helpers'
 import SquadMemberCard from './SquadMemberCard'
-import { isMobile } from '../../helpers'
+import Advertisment from './Advertisment'
+import GroupAddIcon from '@material-ui/icons/GroupAdd'
+import { makeStyles } from '@material-ui/core/styles'
+import ConfirmationModal from './ConfirmationModal'
+import RequestsModal from './RequestsModal'
+import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { useMutation } from '@apollo/react-hooks'
+import { deleteSquadMember, updateSquadMember } from '../../actions'
+import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER } from '../../requests'
 
+const useStyles = makeStyles(SquadPageContentStyles)
 
 function filterMembers(members, roles) {
   return members.filter((member) => {
@@ -25,8 +35,47 @@ function noMembers(currentUser) {
 }
 
 export default function SquadPageContent(props) {
-  const [expanded, setExpanded] = useState(false);
-  const user = props.user
+  const dispatch = useDispatch()
+  const [deleteSquadMemberQuery, { data1 }] = useMutation(DELETE_SQUAD_MEMBER)
+  const [updateSquadMemberQuery, { data2 }] = useMutation(UPDATE_SQUAD_MEMBER)
+  const [expanded, setExpanded] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [requestsOpen, setRequestsOpen] = useState(false)
+  const [confirmationModalOptions, setConfirmationModalOptions] = useState({})
+
+  const user = useSelector(state => state.currentUser)
+  const requests = useSelector(state => state.currentUser.squad.requests.filter((request) => !request.approvedAt))
+  
+  const [manage, setManage] = useState(isCommander(user))
+
+  const userMember= user.squad.members.find(member => member.user.id == user.id)
+  const classes = useStyles()
+
+  const openModal = (member, message, operation) => {
+    setConfirmationModalOptions({
+      message: message,
+      handleClose: (value) => {
+        if (value)
+          switch (operation) {
+            case 'deleteMember': {
+              dispatch(deleteSquadMember(member))
+              deleteSquadMemberQuery({ variables: { id: member.id } })
+              break
+            }
+            case 'updateMemberRole': {
+              dispatch(updateSquadMember(member, userMember))
+              setManage(userMember.role === 'commander')
+              updateSquadMemberQuery({variables: { id: member.id, role: member.newAttributes.role } })
+              break
+            }
+            default: {}
+          }
+
+        setOpen(false)
+      }
+    })
+    setOpen(true)
+  }
 
   const handleExpandChange = (event, newValue) => {
     setExpanded(newValue)
@@ -35,13 +84,28 @@ export default function SquadPageContent(props) {
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
   const members = filterMembers(user.squad.members, ['student'])
   
-  
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
-    <div className={'d-flex flex-column flex-xl-row justify-content-xl-between justify-content-center mx-auto ' + (isMobile ? 'w-100' : 'w-75')}>
-      <Typography className='pt-4 mr-xl-3 align-self-center align-self-xl-left' variant='h4' component='h1' style={{fontSize: '28px'}}>
-        Взвод № {user.squad.squadNumber}
-      </Typography>
+    { manage ?
+      <div>
+        <ConfirmationModal open={open} options={confirmationModalOptions} />
+        <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} requests={requests}/>
+      </div> : '' }
+    <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
+      <div className='pt-4 mr-lg-3 align-self-center align-self-lg-left d-flex flex-row' > 
+        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px'}}>
+          Взвод № {user.squad.squadNumber}
+        </Typography>
+        { manage ? 
+          <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
+            <Badge badgeContent={requests.length} color="primary">
+              <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
+            </Badge>
+          </IconButton>
+          :
+          ""
+        }
+      </div>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className='mx-auto' variant='subtitle1' component='p'>
@@ -76,21 +140,14 @@ export default function SquadPageContent(props) {
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>
-    <Paper className={'py-3 px-4 mt-5 mx-auto ' + (isMobile ? 'w-100' : 'w-75')} square>
-      <Typography variant='h5'>
-        Oбъявление:
-      </Typography>
-      <Typography variant='body1'>
-        {user.squad.advertisment}
-      </Typography>
-    </Paper> 
-    <Paper className={'d-flex flex-column mx-auto mt-5 ' + (isMobile ? 'w-100' : 'w-75')} square variant="outlined" style={{minHeight: '500px'}}>
+    <Advertisment manage={manage} user={user}/>
+    <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
       <div className='d-flex flex-column'> 
         <Typography variant='h4' className='my-4 text-center'>
           <b>Командный состав</b>
         </Typography>
         { commanders.length ? commanders.map((member, index) => {
-          return <SquadMemberCard key={index} member={member}/>  
+          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>  
         }) : noMembers(user) }
       </div>
       <div className='d-flex flex-column'> 
@@ -98,7 +155,7 @@ export default function SquadPageContent(props) {
           <b>Состав</b>
         </Typography>
         { members.length ? members.map((member, index) => {
-          return <SquadMemberCard key={index} member={member}/>  
+          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>  
         }) : noMembers(user) }
       </div>
     </Paper>

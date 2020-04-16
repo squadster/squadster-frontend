@@ -1,13 +1,8 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
 import { useSelector } from 'react-redux';
-import { GET_USER_SQUAD } from '../../requests';
-import { setUserSquad } from '../../actions';
-import Spinner from '../Spinner'
 import { Container, Typography, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SquadStyles from '../../assets/jss/styles/Squad.styles'
+import SquadStyles from '../../assets/jss/styles/squad_page/Squad.styles'
 import SquadPageContent from './SquadPageContent'
 import SVG from 'react-inlinesvg';
 import { Link } from 'react-router-dom'
@@ -37,23 +32,7 @@ function squadPageEmpty(classes) {
 
 export default function Squad() {
   const user = useSelector(state => state.currentUser)
-  const dispatch = useDispatch()
   const classes = useStyles()
-
-  const { loading, data } = useQuery(GET_USER_SQUAD, { skip: !user || user.squad, variables: { id: user.id } } )
-
-  if (!user.squad && loading) {
-    return <Spinner/>
-  } else {
-    if (!user.squad && data.user.squadMember) {
-      dispatch(setUserSquad(data.user.squadMember))
-      return <SquadPageContent user={user}/>
-    } else {
-      if (user.squad) {
-        return <SquadPageContent user={user}/>
-      }
-      else
-        return squadPageEmpty(classes) 
-    }
-  }
+  
+  return user.squad ? <SquadPageContent /> : squadPageEmpty(classes) 
 }
