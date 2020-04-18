@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, InputBase, Container, Typography, Button } from '@material-ui/core';
-import SquadsStyles from '../assets/jss/styles/Squad.styles.jsx'
+import SquadsStyles from '../assets/jss/styles/NewSquad.styles.jsx';
 import { useMutation } from '@apollo/react-hooks';
 import SVG from 'react-inlinesvg';
 import Select from '@material-ui/core/Select';

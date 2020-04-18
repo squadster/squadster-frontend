@@ -105,6 +105,32 @@ const GET_SQUADS = gql`
   }
 `
 
+const SET_SQUAD = gql`
+   mutation createSquad($squad_number: String!, $class_day: Int!) {
+     createSquad(squadNumber: $squad_number, classDay: $class_day) {
+       advertisment
+       classDay
+       squadNumber
+       members {
+         role
+         queueNumber
+         user {
+           id
+           firstName
+           lastName
+           mobilePhone
+           faculty
+           university
+           imageUrl
+           smallImageUrl
+           vkUrl
+           birthDate
+         }
+       }
+     }
+   }
+ `
+
 const DELETE_SQUAD_REQUEST = gql`mutation deleteSquadRequest($id: Int) {
   deleteSquadRequest(
     id: $id
@@ -146,6 +172,7 @@ const APPROVE_SQUAD_REQUEST = gql`mutation approveSquadRequest($id: Int) {
 export {
   GET_CURRENT_USER,
   GET_SQUADS,
+  SET_SQUAD,
   UPDATE_ADVERTISMENT,
   APPROVE_SQUAD_REQUEST,
   DELETE_SQUAD_MEMBER,
