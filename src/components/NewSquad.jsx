@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { SET_SQUAD } from '../requests';
 import { useSelector } from 'react-redux';
+import SquadPageContent from './squad_page/SquadPageContent';
 
 
 const useStyles = makeStyles(SquadsStyles);
@@ -22,7 +23,7 @@ export default function NewSquad() {
   const [sendRequest] = useMutation(SET_SQUAD, { onCompleted: () => window.location.href ='/my-squad' });
 
   if (user && user.squad) {
-    return window.location.href ='/my-squad'
+    return <SquadPageContent/>
   }
 
   return (
@@ -79,7 +80,23 @@ export default function NewSquad() {
                 </Select>
               </FormControl>
             </div>
-            <Button variant='contained' color='primary' size='large' className={classes.newSquadMessageLink} onClick={() => sendRequest({ variables: { squad_number: squadNumber, class_day: day } })}>Создать взвод</Button>
+            <Button
+              variant='contained'
+              color='primary'
+              size='large'
+              className={classes.newSquadMessageLink}
+              onClick={
+                () => sendRequest({
+                  variables: {
+                    squad_number: squadNumber,
+                    class_day: day
+                  }
+                })
+              }
+              disabled={!squadNumber || !day}
+            >
+              Создать взвод
+            </Button>
           </div>
         </div>
       </Paper>
