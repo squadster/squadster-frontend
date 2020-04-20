@@ -18,7 +18,7 @@ const useStyles = makeStyles(SquadPageContentStyles)
 
 function filterMembers(members, roles) {
   return members.filter((member) => {
-    return roles.includes(member.role) 
+    return roles.includes(member.role)
   })
 }
 
@@ -45,7 +45,7 @@ export default function SquadPageContent(props) {
 
   const user = useSelector(state => state.currentUser)
   const requests = useSelector(state => state.currentUser.squad.requests.filter((request) => !request.approvedAt))
-  
+
   const [manage, setManage] = useState(isCommander(user))
 
   const userMember= user.squad.members.find(member => member.user.id == user.id)
@@ -83,7 +83,7 @@ export default function SquadPageContent(props) {
 
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
   const members = filterMembers(user.squad.members, ['student'])
-  
+
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
     { manage ?
@@ -92,11 +92,11 @@ export default function SquadPageContent(props) {
         <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} requests={requests}/>
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
-      <div className='pt-4 mr-lg-3 align-self-center align-self-lg-left d-flex flex-row' > 
+      <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
         <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px'}}>
           Взвод № {user.squad.squadNumber}
         </Typography>
-        { manage ? 
+        { manage ?
           <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
             <Badge badgeContent={requests.length} color="primary">
               <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
@@ -142,23 +142,23 @@ export default function SquadPageContent(props) {
     </div>
     <Advertisment manage={manage} user={user}/>
     <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
-      <div className='d-flex flex-column'> 
+      <div className='d-flex flex-column'>
         <Typography variant='h4' className='my-4 text-center'>
           <b>Командный состав</b>
         </Typography>
         { commanders.length ? commanders.map((member, index) => {
-          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>  
+          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
         }) : noMembers(user) }
       </div>
-      <div className='d-flex flex-column'> 
+      <div className='d-flex flex-column'>
         <Typography variant='h4' className='my-4 text-center'>
           <b>Состав</b>
         </Typography>
         { members.length ? members.map((member, index) => {
-          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>  
+          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
         }) : noMembers(user) }
       </div>
     </Paper>
   </Container>
-</Paper> 
+</Paper>
 }
