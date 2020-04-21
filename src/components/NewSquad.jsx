@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper, InputBase, Container, Typography, Button } from '@material-ui/core';
 import SquadsStyles from '../assets/jss/styles/NewSquad.styles.jsx';
 import { useMutation } from '@apollo/react-hooks';
+import { Redirect } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,20 +11,23 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { SET_SQUAD } from '../requests';
 import { useSelector } from 'react-redux';
-import SquadPageContent from './squad_page/SquadPageContent';
+import { setSquad } from '../actions/index.js';
+import { useDispatch } from 'react-redux'
 
 
 const useStyles = makeStyles(SquadsStyles);
 
 export default function NewSquad() {
   const classes = useStyles();
-  const user = useSelector(state => state.currentUser)
+  const dispatch = useDispatch();
+  const squad = useSelector(state => state.currentUser.squad);
+
   const [day, setDay] = React.useState(0);
   const [squadNumber, setSquadNumber] = React.useState();
-  const [sendRequest] = useMutation(SET_SQUAD, { onCompleted: () => window.location.href ='/my-squad' });
+  const [sendRequest] = useMutation(SET_SQUAD, { onCompleted: (data) => dispatch(setSquad(data.createSquad)) } );
 
-  if (user && user.squad) {
-    return <SquadPageContent/>
+  if (squad) {
+    return  <Redirect to='/my-squad'/>
   }
 
   return (

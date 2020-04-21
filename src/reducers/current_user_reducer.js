@@ -20,10 +20,12 @@ const currentUserReducer = (state, action) => {
     case 'DELETE SQUAD REQUEST':
       const squad = state.squad
       state.squad.requests = squad.requests.filter((request => request.id !== action.request.id))
-      console.log(state.squad)
       return state
     case 'APPROVE SQUAD REQUEST':
       state.squad.members.push(action.squadMember)
+      return state
+    case 'SET SQUAD':
+      state.squad = action.squad;
       return state
     default:
       return null

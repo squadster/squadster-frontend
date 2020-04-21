@@ -106,27 +106,39 @@ const GET_SQUADS = gql`
 `
 
 const SET_SQUAD = gql`
-   mutation createSquad($squad_number: String!, $class_day: Int!) {
-     createSquad(squadNumber: $squad_number, classDay: $class_day) {
-       advertisment
-       classDay
-       squadNumber
-       members {
-         role
-         queueNumber
-         user {
-           id
-           firstName
-           lastName
-           mobilePhone
-           faculty
-           university
-           imageUrl
-           smallImageUrl
-           vkUrl
-           birthDate
-         }
-       }
+  mutation createSquad($squad_number: String!, $class_day: Int!) {
+    createSquad(squadNumber: $squad_number, classDay: $class_day) {
+      advertisment
+      classDay
+      squadNumber
+      requests {
+        id
+        approvedAt
+        user {
+          id
+          firstName
+          lastName
+          faculty
+          smallImageUrl
+          vkUrl
+        }
+      }
+      members {
+        role
+        queueNumber
+        user {
+          id
+          firstName
+          lastName
+          mobilePhone
+          faculty
+          university
+          imageUrl
+          smallImageUrl
+          vkUrl
+          birthDate
+        }
+      }
      }
    }
  `
