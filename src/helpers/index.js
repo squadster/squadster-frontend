@@ -49,6 +49,8 @@ function getWeekDay(day) {
       return 'Четверг'
     case 'friday':
       return 'Пятница'
+    case 'saturday':
+      return 'Суббота'
     default:
       break;
   }
@@ -71,6 +73,5 @@ function getMemberRole(role) {
 function isCommander(user) {
   return user.role === 'commander'
 }
-
 
 export { apolloClient, setAxiosInterceptors, logout, getWeekDay, getMemberRole, isMobile, isCommander };

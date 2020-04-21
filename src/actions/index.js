@@ -24,6 +24,10 @@ export const deleteSquadRequest = request => {
   return { type: "DELETE SQUAD REQUEST", request: request }
 }
 
-export const approveSquadRequest = (member) => {  
+export const approveSquadRequest = (member) => {
   return { type: "APPROVE SQUAD REQUEST", squadMember: member }
+}
+
+export const setSquad = (squad) => {
+  return { type: "SET SQUAD", squad: squad }
 }
