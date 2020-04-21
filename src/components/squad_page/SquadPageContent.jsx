@@ -93,7 +93,7 @@ export default function SquadPageContent(props) {
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
-        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px'}}>
+        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px', padding: '10px'}}>
           Взвод № {user.squad.squadNumber}
         </Typography>
         { manage ?
