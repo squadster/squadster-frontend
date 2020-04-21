@@ -15,7 +15,7 @@ export default function RequestModal({open, setOpen, requests}) {
   const classes = useStyles()
 
   const [deleteSquadRequestQuery] = useMutation(DELETE_SQUAD_REQUEST)
-  const [approveSquadRequestQuery, { data }] = useMutation(APPROVE_SQUAD_REQUEST, {onCompleted: (data) => { 
+  const [approveSquadRequestQuery] = useMutation(APPROVE_SQUAD_REQUEST, {onCompleted: (data) => {
     dispatch(approveSquadRequest(data.approveSquadRequest))}
   })
 
@@ -39,7 +39,7 @@ export default function RequestModal({open, setOpen, requests}) {
       <IconButton className='ml-auto' onClick={() => setOpen(false)}>
         <CloseIcon />
       </IconButton>
-    </DialogTitle>  
+    </DialogTitle>
     <DialogContent>
       <List>
         { requests.length ? requests.map(({user, id}, index) => (
@@ -61,8 +61,8 @@ export default function RequestModal({open, setOpen, requests}) {
                 </Button>
                 <Button onClick={() => cancelRequest({user: user, id: id})} className={'ml-1'} variant="contained" color="secondary">
                   Отклонить
-                </Button>    
-              </ButtonGroup> 
+                </Button>
+              </ButtonGroup>
             </ListItem>
             { index !== requests.length - 1 ? <Divider className='my-3' /> : '' }
           </div>

@@ -12,18 +12,18 @@ export default function Advertisment(props) {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false)
   const [advertisment, setAdvertisment] = useState(user.squad.advertisment || "")
-  const [updateAdvertisment, { data }] = useMutation(UPDATE_ADVERTISMENT)
+  const [updateAdvertisment] = useMutation(UPDATE_ADVERTISMENT)
 
   return <Paper className={'py-3 px-4 mt-5'} square>
       <div className='d-flex flex-row justify-content-between mb-2'>
         <Typography variant='h5'>
           Oбъявление:
         </Typography>
-        { 
-          props.manage ? 
+        {
+          props.manage ?
           <div title="Изменить">
             <EditIcon onClick={() => setEditMode(!editMode)}></EditIcon>
-          </div> 
+          </div>
           : ""
         }
       </div>
@@ -50,5 +50,5 @@ export default function Advertisment(props) {
           {advertisment && advertisment.length ? advertisment : "Ничего здесь, пока что"}
         </Typography>
       }
-    </Paper> 
+    </Paper>
 }
