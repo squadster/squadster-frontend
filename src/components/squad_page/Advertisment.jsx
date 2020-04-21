@@ -22,7 +22,10 @@ export default function Advertisment(props) {
         {
           props.manage ?
           <div title="Изменить">
-            <EditIcon onClick={() => setEditMode(!editMode)}></EditIcon>
+            <EditIcon
+              onClick={() => setEditMode(!editMode)}
+              style={{cursor: 'pointer'}}
+            />
           </div>
           : ""
         }
