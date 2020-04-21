@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { setCurrentUser, setUserSquad } from '../../actions';
+import { setCurrentUser } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_CURRENT_USER } from '../../requests';
 import Spinner from '../Spinner'
-import { setAxiosInterceptors, apolloClient } from '../../helpers'
+import { setAxiosInterceptors } from '../../helpers'
 
 function authToken() {
   const params = queryString.parse(window.location.search);
@@ -15,7 +15,7 @@ function authToken() {
 
     localStorage.setItem('authToken', token)
     setAxiosInterceptors()
-  
+
     return token
   }
 }
@@ -32,7 +32,7 @@ export default function AuthCallback() {
       if (user)
         dispatch(setCurrentUser(user))
     }
-  }, [data])
+  })
 
   if (currentUser)
     if (currentUser.squad)

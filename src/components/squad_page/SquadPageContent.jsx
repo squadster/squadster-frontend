@@ -36,8 +36,8 @@ function noMembers(currentUser) {
 
 export default function SquadPageContent(props) {
   const dispatch = useDispatch()
-  const [deleteSquadMemberQuery, { data1 }] = useMutation(DELETE_SQUAD_MEMBER)
-  const [updateSquadMemberQuery, { data2 }] = useMutation(UPDATE_SQUAD_MEMBER)
+  const [deleteSquadMemberQuery] = useMutation(DELETE_SQUAD_MEMBER)
+  const [updateSquadMemberQuery] = useMutation(UPDATE_SQUAD_MEMBER)
   const [expanded, setExpanded] = useState(false)
   const [open, setOpen] = useState(false)
   const [requestsOpen, setRequestsOpen] = useState(false)
@@ -48,7 +48,7 @@ export default function SquadPageContent(props) {
 
   const [manage, setManage] = useState(isCommander(user))
 
-  const userMember= user.squad.members.find(member => member.user.id == user.id)
+  const userMember= user.squad.members.find(member => member.user.id === user.id)
   const classes = useStyles()
 
   const openModal = (member, message, operation) => {
@@ -93,7 +93,7 @@ export default function SquadPageContent(props) {
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
-        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px'}}>
+        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px', padding: '10px'}}>
           Взвод № {user.squad.squadNumber}
         </Typography>
         { manage ?
