@@ -31,10 +31,7 @@ export default function Navbar() {
               { currentUser.squad ?
               <Link to='/my-squad'>
                 <Button className={classes.navbarLink}>Мой взвод</Button>
-              </Link> :
-              <Link to='/new_squad'>
-                <Button className={classes.navbarLink}>Создать взвод</Button>
-              </Link>
+              </Link> : ''
               }
               <Link to='/squads'>
                 <Button className={classes.navbarLink}>Взводы</Button>

@@ -1,7 +1,23 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Paper, Table, Snackbar, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, IconButton, Container } from '@material-ui/core'
+import {
+  Paper,
+  Table,
+  Snackbar,
+  Typography,
+  TableHead,
+  InputBase,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableContainer,
+  TableFooter,
+  TablePagination,
+  IconButton,
+  Container,
+  Button,
+} from '@material-ui/core';
 import SquadsStyles from '../../assets/jss/styles/Squads.styles.jsx'
 import SearchIcon from '@material-ui/icons/Search'
 import { useQuery } from '@apollo/react-hooks'
@@ -13,6 +29,8 @@ import { useSelector } from 'react-redux'
 import { GET_SQUADS } from '../../requests'
 import SendRequestIcon from './SendRequestIcon'
 import MuiAlert from '@material-ui/lab/Alert'
+import { Link } from 'react-router-dom';
+import SVG from 'react-inlinesvg';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -131,6 +149,28 @@ export default function Squads() {
     return `${from}-${to === -1 ? count : to} из ${count}`
   };
 
+  const userWithoutSquadNote = () => {
+    return (
+      <Paper className="p-3 mt-4">
+        <div className='row'>
+          <div className="col-sm-2 text-center">
+            <SVG className={classes.squadIcon} src='icons/squad_spinner.svg'/>
+          </div>
+          <div className='col-sm-10'>
+            <Typography variant='h5' className={classes.typography}>
+              Вы пока не вступили во взвод, создайте новый взвод или отправьте заявку в существующий!
+            </Typography>
+        <div className='row justify-content-md-center'>
+          <Link to='/new_squad'>
+            <Button className={classes.button}>Создать взвод</Button>
+          </Link>
+        </div>
+          </div>
+        </div>
+      </Paper>
+    )
+  }
+
   const [alertState, setAlertState] = useState({open: false})
 
   if (loading) return <Spinner />;
@@ -152,7 +192,7 @@ export default function Squads() {
           Вы уже состоите во взводе, поэтому возможность отправки заявок заблокирована.
         </Typography>
       </Paper>
-      : '' } 
+      : userWithoutSquadNote() }
       <Paper className={'p-3 ' + (user.squad ? 'mt-5' : 'mt-4')}>
         <div className={classes.searchArea}>
           <SearchIcon className={classes.searchIcon}/>
@@ -184,7 +224,7 @@ export default function Squads() {
                 <TableRow key={i}>
                   <TableCell>{squad.squadNumber}</TableCell>
                   <TableCell>{commanderName(squad)}</TableCell>
-                  {!user.squad ? 
+                  {!user.squad ?
                     <TableCell>
                       <SendRequestIcon setAlertState={setAlertState}
                                        deleteRequest={deleteRequest}
