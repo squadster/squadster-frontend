@@ -13,9 +13,10 @@ import { isMobile, logout } from '../helpers'
 const useStyles = makeStyles(AppStyles);
 
 export default function Navbar() {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const currentUser = useSelector(state => state.currentUser)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.currentUser);
+  const squad = useSelector(state => state.currentUser ? state.currentUser.squad : undefined);
   const [expanded, setExpanded] = useState(isMobile ? false : true);
 
   return (
@@ -33,9 +34,11 @@ export default function Navbar() {
                 <Button className={classes.navbarLink}>Мой взвод</Button>
               </Link> : ''
               }
-              <Link to='/squads'>
-                <Button className={classes.navbarLink}>Взводы</Button>
-              </Link>
+              {
+                !squad && <Link to='/squads'>
+                  <Button className={classes.navbarLink}>Взводы</Button>
+                </Link>
+              }
               <Link to='/about'>
                 <Button className={classes.navbarLink}>О сайте</Button>
               </Link>

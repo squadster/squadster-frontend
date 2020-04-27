@@ -35,10 +35,7 @@ export default function AuthCallback() {
   })
 
   if (currentUser)
-    if (currentUser.squad)
-      return <Redirect to='/squad'/>
-    else
-      return <Redirect to='/squads'/>
+    return currentUser.squad ? <Redirect to='/my-squad'/> : <Redirect to='/squads'/>
 
   if (!token)
     return <Redirect to='/' />
