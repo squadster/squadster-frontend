@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper, Avatar, Typography, IconButton } from '@material-ui/core'
+import { Paper, Avatar, Typography, IconButton, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import SquadMemberCardStyles from '../../assets/jss/styles/squad_page/SquadMemberCard.styles'
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled'
@@ -18,11 +18,21 @@ export default function SquadMemberCard(props) {
   const classes = useStyles()
   const manage = props.manage && props.currentUser.id !== member.user.id
 
+
   return <Paper className="position-relative" square variant='outlined'>
   <div className={"my-4 mx-auto py-2 w-75"}>
     <div className='d-flex flex-row justify-content-center justify-content-md-between'>
       <div className='d-flex flex-md-row flex-column align-items-center'>
-        <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
+        <div className='d-flex flex-row'>
+          { member.role === 'student' &&
+          <Tooltip className={classes.queueNumber} arrow title="Номер в очереди" aria-label="Номер в очереди">
+            <Typography variant='h5'>
+              { member.queueNumber }.
+            </Typography>
+          </Tooltip>
+          }
+          <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
+        </div>
         <RoleChip classes='mt-3 mb-2 d-flex d-md-none'
                   manage={manage}
                   openModal={props.openModal}

@@ -181,6 +181,14 @@ const APPROVE_SQUAD_REQUEST = gql`mutation approveSquadRequest($id: Int) {
     }
 }`
 
+const UPDATE_SQUAD_MEMBERS = gql`mutation updateSquadMembers($members: SquadMembersBatch) {
+  updateSquadMembers(
+    batch: $members
+  ) {
+    id
+  }
+}`
+
 export {
   GET_CURRENT_USER,
   GET_SQUADS,
@@ -190,5 +198,6 @@ export {
   DELETE_SQUAD_MEMBER,
   UPDATE_SQUAD_MEMBER,
   DELETE_SQUAD_REQUEST,
-  CREATE_SQUAD_REQUEST
+  CREATE_SQUAD_REQUEST,
+  UPDATE_SQUAD_MEMBERS
 }
