@@ -95,7 +95,7 @@ export default function SquadPageContent(props) {
   }
 
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
-  const members = filterMembers(user.squad.members, ['student']).sort((a, b) => a.queueNumber < b.queueNumber )
+  const members = filterMembers(user.squad.members, ['student']).sort((a, b) => a.queueNumber - b.queueNumber )
   const [updateSquadMembersQuery] = useMutation(UPDATE_SQUAD_MEMBERS)
   const onDragEnd = (result) => {
     // dropped outside the list
