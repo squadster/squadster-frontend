@@ -111,6 +111,10 @@ const SquadsStyles= (theme) => ({
 
   searchArea: {
     padding: 'inherit',
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginRight: '-15px',
+    marginLeft: '-15px',
   },
 
   paginationAction: {

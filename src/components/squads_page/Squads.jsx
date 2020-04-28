@@ -160,11 +160,6 @@ export default function Squads() {
             <Typography variant='h5' className={classes.typography}>
               Вы пока не вступили во взвод, создайте новый взвод или отправьте заявку в существующий!
             </Typography>
-        <div className='row justify-content-md-center'>
-          <Link to='/new_squad'>
-            <Button className={classes.button}>Создать взвод</Button>
-          </Link>
-        </div>
           </div>
         </div>
       </Paper>
@@ -195,16 +190,25 @@ export default function Squads() {
       : userWithoutSquadNote() }
       <Paper className={'p-3 ' + (user.squad ? 'mt-5' : 'mt-4')}>
         <div className={classes.searchArea}>
-          <SearchIcon className={classes.searchIcon}/>
-          <InputBase
-            placeholder='Поиск'
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={findSquad}
-          />
+          <div className="col-auto mr-auto">
+            <SearchIcon className={classes.searchIcon}/>
+            <InputBase
+              placeholder='Поиск'
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={findSquad}
+            />
+          </div>
+          {
+            !user.squad && <div className="col-auto">
+              <Link to='/new_squad'>
+                <Button className={classes.button}>Создать взвод</Button>
+              </Link>
+            </div>
+          }
         </div>
         <TableContainer>
           <Table className={classes.table} aria-label='sticky table'>
