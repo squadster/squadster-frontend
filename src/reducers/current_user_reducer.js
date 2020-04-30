@@ -27,6 +27,9 @@ const currentUserReducer = (state, action) => {
     case 'SET SQUAD':
       state.squad = action.squad;
       return state
+    case 'SET SQUAD MEMBERS':
+      state.squad.members = action.members
+      return state
     default:
       return null
   }

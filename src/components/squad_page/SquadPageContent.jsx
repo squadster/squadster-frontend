@@ -11,8 +11,9 @@ import RequestsModal from './RequestsModal'
 import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
-import { deleteSquadMember, updateSquadMember } from '../../actions'
-import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER } from '../../requests'
+import { deleteSquadMember, updateSquadMember, setSquadMembers } from '../../actions'
+import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from '../../requests'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const useStyles = makeStyles(SquadPageContentStyles)
 
@@ -21,6 +22,18 @@ function filterMembers(members, roles) {
     return roles.includes(member.role)
   })
 }
+
+function reorder(list, startIndex, endIndex) {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  result.forEach((member, index) => {
+    member.queueNumber = index + 1
+  })
+
+  return result;
+};
 
 function noMembers(currentUser) {
   return <div className='d-flex flex-column text-center py-4'>
@@ -82,7 +95,23 @@ export default function SquadPageContent(props) {
   }
 
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
-  const members = filterMembers(user.squad.members, ['student'])
+  const members = filterMembers(user.squad.members, ['student']).sort((a, b) => a.queueNumber - b.queueNumber )
+  const [updateSquadMembersQuery] = useMutation(UPDATE_SQUAD_MEMBERS)
+  const onDragEnd = (result) => {
+    // dropped outside the list
+    if (!result.destination)
+      return
+  
+    const newMembers = reorder(
+      members,
+      result.source.index,
+      result.destination.index
+    );
+
+    dispatch(setSquadMembers(commanders.concat(newMembers)))
+    updateSquadMembersQuery({variables: { members: newMembers.map(({id, queueNumber}) => ({id, queueNumber})) }})
+  }
+
 
   return <Paper style={{minHeight: '90vh'}}>
   <Container className='d-flex flex-column'>
@@ -141,24 +170,41 @@ export default function SquadPageContent(props) {
       </ExpansionPanel>
     </div>
     <Advertisment manage={manage} user={user}/>
-    <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
-      <div className='d-flex flex-column'>
-        <Typography variant='h4' className='my-4 text-center'>
-          <b>Командный состав</b>
-        </Typography>
-        { commanders.length ? commanders.map((member, index) => {
-          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
-        }) : noMembers(user) }
-      </div>
-      <div className='d-flex flex-column'>
-        <Typography variant='h4' className='my-4 text-center'>
-          <b>Состав</b>
-        </Typography>
-        { members.length ? members.map((member, index) => {
-          return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
-        }) : noMembers(user) }
-      </div>
-    </Paper>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
+        <div className='d-flex flex-column'>
+          <Typography variant='h4' className='my-4 text-center'>
+            <b>Командный состав</b>
+          </Typography>
+          { commanders.length ? commanders.map((member, index) => {
+            return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
+          }) : noMembers(user) }
+        </div>
+        <div className='d-flex flex-column'>
+          <Typography variant='h4' className='my-4 text-center'>
+            <b>Состав</b>
+          </Typography>
+          <Droppable isDropDisabled={!manage} droppableId='members'>
+            {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              { members.length ? members.map((member, index) => {
+                return <Draggable isDragDisabled={!manage} key={member.id} draggableId={member.id} index={index}>
+                {(provided, snapshot) => (
+                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
+                  </div>
+                )}
+              </Draggable>
+              }) : noMembers(user) }
+              {provided.placeholder}
+            </div>)}
+          </Droppable> 
+        </div>
+      </Paper>
+    </DragDropContext>
   </Container>
 </Paper>
 }

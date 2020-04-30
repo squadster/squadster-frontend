@@ -31,3 +31,7 @@ export const approveSquadRequest = (member) => {
 export const setSquad = (squad) => {
   return { type: "SET SQUAD", squad: squad }
 }
+
+export const setSquadMembers = (members) => {
+  return { type: "SET SQUAD MEMBERS", members: members }
+}
