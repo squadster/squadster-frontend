@@ -33,7 +33,6 @@ export default function App() {
     <Router>
       <div>
         <Navbar />
-
         <Switch>
           <Route path="/about" component={About} />
           <PrivateRoute path="/squads" component={Squads} />
@@ -42,6 +41,7 @@ export default function App() {
           <Route path="/auth_callback" component={AuthCallback} />
           <Route path='*' exact={true} component={() => <Redirect to='/' />} />
         </Switch>
+        {!user && <About/>}
       </div>
     </Router>
   );

@@ -80,8 +80,41 @@ const SquadsStyles= (theme) => ({
     width: '566px',
   },
 
+  squadIcon: {
+    height: 'initial',
+    maxHight: '100px',
+    maxWidth: '100px',
+    margin: 0,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+
+    [theme.breakpoints.down('xs')]: {
+      marginRight: 'auto',
+      marginLeft: 'auto',
+    }
+  },
+
+  button: {
+    backgroundColor: '#3f51b5',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#303f9f',
+      boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+    },
+  },
+
+  typography: {
+    fontWeight: '300',
+  },
+
   searchArea: {
     padding: 'inherit',
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginRight: '-15px',
+    marginLeft: '-15px',
   },
 
   paginationAction: {
