@@ -7,6 +7,15 @@ const SquadPageContentStyles = {
 
   requestsButton: {
     marginLeft: '16px',
+    marginBottom: 'auto'
+  },
+
+  squadTitle: {
+    height: 'max-content',
+    width: 'max-content',
+    fontSize: '28px',
+    padding: '10px',
+    marginBottom: 'auto'
   }
 }
 
