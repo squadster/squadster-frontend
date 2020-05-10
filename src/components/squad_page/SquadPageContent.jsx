@@ -194,7 +194,7 @@ export default function SquadPageContent(props) {
                 return <Draggable isDragDisabled={!manage} key={member.id} draggableId={member.id} index={index}>
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                    <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
+                    <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} index={index} key={index} member={member}/>
                   </div>
                 )}
               </Draggable>
