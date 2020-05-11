@@ -12,10 +12,18 @@ const currentUserReducer = (state, action) => {
     case 'UPDATE SQUAD MEMBER':
       const member = action.member
       const newRole = member.newAttributes.role
+      let queueNumber = state.squad.members.filter((member) => member.role === 'student').reduce((prev, current) => (prev.queueNumber > current.queueNumber) ? prev : current).queueNumber
+
+      if (member.role !== 'student' && member.newAttributes.role === 'student') {
+        queueNumber += 1
+        member.queueNumber = queueNumber
+      }
       member.role = newRole
 
-      if (newRole === 'commander')
+      if (newRole === 'commander') {
         action.currentUserMember.role = 'student'
+        action.currentUserMember.queueNumber = queueNumber + 1
+      }
       return state
     case 'DELETE SQUAD REQUEST':
       const squad = state.squad
