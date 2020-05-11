@@ -27,7 +27,7 @@ export default function SquadMemberCard(props) {
           { member.role === 'student' &&
           <Tooltip className={classes.queueNumber} arrow title="Номер в очереди" aria-label="Номер в очереди">
             <Typography variant='h5'>
-              { member.queueNumber }.
+              { props.index + 1 }.
             </Typography>
           </Tooltip>
           }

@@ -16,12 +16,17 @@ export default function RequestModal({open, setOpen, requests}) {
 
   const [deleteSquadRequestQuery] = useMutation(DELETE_SQUAD_REQUEST)
   const [approveSquadRequestQuery] = useMutation(APPROVE_SQUAD_REQUEST, {onCompleted: (data) => {
-    dispatch(approveSquadRequest(data.approveSquadRequest))}
+    dispatch(approveSquadRequest(data.approveSquadRequest))
+    if (requests.length <= 1)
+      setOpen(false)
+  }
   })
 
   const cancelRequest = (request) => {
     deleteSquadRequestQuery({ variables: { id: request.id } })
     dispatch(deleteSquadRequest(request))
+    if (requests.length <= 1)
+      setOpen(false)
   }
 
   const approveRequest = (request) => {

@@ -122,18 +122,16 @@ export default function SquadPageContent(props) {
       </div> : '' }
     <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
-        <Typography variant='h4' className='my-auto' component='h1' style={{height: 'max-content', fontSize: '28px', padding: '10px'}}>
-          Взвод № {user.squad.squadNumber}
-        </Typography>
-        { manage ?
-          <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
-            <Badge badgeContent={requests.length} color="primary">
-              <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
-            </Badge>
-          </IconButton>
-          :
-          ""
-        }
+        <div className='d-flex flex-row'>
+          <Typography variant='h4' className={classes.squadTitle} component='h1'>
+            Взвод № {user.squad.squadNumber}
+          </Typography>
+          { manage && <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
+              <Badge badgeContent={requests.length} color="primary">
+                <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
+              </Badge>
+            </IconButton>}
+        </div>
       </div>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -194,7 +192,7 @@ export default function SquadPageContent(props) {
                 return <Draggable isDragDisabled={!manage} key={member.id} draggableId={member.id} index={index}>
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                    <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
+                    <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} index={index} key={index} member={member}/>
                   </div>
                 )}
               </Draggable>

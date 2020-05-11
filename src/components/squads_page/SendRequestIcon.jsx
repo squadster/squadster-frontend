@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from '../../requests'
 
 function requestSent(user, requests) {
-  return requests.find((request => request.user.id = user.id))
+  return requests.find((request => request.user.id === user.id))
 }
 
 export default function SendRequestIcon({user, squad, setAlertState, deleteRequest, pushRequest}) {
