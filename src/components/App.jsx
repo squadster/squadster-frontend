@@ -12,7 +12,8 @@ import { useQuery } from '@apollo/react-hooks'
 import Spinner from './Spinner'
 import { setCurrentUser } from '../actions'
 import { setAxiosInterceptors, logout } from '../helpers'
-import NewSquad from "./NewSquad.jsx";
+import NewSquad from "./NewSquad"
+import Landing from './Landing'
 
 export default function App() {
   setAxiosInterceptors();
@@ -34,14 +35,14 @@ export default function App() {
       <div>
         <Navbar />
         <Switch>
-          <Route path="/about" component={About} />
-          <PrivateRoute path="/squads" component={Squads} />
-          <PrivateRoute path="/my-squad" component={Squad} />
-          <PrivateRoute path="/new_squad" component={NewSquad} />
+          <Route exact path="/about" component={About} />
+          <PrivateRoute exact path="/squads" component={Squads} />
+          <PrivateRoute exact path="/my_squad" component={Squad} />
+          <PrivateRoute exact path="/new_squad" component={NewSquad} />
           <Route path="/auth_callback" component={AuthCallback} />
-          <Route path='*' exact={true} component={() => <Redirect to='/' />} />
+          <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
+          <Redirect from="*" to="/" />
         </Switch>
-        {!user && <About/>}
       </div>
     </Router>
   );

@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../constants'
 import { isMobile, logout } from '../helpers'
+import NavbarLogo from './NavbarLogo'
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(AppStyles);
 
@@ -22,6 +24,9 @@ export default function Navbar() {
   return (
     <div className={classes.navbar}>
       <AppBar height='10vh' position="static">
+        <Link to="/">
+          <NavbarLogo />
+        </Link>
         { isMobile ?
           <IconButton onClick={() => setExpanded(!expanded)} className={classes.collapsedButton} edge="end"  color="inherit">
             <MenuIcon />
@@ -48,6 +53,9 @@ export default function Navbar() {
             </Toolbar>
             ) : (
             <Toolbar className={classes.toolbar}>
+              <Link to='/about'>
+                <Button className={classes.navbarLink}>О сайте</Button>
+              </Link>
               <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
                 <SVG src='VK_Blue_Logo.svg' width='50px'/>
                 Войти
