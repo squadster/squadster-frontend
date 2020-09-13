@@ -7,7 +7,7 @@ import AppStyles from '../../App.styles'
 import SVG from 'react-inlinesvg';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_URL } from 'constants/API_URL'
+import { API_URL } from '../../../../constants'
 import { isMobile, logout } from 'helpers'
 import NavbarLogo from './components/NavbarLogo'
 
