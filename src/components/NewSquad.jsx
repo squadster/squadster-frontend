@@ -22,7 +22,7 @@ export default function NewSquad() {
   const dispatch = useDispatch();
   const squad = useSelector(state => state.currentUser.squad);
 
-  const [day, setDay] = React.useState(0);
+  const [day, setDay] = React.useState();
   const [squadNumber, setSquadNumber] = React.useState();
   const [sendRequest] = useMutation(SET_SQUAD, { onCompleted: (data) => dispatch(setSquad(data.createSquad)) } );
 

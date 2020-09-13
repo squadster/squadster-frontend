@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../constants'
 import { isMobile, logout } from '../helpers'
 import NavbarLogo from './NavbarLogo'
-import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(AppStyles);
 

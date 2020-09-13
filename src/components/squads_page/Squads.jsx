@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -116,14 +116,14 @@ export default function Squads() {
     setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
   }
 
-  const deleteRequest = (squad, userRequest) => {
+  const deleteRequest = useCallback((squad, userRequest) => {
     const index = squads.indexOf(squad)
     squad.requests = squad.requests.filter((request => request !== userRequest))
     squads[index] = squad
     setSquads(squads)
-  }
+  }, [squads])
 
-  const pushRequest = (squad, userRequest) => {
+  const pushRequest = useCallback((squad, userRequest) => {
     squads.forEach(squad => {
       squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
     })
@@ -132,7 +132,7 @@ export default function Squads() {
     squad.requests.push(userRequest)
     squads[index] = squad
     setSquads(squads)
-  }
+  }, [squads])
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
 
