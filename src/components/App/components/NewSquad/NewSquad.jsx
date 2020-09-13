@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, InputBase, Container, Typography, Button } from '@material-ui/core';
-import SquadsStyles from '../assets/jss/styles/NewSquad.styles.jsx';
+import SquadsStyles from './NewSquad.styles';
 import { useMutation } from '@apollo/react-hooks';
 import { Redirect } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
@@ -9,9 +9,9 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import { SET_SQUAD } from '../requests';
+import { SET_SQUAD } from 'requests';
 import { useSelector } from 'react-redux';
-import { setSquad } from '../actions/index.js';
+import { setSquad } from 'actions';
 import { useDispatch } from 'react-redux'
 
 

@@ -18,16 +18,16 @@ import {
   Container,
   Button,
 } from '@material-ui/core';
-import SquadsStyles from '../../assets/jss/styles/Squads.styles.jsx'
+import SquadsStyles from './Squads.styles'
 import SearchIcon from '@material-ui/icons/Search'
 import { useQuery } from '@apollo/react-hooks'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import LastPageIcon from '@material-ui/icons/LastPage'
-import Spinner from '../Spinner.jsx'
+import Spinner from '../shared/Spinner'
 import { useSelector } from 'react-redux'
-import { GET_SQUADS } from '../../requests'
-import SendRequestIcon from './SendRequestIcon'
+import { GET_SQUADS } from '../../../../requests'
+import SendRequestIcon from './components/SendRequestIcon'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom';
 import SVG from 'react-inlinesvg';

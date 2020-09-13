@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import EditIcon from '@material-ui/icons/Edit'
 import { Typography, Paper, TextField, Button } from '@material-ui/core'
 import { useMutation } from '@apollo/react-hooks'
-import { UPDATE_ADVERTISMENT } from '../../requests'
+import { UPDATE_ADVERTISMENT } from 'requests'
 import { useDispatch } from 'react-redux'
-import { updateSquadAdvertisment } from '../../actions'
+import { updateSquadAdvertisment } from 'actions'
 
 export default function Advertisment(props) {
   const user = props.user

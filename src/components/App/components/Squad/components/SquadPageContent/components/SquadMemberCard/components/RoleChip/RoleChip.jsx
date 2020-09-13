@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Chip, Select, MenuItem } from '@material-ui/core'
-import { getMemberRole } from '../../helpers'
+import { getMemberRole } from 'helpers'
 import { makeStyles } from '@material-ui/core/styles';
-import RoleChipStyles from '../../assets/jss/styles/squad_page/RoleChip.styles'
+import RoleChipStyles from './RoleChip.styles'
 
 const useStyles = makeStyles(RoleChipStyles)
 

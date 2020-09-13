@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Container, Typography, Paper, Badge, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, IconButton } from '@material-ui/core'
-import { getWeekDay, isCommander } from '../../helpers'
-import SquadMemberCard from './SquadMemberCard'
-import Advertisment from './Advertisment'
+import { getWeekDay, isCommander } from 'helpers'
+import SquadMemberCard from '../SquadMemberCard/SquadMemberCard'
+import Advertisment from '../Advertisment'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import { makeStyles } from '@material-ui/core/styles'
-import ConfirmationModal from './ConfirmationModal'
-import RequestsModal from './RequestsModal'
-import SquadPageContentStyles from '../../assets/jss/styles/squad_page/SquadPageContentStyles.styles'
+import ConfirmationModal from '../ConfirmationModal'
+import RequestsModal from '../RequestsModal/RequestsModal'
+import SquadPageContentStyles from './SquadPageContent.styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
-import { deleteSquadMember, updateSquadMember, setSquadMembers } from '../../actions'
-import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from '../../requests'
+import { deleteSquadMember, updateSquadMember, setSquadMembers } from 'actions'
+import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from 'requests'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const useStyles = makeStyles(SquadPageContentStyles)

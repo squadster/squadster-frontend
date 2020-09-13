@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import EmailIcon from '@material-ui/icons/Email';
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
 import { useMutation } from '@apollo/react-hooks'
-import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from '../../requests'
+import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from '../../../../../requests'
 
 function requestSent(user, requests) {
   return requests.find((request => request.user.id === user.id))

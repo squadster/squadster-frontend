@@ -1,4 +1,4 @@
-const SquadPageContentStyles = {  
+const SquadPageContent = {  
   requestsIcon: {
     width: '32px',
     height: '32px',
@@ -19,4 +19,4 @@ const SquadPageContentStyles = {
   }
 }
 
-export default SquadPageContentStyles;
+export default SquadPageContent;

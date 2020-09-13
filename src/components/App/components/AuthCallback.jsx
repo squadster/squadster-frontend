@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { setCurrentUser } from '../../actions';
+import { setCurrentUser } from 'actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
-import { GET_CURRENT_USER } from '../../requests';
-import Spinner from '../Spinner'
-import { setAxiosInterceptors } from '../../helpers'
+import { GET_CURRENT_USER } from 'requests';
+import Spinner from './shared/Spinner'
+import { setAxiosInterceptors } from 'helpers'
 
 function authToken() {
   const params = queryString.parse(window.location.search);
