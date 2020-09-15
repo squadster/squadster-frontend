@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
@@ -18,16 +18,16 @@ import {
   Container,
   Button,
 } from '@material-ui/core';
-import SquadsStyles from '../../assets/jss/styles/Squads.styles.jsx'
+import SquadsStyles from './Squads.styles'
 import SearchIcon from '@material-ui/icons/Search'
 import { useQuery } from '@apollo/react-hooks'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import LastPageIcon from '@material-ui/icons/LastPage'
-import Spinner from '../Spinner.jsx'
+import Spinner from '../shared/Spinner'
 import { useSelector } from 'react-redux'
-import { GET_SQUADS } from '../../requests'
-import SendRequestIcon from './SendRequestIcon'
+import { GET_SQUADS } from '../../../../requests'
+import SendRequestIcon from './components/SendRequestIcon'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
@@ -116,14 +116,14 @@ export default function Squads() {
     setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
   }
 
-  const deleteRequest = (squad, userRequest) => {
+  const deleteRequest = useCallback((squad, userRequest) => {
     const index = squads.indexOf(squad)
     squad.requests = squad.requests.filter((request => request !== userRequest))
     squads[index] = squad
     setSquads(squads)
-  }
+  }, [squads])
 
-  const pushRequest = (squad, userRequest) => {
+  const pushRequest = useCallback((squad, userRequest) => {
     squads.forEach(squad => {
       squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
     })
@@ -132,7 +132,7 @@ export default function Squads() {
     squad.requests.push(userRequest)
     squads[index] = squad
     setSquads(squads)
-  }
+  }, [squads])
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
 

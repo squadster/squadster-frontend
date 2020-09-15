@@ -1,19 +1,19 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
-import Navbar from './Navbar'
-import Squad from './squad_page/Squad'
-import PrivateRoute from './PrivateRoute'
-import AuthCallback from "./auth/AuthCallback.jsx"
-import Squads from "./squads_page/Squads.jsx"
-import About from "./About.jsx"
+import Navbar from './components/Navbar/Navbar'
+import Squad from './components/Squad/Squad'
+import PrivateRoute from './components/PrivateRoute'
+import AuthCallback from "./components/AuthCallback.jsx"
+import Squads from "./components/Squads/Squads.jsx"
+import About from "./components/About.jsx"
 import { useSelector, useDispatch } from 'react-redux'
-import { GET_CURRENT_USER } from '../requests'
+import { GET_CURRENT_USER } from 'requests'
 import { useQuery } from '@apollo/react-hooks'
-import Spinner from './Spinner'
-import { setCurrentUser } from '../actions'
-import { setAxiosInterceptors, logout } from '../helpers'
-import NewSquad from "./NewSquad"
-import Landing from './Landing'
+import Spinner from './components/shared/Spinner'
+import { setCurrentUser } from 'actions'
+import { setAxiosInterceptors, logout } from 'helpers'
+import NewSquad from "./components/NewSquad/NewSquad"
+import Landing from './components/Landing'
 
 export default function App() {
   setAxiosInterceptors();

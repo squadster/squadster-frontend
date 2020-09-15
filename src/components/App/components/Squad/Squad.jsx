@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import SquadPageContent from './SquadPageContent'
+import SquadPageContent from './components/SquadPageContent/SquadPageContent'
 
 
 export default function Squad() {

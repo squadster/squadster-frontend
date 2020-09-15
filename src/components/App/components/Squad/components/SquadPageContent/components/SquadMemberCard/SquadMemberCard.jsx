@@ -1,9 +1,9 @@
 import React from 'react'
 import { Paper, Avatar, Typography, IconButton, Tooltip } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import SquadMemberCardStyles from '../../assets/jss/styles/squad_page/SquadMemberCard.styles'
+import SquadMemberCardStyles from './SquadMemberCard.styles'
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled'
-import RoleChip from './RoleChip'
+import RoleChip from './components/RoleChip/RoleChip'
 
 const useStyles = makeStyles(SquadMemberCardStyles)
 

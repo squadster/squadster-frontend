@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux';
 import { Button, Toolbar, AppBar, IconButton, Collapse } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import AppStyles from '../assets/jss/styles/App.styles.jsx'
+import AppStyles from '../../App.styles'
 import SVG from 'react-inlinesvg';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_URL } from '../constants'
-import { isMobile, logout } from '../helpers'
-import NavbarLogo from './NavbarLogo'
-import { Redirect } from 'react-router-dom'
+import { API_URL } from '../../../../constants'
+import { isMobile, logout } from 'helpers'
+import NavbarLogo from './components/NavbarLogo'
 
 const useStyles = makeStyles(AppStyles);
 

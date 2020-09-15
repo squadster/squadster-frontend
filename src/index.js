@@ -5,9 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 
 import './assets/css/default.styles.css';
-import theme from "./assets/jss/theme";
+import theme from "./theme";
 import store from "./store/index";
-import App from "./components/App";
+import App from "./components/App/App";
 import { apolloClient } from './helpers';
 import { ApolloProvider } from 'react-apollo'
 
