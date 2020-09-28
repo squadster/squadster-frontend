@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 import Squad from './components/Squad/Squad'
 import PrivateRoute from './components/PrivateRoute'
 import AuthCallback from "./components/AuthCallback.jsx"
@@ -67,6 +68,7 @@ export default function App() {
           </Switch>
         </AlertContext.Provider>
       </div>
+      <Footer />
     </Router>
   );
 }

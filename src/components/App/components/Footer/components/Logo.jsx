@@ -9,7 +9,6 @@ const StyledImage = styled.img`
     }
 
     width: 80px;
-    position: absolute;
     left: 20px;
     top: 14px;
     transform: rotate(100deg);
@@ -17,6 +16,6 @@ const StyledImage = styled.img`
     z-index: 1
 `
 
-export default function NavbarLogo(props) {
-  return <StyledImage onClick={props.onClick} src='icons/squad_spinner_white.svg'/>
+export default function Logo(props) {
+  return <StyledImage onClick={props.onClick} src='icons/squad_spinner.svg'/>
 }
