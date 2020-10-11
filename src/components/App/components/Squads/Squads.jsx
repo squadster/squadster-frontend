@@ -31,6 +31,8 @@ import SendRequestIcon from './components/SendRequestIcon'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
+import CommanderSquadConfig from './components/CommanderSquadConfig'
+import MemberSquadConfig from './components/MemberSquadConfig'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -216,7 +218,7 @@ export default function Squads() {
               <TableRow>
                 <TableCell className={classes.TableCell}>Номер взвода</TableCell>
                 <TableCell className={classes.TableCell}>Командир</TableCell>
-                { !user.squad ? <TableCell className={classes.TableCell}></TableCell> : null}
+                <TableCell className={classes.TableCell}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -224,21 +226,28 @@ export default function Squads() {
               (rowsPerPage > 0
                 ? squads.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : squads
-              ).map((squad, i) => (
-                <TableRow key={i}>
+              ).map((squad, i) => {
+                const isUsersSquad = user.squad.id === squad.id
+                const isUserCommander = user.squadMember.role === 'commander'
+                return <TableRow key={i}>
                   <TableCell>{squad.squadNumber}</TableCell>
                   <TableCell>{commanderName(squad)}</TableCell>
-                  {!user.squad ?
-                    <TableCell>
+                  <TableCell>
+                  {
+                    !user.squad &&
                       <SendRequestIcon setAlertState={setAlertState}
                                        deleteRequest={deleteRequest}
                                        pushRequest={pushRequest}
                                        squad={squad}
                                        user={user} />
-                    </TableCell>
-                    : null }
+                   
+                  }
+                  {
+                   isUsersSquad && (isUserCommander ? <CommanderSquadConfig /> : <MemberSquadConfig />)
+                  }
+                  </TableCell>
                 </TableRow>
-              ))
+              })
             }
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

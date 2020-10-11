@@ -38,11 +38,9 @@ export default function Navbar() {
                 <Button className={classes.navbarLink}>Мой взвод</Button>
               </Link> : ''
               }
-              {
-                !squad && <Link to='/squads'>
-                  <Button className={classes.navbarLink}>Взводы</Button>
-                </Link>
-              }
+              <Link to='/squads'>
+                <Button className={classes.navbarLink}>Взводы</Button>
+              </Link>
               <Link to='/about'>
                 <Button className={classes.navbarLink}>О сайте</Button>
               </Link>
