@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, List, ListItem, ListItemAvatar, Divider, IconButton, ListItemText, ButtonGroup, DialogTitle, Dialog, DialogContent, Button } from '@material-ui/core'
 import { useMutation } from '@apollo/react-hooks'
 import { DELETE_SQUAD_REQUEST, APPROVE_SQUAD_REQUEST } from 'requests'
-import { deleteSquadRequest, approveSquadRequest } from 'actions'
+import { deleteSquadRequest, approveSquadRequest } from 'actions/current_user_actions'
 import { useDispatch } from 'react-redux'
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';

@@ -88,6 +88,7 @@ const GET_SQUADS = gql`
     squads {
       id
       squadNumber
+      linkInvitationsEnabled
       members {
         role
         user {
@@ -189,6 +190,19 @@ const UPDATE_SQUAD_MEMBERS = gql`mutation updateSquadMembers($members: SquadMemb
   }
 }`
 
+const DELETE_SQUAD = gql(`mutation deleteSquad($id: Int) {
+  deleteSquad(id: $id) { id }
+}`)
+
+const UPDATE_LINK_OPTION = gql`mutation updateSquad($id: Int, $linkOption: String) {
+  updateSquad(
+    id: $id,
+    linkInvitationsEnabled: $linkOption
+  ) {
+    linkInvitationsEnabled
+  }
+}`
+
 export {
   GET_CURRENT_USER,
   GET_SQUADS,
@@ -199,5 +213,7 @@ export {
   UPDATE_SQUAD_MEMBER,
   DELETE_SQUAD_REQUEST,
   CREATE_SQUAD_REQUEST,
-  UPDATE_SQUAD_MEMBERS
+  UPDATE_SQUAD_MEMBERS,
+  DELETE_SQUAD,
+  UPDATE_LINK_OPTION
 }

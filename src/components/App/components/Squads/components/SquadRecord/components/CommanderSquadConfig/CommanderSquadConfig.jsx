@@ -2,10 +2,19 @@ import React, { useState } from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import SettingsIcon from '@material-ui/icons/Settings'
-import Alert from '@material-ui/lab/Alert'
+import './CommanderSquadConfig.scss'
 
-export default function CommanderSquadConfig({deleteSquad, patchSquad}) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+export default function CommanderSquadConfig({squad}) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const linkOption = squad.linkInvitationEnabled
+
+  const deleteSquad = () => {
+
+  }
+
+  const patchSquad = (params) => {
+    
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,11 +31,12 @@ export default function CommanderSquadConfig({deleteSquad, patchSquad}) {
         id="commander-squad-config"
         anchorEl={anchorEl}
         keepMounted
+        className='commander-squad-menu'
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Включить доступ по ссылке</MenuItem>
-        <MenuItem onClick={handleClose}><Alert severity="error" variant='filled'>Расформировать взвод</Alert></MenuItem>
+        <MenuItem onClick={}>{linkOption ? 'Выключить' : 'Включить'} доступ по ссылке</MenuItem>
+        <MenuItem className='commander-squad-menu__danger-item' onClick={handleClose}>Расформировать взвод</MenuItem>
       </Menu>
     </div>
   );

@@ -11,7 +11,7 @@ import RequestsModal from './components/RequestsModal/RequestsModal'
 import SquadPageContentStyles from './SquadPageContent.styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
-import { deleteSquadMember, updateSquadMember, setSquadMembers } from 'actions'
+import { deleteSquadMember, updateSquadMember, setSquadMembers } from 'actions/current_user_actions'
 import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from 'requests'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 

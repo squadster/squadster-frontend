@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import EmailIcon from '@material-ui/icons/Email';
+import EmailIcon from '@material-ui/icons/Email'
 import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend'
 import { useMutation } from '@apollo/react-hooks'
-import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from '../../../../../requests'
+import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from 'requests'
+import { useDispatch } from 'react-redux'
+import { deleteRequest, pushRequest } from 'actions/squads_actions'
 
 function requestSent(user, requests) {
   return requests.find((request => request.user.id === user.id))
 }
 
-export default function SendRequestIcon({user, squad, setAlertState, deleteRequest, pushRequest}) {
+export default function SendRequestIcon({user, squad, setAlertState}) {
+  const dispatch = useDispatch()
   const userRequest = requestSent(user, squad.requests)
   const [deleteSquadRequestQuery, { loading: deleteSquadRequestLoading, data: deleteSquadRequestData }] = useMutation(DELETE_SQUAD_REQUEST)
   const [createSquadRequestQuery, { loading: createSquadRequestLoading, data: createSquadRequestData }] = useMutation(CREATE_SQUAD_REQUEST)
@@ -29,19 +32,19 @@ export default function SendRequestIcon({user, squad, setAlertState, deleteReque
     if (deletionInProcess)
       if (!deleteSquadRequestLoading && deleteSquadRequestData) {
         setDeletionInProcess(false)
-        deleteRequest(squad, userRequest)
+        dispatch(deleteRequest(squad, userRequest))
         setAlertState({ message: `Запрос на вступление в отряд ${squad.squadNumber} отменен!`, open: true})
       }
-  }, [deleteSquadRequestLoading, deleteSquadRequestData, deleteRequest, setAlertState, userRequest, squad, deletionInProcess])
+  }, [deleteSquadRequestLoading, deleteSquadRequestData, setAlertState, dispatch, userRequest, squad, deletionInProcess])
 
   useEffect(() => {
     if (creationInProcess)
       if (!createSquadRequestLoading && createSquadRequestData) {
         setCreationInProcess(false)
-        pushRequest(squad, {id: createSquadRequestData.createSquadRequest.id, user: {id: user.id}})
+        dispatch(pushRequest(squad, {id: createSquadRequestData.createSquadRequest.id, user: {id: user.id}}))
         setAlertState({message: `Запрос на вступление в отряд ${squad.squadNumber} отправлен!`, open: true })
       }
-  }, [createSquadRequestLoading, createSquadRequestData, creationInProcess, pushRequest, user.id, setAlertState, squad])
+  }, [createSquadRequestLoading, createSquadRequestData, creationInProcess, dispatch, user.id, setAlertState, squad])
 
  
   if (creationInProcess || deletionInProcess)

@@ -11,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { SET_SQUAD } from 'requests';
 import { useSelector } from 'react-redux';
-import { setSquad } from 'actions';
+import { setSquad } from 'actions/current_user_actions';
 import { useDispatch } from 'react-redux'
 
 

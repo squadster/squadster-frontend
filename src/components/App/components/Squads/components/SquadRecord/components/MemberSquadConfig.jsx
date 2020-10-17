@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import SettingsIcon from '@material-ui/icons/Settings'
 
-export default function CommanderSquadConfig({leaveSquad, squad}) {
+export default function CommanderSquadConfig({squad}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {

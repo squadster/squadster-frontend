@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GET_CURRENT_USER } from 'requests'
 import { useQuery } from '@apollo/react-hooks'
 import Spinner from './components/shared/Spinner'
-import { setCurrentUser } from 'actions'
+import { setCurrentUser } from 'actions/current_user_actions'
 import { setAxiosInterceptors, logout } from 'helpers'
 import NewSquad from "./components/NewSquad/NewSquad"
 import Landing from './components/Landing'

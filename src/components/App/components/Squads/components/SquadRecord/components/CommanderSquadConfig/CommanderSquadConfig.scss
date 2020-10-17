@@ -1,0 +1,11 @@
+.commander-squad-menu {
+  ul {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  &__danger-item {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}
