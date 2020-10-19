@@ -39,7 +39,7 @@ const currentUserReducer = (state, action) => {
       state.squad.members = action.members
       return state
     default:
-      return null
+      return state ? state : null
   }
 }
 

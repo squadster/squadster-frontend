@@ -9,9 +9,9 @@ const commanderName = (squad) => {
   return commander ? `${commander.user.lastName} ${commander.user.firstName}` : '';
 }
 
-export default function SquadRecord({user, squad, deleteRequest, pushRequest, setAlertState}) {
-  const isUsersSquad = user.squad.id === squad.id
-  const isUserCommander = user.squadMember.role === 'commander'
+export default function SquadRecord({user, squad, setAlertState}) {
+  const isUsersSquad = user.squad && user.squad.id === squad.id
+  const isUserCommander = user.squadMember && user.squadMember.role === 'commander'
 
   return <TableRow>
     <TableCell>{squad.squadNumber}</TableCell>
@@ -20,8 +20,6 @@ export default function SquadRecord({user, squad, deleteRequest, pushRequest, se
     {
       !user.squad &&
         <SendRequestIcon setAlertState={setAlertState}
-                         deleteRequest={deleteRequest}
-                         pushRequest={pushRequest}
                          squad={squad}
                          user={user} />
      

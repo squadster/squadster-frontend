@@ -35,7 +35,7 @@ export default function CommanderSquadConfig({squad}) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={}>{linkOption ? 'Выключить' : 'Включить'} доступ по ссылке</MenuItem>
+        <MenuItem onClick={patchSquad}>{linkOption ? 'Выключить' : 'Включить'} доступ по ссылке</MenuItem>
         <MenuItem className='commander-squad-menu__danger-item' onClick={handleClose}>Расформировать взвод</MenuItem>
       </Menu>
     </div>
