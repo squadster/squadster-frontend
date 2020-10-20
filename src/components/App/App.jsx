@@ -68,7 +68,7 @@ export default function App() {
           </Switch>
         </AlertContext.Provider>
       </div>
-      <Footer />
+      <Footer style={{position: 'initial'}}/>
     </Router>
   );
 }
