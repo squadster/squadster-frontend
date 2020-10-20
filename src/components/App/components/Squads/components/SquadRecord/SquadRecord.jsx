@@ -9,9 +9,11 @@ const commanderName = (squad) => {
   return commander ? `${commander.user.lastName} ${commander.user.firstName}` : '';
 }
 
-export default function SquadRecord({user, squad, setAlertState}) {
+export default function SquadRecord({user, squad}) {
   const isUsersSquad = user.squad && user.squad.id === squad.id
   const isUserCommander = user.squadMember && user.squadMember.role === 'commander'
+  console.log(user)
+  console.log(squad)
 
   return <TableRow>
     <TableCell>{squad.squadNumber}</TableCell>
@@ -19,9 +21,7 @@ export default function SquadRecord({user, squad, setAlertState}) {
     <TableCell>
     {
       !user.squad &&
-        <SendRequestIcon setAlertState={setAlertState}
-                         squad={squad}
-                         user={user} />
+        <SendRequestIcon squad={squad} user={user} />
      
     }
     {

@@ -18,11 +18,11 @@ export default function ConfirmationModal(props) {
     </DialogContentText>
   </DialogContent>
   <DialogActions>
-    <Button onClick={() => handleClose(true)} variant='contained' color="secondary">
-      Да
-    </Button>
     <Button onClick={() => handleClose(false)} variant='text' color="primary" autoFocus>
       Нет
+    </Button>
+    <Button onClick={() => handleClose(true)} variant='contained' color="secondary">
+      Да
     </Button>
   </DialogActions>
 </Dialog>

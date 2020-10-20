@@ -2,6 +2,11 @@ const squadsReducer = (state, action) => {
   const { userRequest, squad } = action
   
   switch (action.type) {
+    case 'SET SQUAD':
+      console.log(action.squad)
+      state.push(action.squad)
+
+      return state
     case 'SET SQUADS':
       return action.squads
     case 'DELETE REQUEST':
@@ -16,6 +21,13 @@ const squadsReducer = (state, action) => {
       squad.requests.push(userRequest)
       state[state.indexOf(squad)] = squad
       return state
+    case 'UPDATE SQUAD':
+      const oldSquadIndex = state.indexOf(squad)
+      state[oldSquadIndex] = { ...state[oldSquadIndex], ...action.params }
+
+      return state
+    case 'DELETE SQUAD':
+      return state.filter((sq) => sq.id !== squad.id)
     default:
       return state ? state : []
   }

@@ -10,4 +10,12 @@ const pushRequest = (squad, userRequest) => {
   return { type: 'PUSH REQUEST', squad: squad, userRequest: userRequest }
 }
 
-export { setSquads, deleteRequest, pushRequest }
+const deleteSquad = (squad) => {
+  return { type: 'DELETE SQUAD', squad: squad }
+}
+
+const updateSquad = (squad, params) => {
+  return { type: 'UPDATE SQUAD', squad: squad, params: params }
+}
+
+export { setSquads, deleteRequest, pushRequest, deleteSquad, updateSquad }

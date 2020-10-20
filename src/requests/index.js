@@ -111,6 +111,7 @@ const SET_SQUAD = gql`
     createSquad(squadNumber: $squad_number, classDay: $class_day) {
       advertisment
       classDay
+      id
       squadNumber
       requests {
         id
@@ -194,7 +195,7 @@ const DELETE_SQUAD = gql(`mutation deleteSquad($id: Int) {
   deleteSquad(id: $id) { id }
 }`)
 
-const UPDATE_LINK_OPTION = gql`mutation updateSquad($id: Int, $linkOption: String) {
+const UPDATE_LINK_OPTION = gql`mutation updateSquad($id: Int, $linkOption: Boolean) {
   updateSquad(
     id: $id,
     linkInvitationsEnabled: $linkOption

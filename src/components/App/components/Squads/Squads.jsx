@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Paper, Table, Snackbar, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, Container, Button } from '@material-ui/core';
+import { Paper, Table, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, Container, Button } from '@material-ui/core';
 import SquadsStyles from './Squads.styles'
 import SearchIcon from '@material-ui/icons/Search'
 import { useQuery } from '@apollo/react-hooks'
@@ -8,13 +8,10 @@ import Spinner from '../shared/Spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSquads } from 'actions/squads_actions'
 import { GET_SQUADS } from 'requests'
-import MuiAlert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom';
 import SquadRecord from './components/SquadRecord/SquadRecord'
 import TablePaginationActions from './components/TablePaginationActions'
 import UserWithoutSquadNote from './components/UserWithoutSquadNote'
-
-function Alert(props) { return <MuiAlert elevation={6} variant="filled" {...props} /> }
 
 const useStyles = makeStyles(SquadsStyles)
 const labelDisplayedRows = ({from, to, count}) => `${from}-${to === -1 ? count : to} из ${count}`
@@ -24,7 +21,6 @@ export default function Squads() {
   const dispatch = useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [alertState, setAlertState] = useState({open: false})
 
   const user = useSelector(state => state.currentUser)
   const squads = useSelector(state => state.squads)
@@ -48,11 +44,6 @@ export default function Squads() {
 
   return (
     <Container>
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={alertState.open} onClose={() => setAlertState({open: false, message: alertState.message})}>
-        <Alert onClose={() => setAlertState({open: false, message: alertState.message})} severity="success">
-          {alertState.message}
-        </Alert>
-      </Snackbar>
       { user.squad ?
       <Paper className="p-3 mt-4">
         <Typography variant='h4' component='h1'>
@@ -100,7 +91,7 @@ export default function Squads() {
                 ? squads.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : squads
               ).map((squad, i) => {
-                return <SquadRecord key={i} user={user} squad={squad} setAlertState={setAlertState} />
+                return <SquadRecord key={i} user={user} squad={squad} />
               })
             }
             {emptyRows > 0 && (
