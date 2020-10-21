@@ -18,6 +18,7 @@ import Landing from './components/Landing'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Snackbar } from '@material-ui/core'
 import { AlertContext } from 'contexts'
+import Profile from './components/Profile/Profile'
 
 function Alert(props) { return <MuiAlert elevation={6} variant="filled" {...props} /> }
 
@@ -26,7 +27,7 @@ export default function App() {
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
   const { loading, data } = useQuery(GET_CURRENT_USER, { skip: !localStorage.authToken, onError: () => logout(dispatch) } )
-  
+
   // Alert state can be moved to the separate hook it's not necessary for now
   // as we have one global Snackbar
   //
@@ -62,6 +63,7 @@ export default function App() {
             <PrivateRoute exact path="/squads" component={Squads} />
             <PrivateRoute exact path="/my_squad" component={Squad} />
             <PrivateRoute exact path="/new_squad" component={NewSquad} />
+            <PrivateRoute exact path="/profile" component={Profile} />
             <Route path="/auth_callback" component={AuthCallback} />
             <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
             <Redirect from="*" to="/" />
