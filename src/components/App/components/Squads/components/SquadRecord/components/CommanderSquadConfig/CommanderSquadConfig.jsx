@@ -26,13 +26,15 @@ export default function CommanderSquadConfig({squad}) {
     setAnchorEl(null)
   };
 
-  const handleConfirmSquadDeletion = () => {
+  const handleConfirmSquadDeletion = (confirmed) => {
     setOpen(false)
-    deleteSquadQuery({ variables: { id: squad.id} })
     
-    handleClose()
-    showAlert({message: 'Ваш отряд был распущен!'})
-    dispatch(deleteSquad(squad))
+    if (confirmed) {
+      deleteSquadQuery({ variables: { id: squad.id} })
+      showAlert({message: 'Ваш отряд был распущен!'})
+      dispatch(deleteSquad(squad))
+      handleClose()
+    }
   }
 
   const patchSquad = () => {

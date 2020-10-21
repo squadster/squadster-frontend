@@ -3,7 +3,6 @@ const squadsReducer = (state, action) => {
   
   switch (action.type) {
     case 'SET SQUAD':
-      console.log(action.squad)
       state.push(action.squad)
 
       return state
@@ -27,7 +26,10 @@ const squadsReducer = (state, action) => {
 
       return state
     case 'DELETE SQUAD':
-      return state.filter((sq) => sq.id !== squad.id)
+      if (squad)
+        return state.filter((sq) => sq.id !== squad.id)
+      else
+        return state
     default:
       return state ? state : []
   }

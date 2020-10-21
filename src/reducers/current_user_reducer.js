@@ -34,9 +34,7 @@ const currentUserReducer = (state, action) => {
       return state
     case 'SET SQUAD':
       state.squad = action.squad
-      console.log(action.squad)
       state.squadMember = action.squad.members.find((member) => member.user.id === state.id)
-      console.log(state.squadMember)
 
       return state
     case 'SET SQUAD MEMBERS':
@@ -44,6 +42,7 @@ const currentUserReducer = (state, action) => {
       return state
     case 'DELETE SQUAD':
       state.squad = null
+      state.squadMember = null
       return state
     default:
       return state ? state : null

@@ -14,6 +14,7 @@ const GET_CURRENT_USER = gql`
       vkUrl
       birthDate
       squadMember {
+        id
         role
         queueNumber
         squad {

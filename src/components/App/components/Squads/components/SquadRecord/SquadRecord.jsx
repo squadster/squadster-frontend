@@ -12,8 +12,6 @@ const commanderName = (squad) => {
 export default function SquadRecord({user, squad}) {
   const isUsersSquad = user.squad && user.squad.id === squad.id
   const isUserCommander = user.squadMember && user.squadMember.role === 'commander'
-  console.log(user)
-  console.log(squad)
 
   return <TableRow>
     <TableCell>{squad.squadNumber}</TableCell>
