@@ -43,57 +43,58 @@ export default function Navbar() {
         { isMobile ?
           <IconButton onClick={() => setExpanded(!expanded)} className={classes.collapsedButton} edge="end"  color="inherit">
             <MenuIcon />
-          </IconButton> : ''
+          </IconButton>
+          :
+          <Collapse in={expanded}>
+            {currentUser ? (
+              <Toolbar className={classes.toolbar}>
+                { open ?
+                  <IconButton onClick={handleClick} >
+                    <MoreHorizIcon className={classes.moreHorizIcon}/>
+                  </IconButton>
+                  :
+                  <IconButton onClick={handleClick}>
+                    <div className={classes.avatarBorder}>
+                      <Avatar
+                        alt={currentUser.id}
+                        src={currentUser.imageUrl}
+                        className={classes.avatar}
+                      />
+                    </div>
+                    <ExpandMoreSharpIcon/>
+                  </IconButton>
+                }
+                <Popper open={open} anchorEl={anchorEl} role={undefined} transition disablePortal>
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClose} >
+                          <MenuList autoFocusItem={open} id="menu-list-grow" className={classes.paperMenu}>
+                            <MenuItem className={classes.menuItem} component={Link} to='/profile'>Профиль</MenuItem>
+                            { squad &&
+                              <MenuItem className={classes.menuItem} component={Link} to='/my-squad'>Мой взвод</MenuItem> }
+                            { !squad &&
+                              <MenuItem className={classes.menuItem} component={Link} to='/squads'>Взводы</MenuItem> }
+                            <MenuItem onClick={() => logout(dispatch)}>Выйти</MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </Toolbar>
+              ) : (
+              <Toolbar className={classes.toolbar}>
+                <Button onClick={() => window.location.href = `${API_URL}/api/auth/keks`} color="inherit">
+                  <SVG src='VK_Blue_Logo.svg' width='50px'/>
+                  Войти
+                </Button>
+              </Toolbar>
+              )}
+          </Collapse>
         }
-        <Collapse in={expanded}>
-          {currentUser ? (
-            <Toolbar className={classes.toolbar}>
-              { open ?
-                <IconButton onClick={handleClick} >
-                  <MoreHorizIcon className={classes.moreHorizIcon}/>
-                </IconButton>
-                :
-                <IconButton onClick={handleClick}>
-                  <div className={classes.avatarBorder}>
-                    <Avatar
-                      alt={currentUser.id}
-                      src={currentUser.imageUrl}
-                      className={classes.avatar}
-                    />
-                  </div>
-                  <ExpandMoreSharpIcon/>
-                </IconButton>
-              }
-              <Popper open={open} anchorEl={anchorEl} role={undefined} transition disablePortal>
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose} >
-                        <MenuList autoFocusItem={open} id="menu-list-grow" className={classes.paperMenu}>
-                          <MenuItem className={classes.menuItem} component={Link} to='/profile'>Профиль</MenuItem>
-                          { squad &&
-                            <MenuItem className={classes.menuItem} component={Link} to='/my-squad'>Мой взвод</MenuItem> }
-                          { !squad &&
-                            <MenuItem className={classes.menuItem} component={Link} to='/squads'>Взводы</MenuItem> }
-                          <MenuItem onClick={() => logout(dispatch)}>Выйти</MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-            </Toolbar>
-            ) : (
-            <Toolbar className={classes.toolbar}>
-              <Button onClick={() => window.location.href = `${API_URL}/api/auth/keks`} color="inherit">
-                <SVG src='VK_Blue_Logo.svg' width='50px'/>
-                Войти
-              </Button>
-            </Toolbar>
-            )}
-        </Collapse>
       </AppBar>
     </div>
   );
