@@ -1,183 +1,49 @@
-import React, { useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import {
-  Paper,
-  Table,
-  Snackbar,
-  Typography,
-  TableHead,
-  InputBase,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableContainer,
-  TableFooter,
-  TablePagination,
-  IconButton,
-  Container,
-  Button,
-} from '@material-ui/core';
+import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { Paper, Table, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, Container, Button } from '@material-ui/core';
 import SquadsStyles from './Squads.styles'
 import SearchIcon from '@material-ui/icons/Search'
 import { useQuery } from '@apollo/react-hooks'
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
-import FirstPageIcon from '@material-ui/icons/FirstPage'
-import LastPageIcon from '@material-ui/icons/LastPage'
 import Spinner from '../shared/Spinner'
-import { useSelector } from 'react-redux'
-import { GET_SQUADS } from '../../../../requests'
-import SendRequestIcon from './components/SendRequestIcon'
-import MuiAlert from '@material-ui/lab/Alert'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSquads } from 'actions/squads_actions'
+import { GET_SQUADS } from 'requests'
 import { Link } from 'react-router-dom';
-import SVG from 'react-inlinesvg';
+import SquadRecord from './components/SquadRecord/SquadRecord'
+import TablePaginationActions from './components/TablePaginationActions'
+import UserWithoutSquadNote from './components/UserWithoutSquadNote'
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-
-const useStyles = makeStyles(SquadsStyles);
-
-function TablePaginationActions(props) {
-  const classes = useStyles();
-
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
-
-  const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
-
-  const handleBackButtonClick = event => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = event => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = event => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <div className={classes.paginationAction}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-}
-
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
-
-const commanderName = (squad) => {
-  let commander = squad.members.find((m) => m.role === 'commander');
-  return commander ? `${commander.user.lastName} ${commander.user.firstName}` : '';
-}
+const useStyles = makeStyles(SquadsStyles)
+const labelDisplayedRows = ({from, to, count}) => `${from}-${to === -1 ? count : to} из ${count}`
 
 export default function Squads() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [squads, setSquads] = useState([]);
-  const user = useSelector(state => state.currentUser)
+  const dispatch = useDispatch()
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { loading, error, data } = useQuery(GET_SQUADS, {onCompleted: () => setSquads(data.squads)});
+  const user = useSelector(state => state.currentUser)
+  const squads = useSelector(state => state.squads)
+
+  const { loading, error, data } = useQuery(GET_SQUADS, { onCompleted: () => dispatch(setSquads(data.squads)) });
   const findSquad = ({ target: { value } }) => {
-    if (value === '') return  setSquads(prevSquads => data.squads);
+    if (value === '') return  setSquads(() => data.squads);
     setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
   }
 
-  const deleteRequest = useCallback((squad, userRequest) => {
-    const index = squads.indexOf(squad)
-    squad.requests = squad.requests.filter((request => request !== userRequest))
-    squads[index] = squad
-    setSquads(squads)
-  }, [squads])
-
-  const pushRequest = useCallback((squad, userRequest) => {
-    squads.forEach(squad => {
-      squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
-    })
-
-    const index = squads.indexOf(squad)
-    squad.requests.push(userRequest)
-    squads[index] = squad
-    setSquads(squads)
-  }, [squads])
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
+  const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const labelDisplayedRows = ({from, to, count}) => {
-    return `${from}-${to === -1 ? count : to} из ${count}`
-  };
-
-  const userWithoutSquadNote = () => {
-    return (
-      <Paper className="p-3 mt-4">
-        <div className='row'>
-          <div className="col-sm-2 text-center">
-            <SVG className={classes.squadIcon} src='icons/squad_spinner.svg'/>
-          </div>
-          <div className='col-sm-10'>
-            <Typography variant='h5' className={classes.typography}>
-              Вы пока не вступили во взвод, создайте новый взвод или отправьте заявку в существующий!
-            </Typography>
-          </div>
-        </div>
-      </Paper>
-    )
-  }
-
-  const [alertState, setAlertState] = useState({open: false})
 
   if (loading) return <Spinner />;
   if (error) return(<div>{error}</div>)
 
   return (
     <Container>
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={alertState.open} onClose={() => setAlertState({open: false, message: alertState.message})}>
-        <Alert onClose={() => setAlertState({open: false, message: alertState.message})} severity="success">
-          {alertState.message}
-        </Alert>
-      </Snackbar>
       { user.squad ?
       <Paper className="p-3 mt-4">
         <Typography variant='h4' component='h1'>
@@ -187,7 +53,7 @@ export default function Squads() {
           Вы уже состоите во взводе, поэтому возможность отправки заявок заблокирована.
         </Typography>
       </Paper>
-      : userWithoutSquadNote() }
+      : <UserWithoutSquadNote /> }
       <Paper className={'p-3 ' + (user.squad ? 'mt-5' : 'mt-4')}>
         <div className={classes.searchArea}>
           <div className="col-auto mr-auto">
@@ -216,7 +82,7 @@ export default function Squads() {
               <TableRow>
                 <TableCell className={classes.TableCell}>Номер взвода</TableCell>
                 <TableCell className={classes.TableCell}>Командир</TableCell>
-                { !user.squad ? <TableCell className={classes.TableCell}></TableCell> : null}
+                <TableCell className={classes.TableCell}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -224,21 +90,9 @@ export default function Squads() {
               (rowsPerPage > 0
                 ? squads.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : squads
-              ).map((squad, i) => (
-                <TableRow key={i}>
-                  <TableCell>{squad.squadNumber}</TableCell>
-                  <TableCell>{commanderName(squad)}</TableCell>
-                  {!user.squad ?
-                    <TableCell>
-                      <SendRequestIcon setAlertState={setAlertState}
-                                       deleteRequest={deleteRequest}
-                                       pushRequest={pushRequest}
-                                       squad={squad}
-                                       user={user} />
-                    </TableCell>
-                    : null }
-                </TableRow>
-              ))
+              ).map((squad, i) => {
+                return <SquadRecord key={i} user={user} squad={squad} />
+              })
             }
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

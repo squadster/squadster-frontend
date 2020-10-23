@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import { setCurrentUser } from 'actions';
+import { setCurrentUser } from 'actions/current_user_actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_CURRENT_USER } from 'requests';

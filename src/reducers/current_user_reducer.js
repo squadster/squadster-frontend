@@ -33,13 +33,28 @@ const currentUserReducer = (state, action) => {
       state.squad.members.push(action.squadMember)
       return state
     case 'SET SQUAD':
-      state.squad = action.squad;
+      state.squad = action.squad
+      state.squadMember = action.squad.members.find((member) => member.user.id === state.id)
+
       return state
     case 'SET SQUAD MEMBERS':
       state.squad.members = action.members
       return state
+    case 'DELETE SQUAD':
+      state.squad = null
+      state.squadMember = null
+      return state
+    case 'UPDATE SQUAD':
+      if (state.squad.id === action.squad.id) {
+        const updatedSquad = { ...state.squad, ...action.params }
+        state.squad = updatedSquad
+        
+        return state
+      } else {
+        return state
+      }
     default:
-      return null
+      return state ? state : null
   }
 }
 

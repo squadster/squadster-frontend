@@ -10,6 +10,13 @@ const SquadPageContent = {
     marginBottom: 'auto'
   },
 
+  configButton: {
+    width: '56px',
+    height: '56px',
+    paddingBottom: '16px',
+    color: 'black'
+  },
+
   squadTitle: {
     height: 'max-content',
     width: 'max-content',
