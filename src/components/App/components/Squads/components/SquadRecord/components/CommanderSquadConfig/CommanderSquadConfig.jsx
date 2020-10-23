@@ -6,7 +6,7 @@ import './CommanderSquadConfig.scss'
 import { UPDATE_LINK_OPTION, DELETE_SQUAD } from 'requests'
 import { useMutation } from 'react-apollo'
 import { useDispatch } from 'react-redux'
-import { deleteSquad, updateSquad } from 'actions/squads_actions' 
+import { deleteSquad, updateSquad } from 'actions/squads_actions'
 import ConfirmationModal from 'components/App/components/shared/ConfirmationModal'
 import { AlertContext } from 'contexts'
 
@@ -28,10 +28,10 @@ export default function CommanderSquadConfig({squad}) {
 
   const handleConfirmSquadDeletion = (confirmed) => {
     setOpen(false)
-    
+
     if (confirmed) {
       deleteSquadQuery({ variables: { id: squad.id} })
-      showAlert({message: 'Ваш отряд был распущен!'})
+      showAlert({message: 'Ваш взвод был распущен!'})
       dispatch(deleteSquad(squad))
       handleClose()
     }

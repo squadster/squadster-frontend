@@ -31,10 +31,10 @@ export default function CommanderSquadConfig({_squad}) {
 
     if (confirmed) {
       deleteSquadMemberQuery({ variables: { id: user.squadMember.id } })
-    
+
       handleClose()
       dispatch(deleteSquad())
-      showAlert({message: "Вы вышли из отряда"})
+      showAlert({message: "Вы вышли из взвода"})
     }
   }
 

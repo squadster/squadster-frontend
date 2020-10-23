@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { DELETE_SQUAD_REQUEST, CREATE_SQUAD_REQUEST } from 'requests'
 import { useDispatch } from 'react-redux'
 import { deleteRequest, pushRequest } from 'actions/squads_actions'
-import { AlertContext } from 'contexts'  
+import { AlertContext } from 'contexts'
 
 function requestSent(user, requests) {
   return requests.find((request => request.user.id === user.id))
@@ -36,7 +36,7 @@ export default function SendRequestIcon({user, squad}) {
       if (!deleteSquadRequestLoading && deleteSquadRequestData) {
         setDeletionInProcess(false)
         dispatch(deleteRequest(squad, userRequest))
-        showAlert({ message: `Запрос на вступление в отряд ${squad.squadNumber} отменен!`})
+        showAlert({ message: `Запрос на вступление во взвод  ${squad.squadNumber} отменен!`})
       }
   }, [deleteSquadRequestLoading, deleteSquadRequestData, showAlert, dispatch, userRequest, squad, deletionInProcess])
 
@@ -45,11 +45,11 @@ export default function SendRequestIcon({user, squad}) {
       if (!createSquadRequestLoading && createSquadRequestData) {
         setCreationInProcess(false)
         dispatch(pushRequest(squad, {id: createSquadRequestData.createSquadRequest.id, user: {id: user.id}}))
-        showAlert({message: `Запрос на вступление в отряд ${squad.squadNumber} отправлен!`})
+        showAlert({message: `Запрос на вступление во взвод ${squad.squadNumber} отправлен!`})
       }
   }, [createSquadRequestLoading, createSquadRequestData, creationInProcess, dispatch, user.id, showAlert, squad])
 
- 
+
   if (creationInProcess || deletionInProcess)
     return <div style={{width: '22px', height: '22px'}} className="spinner-border" role="status" ></div>
 
