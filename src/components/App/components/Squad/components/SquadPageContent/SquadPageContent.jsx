@@ -13,7 +13,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { deleteSquadMember, updateSquadMember, setSquadMembers } from 'actions/current_user_actions'
 import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from 'requests'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import MemberSquadConfig from 'components/App/components/Squads/components/SquadRecord/components/MemberSquadConfig'
+import CommanderSquadConfig from 'components/App/components/Squads/components/SquadRecord/components/CommanderSquadConfig/CommanderSquadConfig'
 
 const useStyles = makeStyles(SquadPageContentStyles)
 
@@ -126,11 +128,18 @@ export default function SquadPageContent(props) {
           <Typography variant='h4' className={classes.squadTitle} component='h1'>
             Взвод № {user.squad.squadNumber}
           </Typography>
-          { manage && <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
+          {
+            manage && <><IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
               <Badge badgeContent={requests.length} color="primary">
                 <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
               </Badge>
-            </IconButton>}
+            </IconButton>
+            <IconButton className={classes.configButton}>
+              <CommanderSquadConfig squad={user.squad} />
+            </IconButton>
+            </>
+          }
+          { !manage && <IconButton className={classes.configButton}><MemberSquadConfig squad={user.squad} /></IconButton> }
         </div>
       </div>
       <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
