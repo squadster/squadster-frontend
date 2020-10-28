@@ -87,7 +87,7 @@ export default function Navbar() {
               </Toolbar>
               ) : (
               <Toolbar className={classes.toolbar}>
-                <Button onClick={() => window.location.href = `${API_URL}/api/auth/keks`} color="inherit">
+                <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
                   <SVG src='VK_Blue_Logo.svg' width='50px'/>
                   Войти
                 </Button>
