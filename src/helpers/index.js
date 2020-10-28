@@ -1,6 +1,6 @@
 import React from 'react'
 import ApolloClient from 'apollo-boost'
-import { API_URL } from '../constants'
+import { API_URL } from 'static'
 import { setCurrentUser } from '../actions/current_user_actions';
 import { Redirect } from 'react-router-dom'
 import axios from 'axios';

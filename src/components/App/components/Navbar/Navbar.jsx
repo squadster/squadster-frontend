@@ -7,7 +7,7 @@ import AppStyles from '../../App.styles'
 import SVG from 'react-inlinesvg';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_URL } from '../../../../constants'
+import { API_URL } from 'static'
 import { isMobile, logout } from 'helpers'
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -75,8 +75,7 @@ export default function Navbar() {
                             <MenuItem className={classes.menuItem} component={Link} to='/profile'>Профиль</MenuItem>
                             { squad &&
                               <MenuItem className={classes.menuItem} component={Link} to='/my-squad'>Мой взвод</MenuItem> }
-                            { !squad &&
-                              <MenuItem className={classes.menuItem} component={Link} to='/squads'>Взводы</MenuItem> }
+                              <MenuItem className={classes.menuItem} component={Link} to='/squads'>Взводы</MenuItem>
                             <MenuItem onClick={() => logout(dispatch)}>Выйти</MenuItem>
                           </MenuList>
                         </ClickAwayListener>
