@@ -103,7 +103,7 @@ export default function SquadPageContent(props) {
     // dropped outside the list
     if (!result.destination)
       return
-  
+
     const newMembers = reorder(
       members,
       result.source.index,
@@ -115,7 +115,7 @@ export default function SquadPageContent(props) {
   }
 
 
-  return <Paper style={{minHeight: '90vh'}}>
+  return <Paper>
   <Container className='d-flex flex-column'>
     { manage ?
       <div>
@@ -178,7 +178,7 @@ export default function SquadPageContent(props) {
     </div>
     <Advertisment manage={manage} user={user}/>
     <DragDropContext onDragEnd={onDragEnd}>
-      <Paper className={'d-flex flex-column mt-5'} square variant="outlined" style={{minHeight: '500px'}}>
+      <Paper className={'d-flex flex-column mt-5 mb-5'} square variant="outlined" style={{minHeight: '500px'}}>
         <div className='d-flex flex-column'>
           <Typography variant='h4' className='my-4 text-center'>
             <b>Командный состав</b>
@@ -208,7 +208,7 @@ export default function SquadPageContent(props) {
               }) : noMembers(user) }
               {provided.placeholder}
             </div>)}
-          </Droppable> 
+          </Droppable>
         </div>
       </Paper>
     </DragDropContext>

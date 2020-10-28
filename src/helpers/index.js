@@ -35,7 +35,7 @@ function setAxiosInterceptors() {
 }
 
 
-const isMobile = window.screen.width < 992
+const isMobile = window.innerWidth < 992
 
 function getWeekDay(day) {
   switch (day) {

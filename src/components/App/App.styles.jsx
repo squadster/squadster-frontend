@@ -10,7 +10,7 @@ const AppStyles = (theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    minHeight: '10vh',
+    height: '7vh',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       justifyContent: 'initial'
@@ -46,6 +46,44 @@ const AppStyles = (theme) => ({
     breakpoints: {
       display: 'block',
     },
+  },
+
+  avatar: {
+    width: '104px',
+    height: '104px',
+    border: 'solid',
+    borderColor: 'white',
+  },
+
+  moreHorizIcon: {
+    width: '104px',
+    height: '7vh',
+  },
+
+  avatarBorder: {
+    borderRadius: '50%',
+    border: 'solid',
+    borderColor: '#3f51b5',
+    marginTop: '50px',
+  },
+
+  paperMenu: {
+    fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+    fontWeight: '300',
+    border: '1px solid #e0e0e0',
+    borderRadius: '3%',
+  },
+
+  footer: {
+    width: '100%',
+    bottom: '0',
+    position: 'fixed',
+  },
+
+  menuItem: {
+    borderBottom: '1px solid #e0e0e0',
+    minWidth: '180px',
+    minHeight: '45px'
   },
 });
 
