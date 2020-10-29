@@ -1,4 +1,4 @@
-import gql from  'graphql-tag'
+import gql from 'graphql-tag'
 
 const GET_CURRENT_USER = gql`
   query getCurrentUser {
@@ -69,7 +69,7 @@ const UPDATE_ADVERTISMENT = gql`mutation updateSquad($id: Int, $advertisment: St
 const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
   deleteSquadMember(
     id: $id
-  ){
+  ) {
     id
   }
 }`
