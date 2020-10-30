@@ -4,7 +4,6 @@ const squadsReducer = (state, action) => {
   switch (action.type) {
     case 'SET SQUAD':
       state.push(action.squad)
-      console.log(state)
 
       return state
     case 'SET SQUADS':

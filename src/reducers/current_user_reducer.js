@@ -35,7 +35,6 @@ const currentUserReducer = (state, action) => {
     case 'SET SQUAD':
       state.squad = action.squad
       state.squadMember = action.squad.members.find((member) => member.user.id === state.id)
-      console.log(state)
       return state
     case 'SET SQUAD MEMBERS':
       state.squad.members = action.members

@@ -78,6 +78,7 @@ const AppStyles = (theme) => ({
     width: '100%',
     bottom: '0',
     position: 'fixed',
+    backgroundColor: 'white'
   },
 
   menuItem: {
