@@ -26,6 +26,8 @@ const AppStyles = (theme) => ({
     width: 'max-content',
     alignSelf: 'flex-end',
     marginRight: '0px',
+    marginTop: 'auto',
+    marginBottom: 'auto'
   },
 
   button: {
