@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Paper, Table, Typography, TableHead, InputBase, TableBody, TableCell, TableRow, TableContainer, TableFooter, TablePagination, Container, Button } from '@material-ui/core';
 import SquadsStyles from './Squads.styles'
@@ -25,10 +25,16 @@ export default function Squads() {
   const user = useSelector(state => state.currentUser)
   const squads = useSelector(state => state.squads)
 
-  const { loading, error, data } = useQuery(GET_SQUADS, { onCompleted: () => dispatch(setSquads(data.squads)) });
+  const [squadsState, setSquadsState] = useState(squads)
+
+  useEffect(() => {
+    setSquadsState(squads)
+  }, [squads])
+
+  const { loading, data } = useQuery(GET_SQUADS, { onCompleted: () => dispatch(setSquads(data.squads)) });
   const findSquad = ({ target: { value } }) => {
-    if (value === '') return  setSquads(() => data.squads);
-    setSquads(data.squads.filter((squad) => squad.squadNumber.includes(value)));
+    if (value === '') return  setSquadsState(() => squads);
+    setSquadsState(squads.filter((squad) => squad.squadNumber.includes(value)));
   }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, squads.length - page * rowsPerPage);
@@ -40,7 +46,6 @@ export default function Squads() {
   };
 
   if (loading) return <Spinner />;
-  if (error) return(<div>{error}</div>)
 
   return (
     <Container>
@@ -88,8 +93,8 @@ export default function Squads() {
             <TableBody>
             {
               (rowsPerPage > 0
-                ? squads.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : squads
+                ? squadsState.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : squadsState
               ).map((squad, i) => {
                 return <SquadRecord key={i} user={user} squad={squad} />
               })
