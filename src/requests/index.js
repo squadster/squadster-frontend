@@ -22,6 +22,8 @@ const GET_CURRENT_USER = gql`
           advertisment
           classDay
           squadNumber
+          linkInvitationsEnabled
+          hashId
           requests {
             id
             approvedAt

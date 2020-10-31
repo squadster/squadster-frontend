@@ -3,6 +3,7 @@ import CommanderSquadConfig from './components/CommanderSquadConfig/CommanderSqu
 import MemberSquadConfig from './components/MemberSquadConfig'
 import SendRequestIcon from './components/SendRequestIcon'
 import { TableCell, TableRow } from '@material-ui/core'
+import { COMMANDER_ROLES } from 'static'
 
 const commanderName = (squad) => {
   let commander = squad.members.find((m) => m.role === 'commander');
@@ -11,7 +12,7 @@ const commanderName = (squad) => {
 
 export default function SquadRecord({user, squad}) {
   const isUsersSquad = user.squad && user.squad.id === squad.id
-  const isUserCommander = user.squadMember && user.squadMember.role === 'commander'
+  const isUserCommander = user.squadMember && COMMANDER_ROLES.includes(user.squadMember.role)
 
   return <TableRow>
     <TableCell>{squad.squadNumber}</TableCell>
@@ -20,10 +21,11 @@ export default function SquadRecord({user, squad}) {
     {
       !user.squad &&
         <SendRequestIcon squad={squad} user={user} />
-     
     }
     {
-     isUsersSquad && (isUserCommander ? <CommanderSquadConfig squad={squad} /> : <MemberSquadConfig squad={squad}/>)
+      isUsersSquad && (
+        isUserCommander ? <CommanderSquadConfig user={user} squad={squad} /> : <MemberSquadConfig squad={squad}/>
+      )
     }
     </TableCell>
   </TableRow>

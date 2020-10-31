@@ -16,6 +16,9 @@ import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBERS } from '
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import MemberSquadConfig from 'components/App/components/Squads/components/SquadRecord/components/MemberSquadConfig'
 import CommanderSquadConfig from 'components/App/components/Squads/components/SquadRecord/components/CommanderSquadConfig/CommanderSquadConfig'
+import { COMMANDER_ROLES } from 'static'
+import './SquadPageContent.scss'
+import CopyToClipboardButton from 'components/App/components/shared/CopyToClipboardButton'
 
 const useStyles = makeStyles(SquadPageContentStyles)
 
@@ -47,6 +50,10 @@ function noMembers(currentUser) {
         Не забывайте обновлять роли членов взвода а также отсылайте приглашения
       </Typography> : "" }
   </div>
+}
+
+function buildInvitationLink(hashId) {
+  return `${window.origin}/invitation/${hashId}`
 }
 
 export default function SquadPageContent(props) {
@@ -118,31 +125,43 @@ export default function SquadPageContent(props) {
   return <Paper>
   <Container className='d-flex flex-column'>
     { manage ?
-      <div>
+      <>
         <ConfirmationModal open={open} options={confirmationModalOptions} />
         <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} requests={requests}/>
-      </div> : '' }
-    <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
+      </> : '' }
+    <div className={'header-block d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
-        <div className='d-flex flex-row'>
-          <Typography variant='h4' className={classes.squadTitle} component='h1'>
-            Взвод № {user.squad.squadNumber}
-          </Typography>
+        <div className='d-flex flex-column'>
+          <div className='d-flex flex-row'>
+            <Typography variant='h4' className={classes.squadTitle} component='h1'>
+              Взвод № {user.squad.squadNumber}
+            </Typography>
+            {
+              manage && <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
+                <Badge badgeContent={requests.length} color="primary">
+                  <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
+                </Badge>
+              </IconButton>
+            }
+            { COMMANDER_ROLES.includes(user.squadMember.role) &&
+                <IconButton className={classes.configButton}>
+                  <CommanderSquadConfig user={user} squad={user.squad} />
+                </IconButton>
+            }
+            { user.squadMember.role === 'student' && <IconButton className={classes.configButton}><MemberSquadConfig squad={user.squad} /></IconButton> }
+          </div>
           {
-            manage && <><IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
-              <Badge badgeContent={requests.length} color="primary">
-                <GroupAddIcon style={{cursor: 'pointer'}} className={classes.requestsIcon}/>
-              </Badge>
-            </IconButton>
-            <IconButton className={classes.configButton}>
-              <CommanderSquadConfig squad={user.squad} />
-            </IconButton>
-            </>
+            user.squad.linkInvitationsEnabled &&
+            <CopyToClipboardButton className='mt-4'
+                                   buttonOptions={{variant: 'contained', color: 'primary'}}
+                                   tooltipText='Скопировать ссылку на приглашение'
+                                   text={buildInvitationLink(user.squad.hashId)}>
+              Пригласить во взвод
+            </CopyToClipboardButton>
           }
-          { !manage && <IconButton className={classes.configButton}><MemberSquadConfig squad={user.squad} /></IconButton> }
         </div>
       </div>
-      <ExpansionPanel className='mt-4' expanded={expanded} onChange={handleExpandChange}>
+      <ExpansionPanel className='mt-4 advertisement' expanded={expanded} onChange={handleExpandChange}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className='mx-auto' variant='subtitle1' component='p'>
             Показать дополнительную информацию

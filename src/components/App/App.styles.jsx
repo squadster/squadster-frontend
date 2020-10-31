@@ -26,6 +26,8 @@ const AppStyles = (theme) => ({
     width: 'max-content',
     alignSelf: 'flex-end',
     marginRight: '0px',
+    marginTop: 'auto',
+    marginBottom: 'auto'
   },
 
   button: {
@@ -78,6 +80,7 @@ const AppStyles = (theme) => ({
     width: '100%',
     bottom: '0',
     position: 'fixed',
+    backgroundColor: 'white'
   },
 
   menuItem: {
