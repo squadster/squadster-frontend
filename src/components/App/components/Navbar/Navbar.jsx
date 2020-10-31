@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Toolbar, AppBar, IconButton, Collapse, Avatar, MenuItem } from '@material-ui/core';
+import { Button, Toolbar, AppBar, IconButton, Avatar, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../../App.styles'
