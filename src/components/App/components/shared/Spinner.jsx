@@ -23,5 +23,5 @@ const StyledImage = styled.img`
 `
 
 export default function Spinner() {
-  return <StyledImage src='squad_spinner.png'/>
+  return <StyledImage src={`${window.origin}/squad_spinner.png`}/>
 }

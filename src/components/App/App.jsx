@@ -19,13 +19,15 @@ import MuiAlert from '@material-ui/lab/Alert'
 import { Snackbar } from '@material-ui/core'
 import { AlertContext } from 'contexts'
 import Profile from './components/Profile/Profile'
+import InvitationAuth from './components/InvitationAuth'
 
 function Alert(props) { return <MuiAlert elevation={6} variant="filled" {...props} /> }
 
 export default function App() {
-  setAxiosInterceptors();
-  const user = useSelector(state => state.currentUser)
+  setAxiosInterceptors()  
   const dispatch = useDispatch()
+
+  const user = useSelector(state => state.currentUser)
   const { loading, data } = useQuery(GET_CURRENT_USER, { skip: !localStorage.authToken, onError: () => logout(dispatch) } )
 
   // Alert state can be moved to the separate hook it's not necessary for now
@@ -34,8 +36,8 @@ export default function App() {
   const [alertState, setAlertState] = useState({})
   const [openAlert, setOpenAlert] = useState(false)
   const closeAlert = useCallback(() => setOpenAlert(false), [])
-  const showAlert = useCallback(({variant='success', message}) => {
-    setAlertState({variant: variant, message: message})
+  const showAlert = useCallback(({variant='success', message, duration=5000}) => {
+    setAlertState({variant: variant, message: message, duration: duration})
     setOpenAlert(true)
   }, [])
 
@@ -43,15 +45,13 @@ export default function App() {
     return <Spinner/>
   }
 
-  if (!user && data && data.currentUser) {
-    dispatch(setCurrentUser(data.currentUser))
-  }
-
+  if (!user && data && data.currentUser)
+      dispatch(setCurrentUser(data.currentUser))
 
   return (
     <Router>
       <div>
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={5000} open={openAlert} onClose={closeAlert}>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={alertState.duration} open={openAlert} onClose={closeAlert}>
           <Alert onClose={closeAlert} severity={alertState.variant || 'success'}>
             {alertState.message}
           </Alert>
@@ -64,13 +64,14 @@ export default function App() {
             <PrivateRoute exact path="/my_squad" component={Squad} />
             <PrivateRoute exact path="/new_squad" component={NewSquad} />
             <PrivateRoute exact path="/profile" component={Profile} />
+            <Route path="/invitation/:hash_id" component={InvitationAuth} />
             <Route path="/auth_callback" component={AuthCallback} />
             <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
             <Redirect from="*" to="/" />
           </Switch>
         </AlertContext.Provider>
       </div>
-      <Footer style={{position: 'initial'}}/>
+      <Footer />
     </Router>
   );
 }
