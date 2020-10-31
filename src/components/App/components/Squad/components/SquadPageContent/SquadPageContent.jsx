@@ -52,6 +52,10 @@ function noMembers(currentUser) {
   </div>
 }
 
+function buildInvitationLink(hashId) {
+  return `${window.origin}/invitation/${hashId}`
+}
+
 export default function SquadPageContent(props) {
   const dispatch = useDispatch()
   const [deleteSquadMemberQuery] = useMutation(DELETE_SQUAD_MEMBER)
@@ -144,11 +148,14 @@ export default function SquadPageContent(props) {
                   <CommanderSquadConfig user={user} squad={user.squad} />
                 </IconButton>
             }
-            { !manage && <IconButton className={classes.configButton}><MemberSquadConfig squad={user.squad} /></IconButton> }
+            { user.squadMember.role === 'student' && <IconButton className={classes.configButton}><MemberSquadConfig squad={user.squad} /></IconButton> }
           </div>
           {
             user.squad.linkInvitationsEnabled &&
-            <CopyToClipboardButton className='mt-4' buttonOptions={{variant: 'contained', color: 'primary'}} tooltipText='Скопировать ссылку на приглашение' text=''>
+            <CopyToClipboardButton className='mt-4'
+                                   buttonOptions={{variant: 'contained', color: 'primary'}}
+                                   tooltipText='Скопировать ссылку на приглашение'
+                                   text={buildInvitationLink(user.squad.hashId)}>
               Пригласить во взвод
             </CopyToClipboardButton>
           }
