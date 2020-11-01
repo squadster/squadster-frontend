@@ -4,6 +4,7 @@ import { isCommander, canChangeClassDay } from 'helpers'
 import SquadMemberCard from './components/SquadMemberCard/SquadMemberCard'
 import Advertisment from './components/Advertisment'
 import ClassDay from './components/ClassDay'
+import SquadNumber from './components/SquadNumber'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import { makeStyles } from '@material-ui/core/styles'
 import ConfirmationModal from 'components/App/components/shared/ConfirmationModal'
@@ -128,9 +129,7 @@ export default function SquadPageContent(props) {
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
         <div className='d-flex flex-column'>
           <div className='d-flex flex-row'>
-            <Typography variant='h4' className={classes.squadTitle} component='h1'>
-              Взвод № {user.squad.squadNumber}
-            </Typography>
+            <SquadNumber user={user} classes={classes} />
             {
               manage && <IconButton onClick={() => setRequestsOpen(true)} className={classes.requestsButton}>
                 <Badge badgeContent={requests.length} color="primary">
