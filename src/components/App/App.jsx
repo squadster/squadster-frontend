@@ -64,6 +64,7 @@ export default function App() {
             <PrivateRoute exact path="/my_squad" component={Squad} />
             <PrivateRoute exact path="/new_squad" component={NewSquad} />
             <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute path="/colleagues/:id" component={Profile} />
             <Route path="/auth_callback" component={AuthCallback} />
             <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
             <Redirect from="*" to="/" />
