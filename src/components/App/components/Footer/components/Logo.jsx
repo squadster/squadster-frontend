@@ -17,5 +17,5 @@ const StyledImage = styled.img`
 `
 
 export default function Logo(props) {
-  return <StyledImage onClick={props.onClick} src='icons/squad_spinner.svg'/>
+  return <StyledImage onClick={props.onClick} src={`${window.origin}/icons/squad_spinner.svg`}/>
 }

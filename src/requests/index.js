@@ -122,6 +122,7 @@ const SET_SQUAD = gql`
   mutation createSquad($squad_number: String!, $class_day: Int!) {
     createSquad(squadNumber: $squad_number, classDay: $class_day) {
       advertisment
+      hashId
       classDay
       id
       squadNumber

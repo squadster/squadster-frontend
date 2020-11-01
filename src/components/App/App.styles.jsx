@@ -1,12 +1,4 @@
 const AppStyles = (theme) => ({
-  root: { },
-
-  body: {
-    fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
-    backgroundColor: '#eaeff1',
-    fontWeight: '300',
-  },
-
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -78,9 +70,7 @@ const AppStyles = (theme) => ({
 
   footer: {
     width: '100%',
-    bottom: '0',
-    position: 'fixed',
-    backgroundColor: 'white'
+    marginTop: 'auto'
   },
 
   menuItem: {

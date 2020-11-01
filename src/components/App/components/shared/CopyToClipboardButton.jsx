@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Tooltip from '@material-ui/core/Tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button } from '@material-ui/core'
@@ -9,8 +9,15 @@ export default function CopyToClipboardButton({text, tooltipText, buttonOptions,
 
   const handleCopyTooltip = () => {
     setCopied(true)
-    setTimeout(() => setCopied(false), 3000)
   };
+
+  useEffect(() => {
+    let timer
+    if (copied)
+      timer = setTimeout(() => setCopied(false), 3000)
+   
+    return () => clearTimeout(timer)
+  }, [copied])
 
   return <div className='d-flex flex-row'>
       <Tooltip
@@ -18,7 +25,7 @@ export default function CopyToClipboardButton({text, tooltipText, buttonOptions,
         PopperProps={{
           disablePortal: true,
         }}
-        open={copied || show}
+        open={show}
         disableFocusListener
         disableHoverListener
         disableTouchListener
