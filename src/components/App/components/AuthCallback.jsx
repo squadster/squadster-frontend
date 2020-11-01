@@ -22,6 +22,17 @@ function authToken(params) {
   }
 }
 
+function buildWarningMessage(warning) {
+  switch (warning) {
+    case "Invalid hash_id":
+      return "Невалидная ссылка для входа или командир отряда отключил доступ по ссылке"
+    case "User already has a squad_member":
+      return  "Вы уже вступили в отряд, покиньте его чтобы войти в новый"
+    default:
+      return warning
+  }
+}
+
 export default function AuthCallback() {
   const dispatch = useDispatch()
   const params = queryString.parse(window.location.search)
@@ -42,7 +53,7 @@ export default function AuthCallback() {
 
   useEffect(() => {
     if (warnings.length)
-      showAlert({message: warnings[0], variant: 'warning'})
+      showAlert({message: buildWarningMessage(warnings[0]), variant: 'warning'})
   }, [warnings, showAlert])
 
   if (currentUser)
