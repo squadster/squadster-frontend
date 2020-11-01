@@ -58,20 +58,23 @@ export default function App() {
         </Snackbar>
         <AlertContext.Provider value={showAlert}>
           <Navbar />
-          <Switch>
-            <Route exact path="/about" component={About} />
-            <PrivateRoute exact path="/squads" component={Squads} />
-            <PrivateRoute exact path="/my_squad" component={Squad} />
-            <PrivateRoute exact path="/new_squad" component={NewSquad} />
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <Route path="/invitation/:hash_id" component={InvitationAuth} />
-            <Route path="/auth_callback" component={AuthCallback} />
-            <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
-            <Redirect from="*" to="/" />
-          </Switch>
+          <div className='d-flex flex-column' style={{minHeight: '90vh'}}>
+            <Switch>
+              <Route exact path="/about" component={About} />
+              <PrivateRoute exact path="/squads" component={Squads} />
+              <PrivateRoute exact path="/my_squad" component={Squad} />
+              <PrivateRoute exact path="/new_squad" component={NewSquad} />
+              <PrivateRoute exact path="/profile" component={Profile} />
+              <Route path="/invitation/:hash_id" component={InvitationAuth} />
+              <Route path="/auth_callback" component={AuthCallback} />
+              <Route path="/" component={user ? () => <Redirect to='/my_squad' /> : Landing} />
+              <Redirect from="*" to="/" />
+            </Switch>
+            <div className='pb-5' />
+            <Footer />
+          </div>
         </AlertContext.Provider>
       </div>
-      <Footer />
     </Router>
   );
 }

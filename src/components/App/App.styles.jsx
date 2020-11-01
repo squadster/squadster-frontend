@@ -70,7 +70,7 @@ const AppStyles = (theme) => ({
 
   footer: {
     width: '100%',
-    marginTop: '48px'
+    marginTop: 'auto'
   },
 
   menuItem: {
