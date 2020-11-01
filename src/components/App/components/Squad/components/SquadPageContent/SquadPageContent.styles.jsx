@@ -1,4 +1,4 @@
-const SquadPageContent = {  
+const SquadPageContent = {
   requestsIcon: {
     width: '32px',
     height: '32px',
@@ -23,7 +23,11 @@ const SquadPageContent = {
     fontSize: '28px',
     padding: '10px',
     marginBottom: 'auto'
-  }
+  },
+
+  classDay: {
+    width: '100%',
+  },
 }
 
 export default SquadPageContent;

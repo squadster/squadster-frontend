@@ -207,6 +207,15 @@ const UPDATE_LINK_OPTION = gql`mutation updateSquad($id: Int, $linkOption: Boole
   }
 }`
 
+const UPDATE_CLASS_DAY = gql`mutation updateSquad($id: Int, $classDay: Int) {
+  updateSquad(
+    id: $id,
+    classDay: $classDay
+  ) {
+    classDay
+  }
+}`
+
 export {
   GET_CURRENT_USER,
   GET_SQUADS,
@@ -219,5 +228,6 @@ export {
   CREATE_SQUAD_REQUEST,
   UPDATE_SQUAD_MEMBERS,
   DELETE_SQUAD,
-  UPDATE_LINK_OPTION
+  UPDATE_LINK_OPTION,
+  UPDATE_CLASS_DAY,
 }

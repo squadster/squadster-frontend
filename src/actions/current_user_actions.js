@@ -35,3 +35,7 @@ export const setSquad = (squad) => {
 export const setSquadMembers = (members) => {
   return { type: "SET SQUAD MEMBERS", members: members }
 }
+
+export const updateSquadClassDay = (value) => {
+  return { type: "UPDATE SQUAD CLASS DAY", value: value }
+}
