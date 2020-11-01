@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Typography, Paper, TextField, Button } from '@material-ui/core'
+import { Typography, TextField, Button } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { useDispatch } from 'react-redux'
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_NUMBER } from 'requests'
-import { updateSquadNumber } from 'actions'
+import { updateSquadNumber } from 'actions/current_user_actions'
 
 export default function SquadNumber(props) {
   const user = props.user;
@@ -41,11 +41,11 @@ export default function SquadNumber(props) {
           </Typography>
       }
       {
-        manage ?
+        manage && !editMode ?
         <div title="Изменить">
           <EditIcon
             onClick={() => setEditMode(!editMode)}
-            style={{cursor: 'pointer'}}
+            style={{cursor: 'pointer', opacity: 0.5}}
           />
         </div>
         : ""
