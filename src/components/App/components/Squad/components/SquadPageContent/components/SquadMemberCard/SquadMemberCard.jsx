@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import SquadMemberCardStyles from './SquadMemberCard.styles'
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled'
 import RoleChip from './components/RoleChip/RoleChip'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(SquadMemberCardStyles)
 
@@ -31,7 +32,9 @@ export default function SquadMemberCard(props) {
             </Typography>
           </Tooltip>
           }
-          <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
+          <Link to={`/colleagues/${user.id}`}>
+            <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
+          </Link>
         </div>
         <RoleChip classes='mt-3 mb-2 d-flex d-md-none'
                   manage={manage}

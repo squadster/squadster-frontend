@@ -68,6 +68,15 @@ const UPDATE_ADVERTISMENT = gql`mutation updateSquad($id: Int, $advertisment: St
   }
 }`
 
+const UPDATE_NUMBER = gql`mutation updateSquad($id: Int, $number: String) {
+  updateSquad(
+    id: $id,
+    squadNumber: $number
+  ) {
+    squadNumber
+  }
+}`
+
 const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
   deleteSquadMember(
     id: $id
@@ -208,11 +217,21 @@ const UPDATE_LINK_OPTION = gql`mutation updateSquad($id: Int, $linkOption: Boole
   }
 }`
 
+const UPDATE_CLASS_DAY = gql`mutation updateSquad($id: Int, $classDay: Int) {
+  updateSquad(
+    id: $id,
+    classDay: $classDay
+  ) {
+    classDay
+  }
+}`
+
 export {
   GET_CURRENT_USER,
   GET_SQUADS,
   SET_SQUAD,
   UPDATE_ADVERTISMENT,
+  UPDATE_NUMBER,
   APPROVE_SQUAD_REQUEST,
   DELETE_SQUAD_MEMBER,
   UPDATE_SQUAD_MEMBER,
@@ -220,5 +239,6 @@ export {
   CREATE_SQUAD_REQUEST,
   UPDATE_SQUAD_MEMBERS,
   DELETE_SQUAD,
-  UPDATE_LINK_OPTION
+  UPDATE_LINK_OPTION,
+  UPDATE_CLASS_DAY,
 }
