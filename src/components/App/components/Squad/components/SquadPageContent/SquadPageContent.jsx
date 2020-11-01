@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Container, Typography, Paper, Badge, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, IconButton } from '@material-ui/core'
-import { getWeekDay, isCommander } from 'helpers'
+import { Container, Typography, Paper, Badge, IconButton } from '@material-ui/core'
+import { isCommander, canChangeClassDay } from 'helpers'
 import SquadMemberCard from './components/SquadMemberCard/SquadMemberCard'
 import Advertisment from './components/Advertisment'
+import ClassDay from './components/ClassDay'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import { makeStyles } from '@material-ui/core/styles'
 import ConfirmationModal from 'components/App/components/shared/ConfirmationModal'
@@ -60,7 +60,6 @@ export default function SquadPageContent(props) {
   const dispatch = useDispatch()
   const [deleteSquadMemberQuery] = useMutation(DELETE_SQUAD_MEMBER)
   const [updateSquadMemberQuery] = useMutation(UPDATE_SQUAD_MEMBER)
-  const [expanded, setExpanded] = useState(false)
   const [open, setOpen] = useState(false)
   const [requestsOpen, setRequestsOpen] = useState(false)
   const [confirmationModalOptions, setConfirmationModalOptions] = useState({})
@@ -99,10 +98,6 @@ export default function SquadPageContent(props) {
     setOpen(true)
   }
 
-  const handleExpandChange = (event, newValue) => {
-    setExpanded(newValue)
-  }
-
   const commanders = filterMembers(user.squad.members, ['commander', 'deputy_commander', 'journalist'])
   const members = filterMembers(user.squad.members, ['student']).sort((a, b) => a.queueNumber - b.queueNumber )
   const [updateSquadMembersQuery] = useMutation(UPDATE_SQUAD_MEMBERS)
@@ -129,7 +124,7 @@ export default function SquadPageContent(props) {
         <ConfirmationModal open={open} options={confirmationModalOptions} />
         <RequestsModal open={requestsOpen} setOpen={setRequestsOpen} requests={requests}/>
       </> : '' }
-    <div className={'header-block d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
+    <div className={'d-flex flex-column flex-lg-row justify-content-lg-between justify-content-center'}>
       <div className='pt-4 mr-lg-3 align-self-lg-left d-flex flex-row' >
         <div className='d-flex flex-column'>
           <div className='d-flex flex-row'>
@@ -161,39 +156,9 @@ export default function SquadPageContent(props) {
           }
         </div>
       </div>
-      <ExpansionPanel className='mt-4 advertisement' expanded={expanded} onChange={handleExpandChange}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className='mx-auto' variant='subtitle1' component='p'>
-            Показать дополнительную информацию
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className='d-flex flex-column'>
-          <div className='d-flex flex-column flex-sm-row mt-3 mt-sm-0'>
-            <Typography style={{minWidth: '150px'}} className='font-weight-bold d-flex align-items-center' variant='body1' component='h3'>
-              Университет:
-            </Typography>
-            <Typography variant='body1' className='d-flex align-items-center' component='p'>
-              {user.university}
-            </Typography>
-          </div>
-          <div className='d-flex flex-column flex-sm-row mt-3 mt-sm-0'>
-            <Typography style={{minWidth: '150px'}} className='font-weight-bold d-flex align-items-center' variant='body1' component='h3'>
-              Факультет:
-            </Typography>
-            <Typography variant='body1' className='d-flex align-items-center' component='p'>
-              {user.faculty}
-            </Typography>
-          </div>
-          <div className='d-flex flex-column flex-sm-row mt-3 mt-sm-0'>
-            <Typography style={{minWidth: '150px'}} className='font-weight-bold d-flex align-items-center' variant='body1' component='h3'>
-              Классный день:
-            </Typography>
-            <Typography variant='body1' className='d-flex align-items-center' component='p'>
-              {getWeekDay(user.squad.classDay)}
-            </Typography>
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+      <div className={classes.classDay}>
+        <ClassDay classDay={user.squad.classDay} manage={canChangeClassDay(user)} user={user}/>
+      </div>
     </div>
     <Advertisment manage={manage} user={user}/>
     <DragDropContext onDragEnd={onDragEnd}>

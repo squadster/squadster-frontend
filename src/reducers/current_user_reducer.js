@@ -47,11 +47,14 @@ const currentUserReducer = (state, action) => {
       if (state.squad.id === action.squad.id) {
         const updatedSquad = { ...state.squad, ...action.params }
         state.squad = updatedSquad
-        
+
         return state
       } else {
         return state
       }
+    case 'UPDATE CLASS DAY':
+      state.squad.classDay = action.value
+      return state
     default:
       return state ? state : null
   }

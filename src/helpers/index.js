@@ -37,20 +37,39 @@ function setAxiosInterceptors() {
 
 const isMobile = window.innerWidth < 992
 
-function getWeekDay(day) {
+function getWeekDayByNumber(day) {
+  switch (day) {
+    case 1:
+      return 'Понедельник'
+    case 2:
+      return 'Вторник'
+    case 3:
+      return 'Среда'
+    case 4:
+      return 'Четверг'
+    case 5:
+      return 'Пятница'
+    case 6:
+      return 'Суббота'
+    default:
+      break;
+  }
+}
+
+function getWeekDayNumber(day) {
   switch (day) {
     case 'monday':
-      return 'Понедельник'
+      return 1
     case 'tuesday':
-      return 'Вторник'
+      return 2
     case 'wednesday':
-      return 'Среда'
+      return 3
     case 'thursday':
-      return 'Четверг'
+      return 4
     case 'friday':
-      return 'Пятница'
+      return 5
     case 'saturday':
-      return 'Суббота'
+      return 6
     default:
       break;
   }
@@ -74,4 +93,26 @@ function isCommander(user) {
   return user.role === 'commander'
 }
 
-export { apolloClient, setAxiosInterceptors, logout, getWeekDay, getMemberRole, isMobile, isCommander };
+function canChangeClassDay(user) {
+  switch (user.role) {
+    case 'commander':
+      return true
+    case 'deputy_commander':
+      return true
+    case 'journalist':
+      return true
+    default: break
+  }
+}
+
+export {
+  apolloClient,
+  setAxiosInterceptors,
+  logout,
+  canChangeClassDay,
+  getMemberRole,
+  isMobile,
+  isCommander,
+  getWeekDayNumber,
+  getWeekDayByNumber,
+};
