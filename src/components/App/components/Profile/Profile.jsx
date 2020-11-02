@@ -1,9 +1,9 @@
 import React from 'react'
-import { Paper, Avatar, Typography, Container } from '@material-ui/core'
+import { Paper, Avatar, Typography, Container, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ProfileStyles from './Profile.styles'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import NotFound from 'components/App/components/shared/NotFound'
 
 const useStyles = makeStyles(ProfileStyles)
@@ -28,6 +28,11 @@ export default function Profile() {
 
   return (
     <Container>
+      <Link to='/'>
+        <Button className='mt-4'>
+          ‹ Назад
+        </Button>
+      </Link>
       <Paper className={classes.root} variant='outlined'>
         <div className='d-flex flex-column flex-sm-row'>
           <Avatar
