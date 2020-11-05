@@ -28,11 +28,6 @@ export default function Profile() {
 
   return (
     <Container>
-      <Link to='/'>
-        <Button className='mt-4'>
-          ‹ Назад
-        </Button>
-      </Link>
       <Paper className={classes.root} variant='outlined'>
         <div className='d-flex flex-column flex-sm-row'>
           <Avatar
@@ -54,6 +49,11 @@ export default function Profile() {
           </div>
         </div>
       </Paper>
+      <Link className='d-flex justify-content-center' to='/'>
+        <Button variant='contained' color='primary' className='mt-4 color-white'>
+          Назад
+        </Button>
+      </Link>
     </Container>
   );
 }
