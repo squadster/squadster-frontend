@@ -1,9 +1,9 @@
 import React from 'react'
-import { Paper, Avatar, Typography, Container } from '@material-ui/core'
+import { Paper, Avatar, Typography, Container, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ProfileStyles from './Profile.styles'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import NotFound from 'components/App/components/shared/NotFound'
 
 const useStyles = makeStyles(ProfileStyles)
@@ -49,6 +49,11 @@ export default function Profile() {
           </div>
         </div>
       </Paper>
+      <Link className='d-flex justify-content-center' to='/'>
+        <Button variant='contained' color='primary' className='mt-4 color-white'>
+          Назад
+        </Button>
+      </Link>
     </Container>
   );
 }

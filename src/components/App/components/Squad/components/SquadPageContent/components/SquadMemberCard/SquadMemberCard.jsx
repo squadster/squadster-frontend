@@ -5,6 +5,7 @@ import SquadMemberCardStyles from './SquadMemberCard.styles'
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled'
 import RoleChip from './components/RoleChip/RoleChip'
 import { Link } from 'react-router-dom'
+import './SquadMemberCard.scss'
 
 const useStyles = makeStyles(SquadMemberCardStyles)
 
@@ -20,7 +21,7 @@ export default function SquadMemberCard(props) {
   const manage = props.manage && props.currentUser.id !== member.user.id
 
 
-  return <Paper className="position-relative" square variant='outlined'>
+  return <Paper className="position-relative squad-card-member" square variant='outlined'>
   <div className={"my-4 mx-auto py-2 w-75"}>
     <div className='d-flex flex-row justify-content-center justify-content-md-between'>
       <div className='d-flex flex-md-row flex-column align-items-center'>
@@ -33,7 +34,7 @@ export default function SquadMemberCard(props) {
           </Tooltip>
           }
           <Link to={`/colleagues/${user.id}`}>
-            <Avatar alt={userName} src={user.imageUrl} className={classes.avatar} />
+            <Avatar alt={userName} src={user.imageUrl} className='squad-card-member__avatar' />
           </Link>
         </div>
         <RoleChip classes='mt-3 mb-2 d-flex d-md-none'

@@ -1,0 +1,11 @@
+.squad-card-member {
+  .squad-card-member__avatar {
+    width: 104px !important;
+    height: 104px !important;
+    
+    img:hover {
+      width: 116px;
+      height: 116px;
+    }
+  }
+}
