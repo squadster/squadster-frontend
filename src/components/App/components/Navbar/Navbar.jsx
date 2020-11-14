@@ -41,6 +41,17 @@ export default function Navbar() {
       <AppBar height='10vh' position="static">
         {currentUser ? (
           <Toolbar className={classes.toolbar}>
+            <div className='d-flex flex-row mr-auto my-auto'>
+              <div className='d-flex flex-row mr-3'>
+                <a href="https://vk.com/club183369373" target='_blank'>
+                  <SVG src='VK_Blue_Logo.svg' width='50px'/>
+                </a>
+                <a href="https://t.me/squadsterbot" className='d-flex' target='_blank'>
+                  <SVG className='my-auto' src='telegram_logo.svg' width='25px'/>
+                </a>
+              </div>
+              <span className='my-auto'>Получайте напоминания через ботов!</span>
+            </div>
             { isMobile ?
               <IconButton onClick={handleClick} className={classes.collapsedButton} edge="end"  color="inherit">
                 <MenuIcon />

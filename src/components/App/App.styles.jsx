@@ -2,11 +2,7 @@ const AppStyles = (theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    height: '7vh',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      justifyContent: 'initial'
-    }
+    height: '7vh'
   },
 
   navbarLink: {
