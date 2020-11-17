@@ -43,10 +43,10 @@ export default function Navbar() {
           <Toolbar className={classes.toolbar}>
             <div className='d-flex flex-row mr-auto my-auto'>
               <div className='d-flex flex-row mr-3'>
-                <a href="https://vk.com/club183369373" target='_blank'>
+                <a href="https://vk.com/club183369373" rel="noopener noreferrer" target='_blank'>
                   <SVG src='VK_Blue_Logo.svg' width='50px'/>
                 </a>
-                <a href="https://t.me/squadsterbot" className='d-flex' target='_blank'>
+                <a href="https://t.me/squadsterbot" className='d-flex' rel="noopener noreferrer" target='_blank'>
                   <SVG className='my-auto' src='telegram_logo.svg' width='25px'/>
                 </a>
               </div>

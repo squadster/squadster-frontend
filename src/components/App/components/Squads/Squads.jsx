@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import SquadRecord from './components/SquadRecord/SquadRecord'
 import TablePaginationActions from './components/TablePaginationActions'
 import UserWithoutSquadNote from './components/UserWithoutSquadNote'
+import WelcomeModal from '../WelcomeModal/WelcomeModal'
 
 const useStyles = makeStyles(SquadsStyles)
 const labelDisplayedRows = ({from, to, count}) => `${from}-${to === -1 ? count : to} из ${count}`
@@ -49,6 +50,7 @@ export default function Squads() {
 
   return (
     <Container>
+      { user.showInfo && <WelcomeModal />}
       { user.squad ?
       <Paper className="p-3 mt-4">
         <Typography variant='h4' component='h1'>

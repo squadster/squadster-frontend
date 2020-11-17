@@ -12,6 +12,7 @@ const GET_CURRENT_USER = gql`
       imageUrl
       smallImageUrl
       vkUrl
+      hashId
       birthDate
       squadMember {
         id
