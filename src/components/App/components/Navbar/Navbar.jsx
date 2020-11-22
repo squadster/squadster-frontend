@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Toolbar, AppBar, IconButton, Avatar, MenuItem } from '@material-ui/core';
+import { Button, Toolbar, AppBar, IconButton, Avatar, MenuItem, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStyles from '../../App.styles'
@@ -41,6 +41,12 @@ export default function Navbar() {
       <AppBar height='10vh' position="static">
         {currentUser ? (
           <Toolbar className={classes.toolbar}>
+            <div className='d-flex flex-row mr-5 align-items-center'>
+              <img alt='Squadster new logo' src='icon.png' className={classes.logo} />
+              <Typography variant="h6" className={classes.credo}>
+                Make labs, not war
+              </Typography>
+            </div>
             <div className='d-flex flex-row mr-auto my-auto'>
               <div className='d-flex flex-row mr-3'>
                 <a href={VK_BOT_URL} rel="noopener noreferrer" target='_blank'>
@@ -97,6 +103,12 @@ export default function Navbar() {
           </Toolbar>
           ) : (
           <Toolbar className={classes.toolbar}>
+            <div className='d-flex flex-row mr-auto align-items-center'>
+              <img alt='Squadster new logo' src='icon.png' className={classes.logo} />
+              <Typography variant="h6" className={classes.credo}>
+                Make labs, not war
+              </Typography>
+            </div>
             <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
               <SVG src='VK_Blue_Logo.svg' width='50px'/>
               Войти
