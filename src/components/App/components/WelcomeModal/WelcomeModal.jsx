@@ -13,7 +13,7 @@ import { VK_BOT_URL, TELEGRAM_BOT_URL } from 'static'
 import CopyToClipboardButton from 'components/App/components/shared/CopyToClipboardButton'
 
 export default function WelcomeModal() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
 
