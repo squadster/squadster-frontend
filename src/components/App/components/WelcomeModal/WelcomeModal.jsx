@@ -4,13 +4,16 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { List, ListItem, ListItemText, TextField } from '@material-ui/core'
+import { List, ListItem, ListItemText, TextField, InputAdornment, IconButton } from '@material-ui/core'
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentUser } from 'actions/current_user_actions'
 import { Link } from 'react-router-dom'
+import { VK_BOT_URL, TELEGRAM_BOT_URL } from 'static'
+import CopyToClipboardButton from 'components/App/components/shared/CopyToClipboardButton'
 
 export default function WelcomeModal() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const user = useSelector(state => state.currentUser)
   const dispatch = useDispatch()
 
@@ -41,6 +44,13 @@ export default function WelcomeModal() {
                   defaultValue={user.hashId}
                   InputProps={{
                     readOnly: true,
+                    endAdornment: ( 
+                      <InputAdornment position="end">
+                        <CopyToClipboardButton Element={IconButton} text={user.hashId}>
+                            <FileCopyOutlinedIcon />
+                        </CopyToClipboardButton>
+                      </InputAdornment>
+                    )
                   }}
                   variant="outlined"
                 />
@@ -50,20 +60,26 @@ export default function WelcomeModal() {
               <ListItemText primary="- Больше информации об уведомлениях и их настройки доступны на странице вашего профиля." />
             </ListItem>
           </List>
-          <div className='pl-3 d-flex flex-column'>
+          <div className='px-3 d-flex flex-row justify-content-between'>
             <Link to='/profile'>
-              Мой профиль
+              <Button variant='contained' color='primary'>
+                Мой профиль
+              </Button>
             </Link>
-            <a className='mt-2' href='https://vk.com/club183369373' rel="noopener noreferrer" target="_blank">
-              VK бот
+            <a className='' href={VK_BOT_URL} rel="noopener noreferrer" target="_blank">
+              <Button variant='contained' color='primary'>
+                VK бот
+              </Button>
             </a>
-            <a className='mt-2' href='https://t.me/squadsterbot'  rel="noopener noreferrer" target="_blank">
-              TG бот
+            <a className='' href={TELEGRAM_BOT_URL} rel="noopener noreferrer" target="_blank">
+              <Button variant='contained' color='primary'>
+                Telegram бот
+              </Button>
             </a>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} className='my-4 mx-auto' variant='contained' color='default'>
             Ок
           </Button>
         </DialogActions>

@@ -7,7 +7,7 @@ import AppStyles from '../../App.styles'
 import SVG from 'react-inlinesvg';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { API_URL } from 'static'
+import { API_URL, VK_BOT_URL, TELEGRAM_BOT_URL } from 'static'
 import { isMobile, logout } from 'helpers'
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -43,10 +43,10 @@ export default function Navbar() {
           <Toolbar className={classes.toolbar}>
             <div className='d-flex flex-row mr-auto my-auto'>
               <div className='d-flex flex-row mr-3'>
-                <a href="https://vk.com/club183369373" rel="noopener noreferrer" target='_blank'>
+                <a href={VK_BOT_URL} rel="noopener noreferrer" target='_blank'>
                   <SVG src='VK_Blue_Logo.svg' width='50px'/>
                 </a>
-                <a href="https://t.me/squadsterbot" className='d-flex' rel="noopener noreferrer" target='_blank'>
+                <a href={TELEGRAM_BOT_URL} className='d-flex' rel="noopener noreferrer" target='_blank'>
                   <SVG className='my-auto' src='telegram_logo.svg' width='25px'/>
                 </a>
               </div>
