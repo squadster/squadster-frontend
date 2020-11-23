@@ -46,10 +46,12 @@ export default function AuthCallback() {
   useEffect(() => {
     if (data) {
       const user = data.currentUser
+      user.showInfo = params.show_info === "true"
+
       if (user)
         dispatch(setCurrentUser(user))
     }
-  }, [data, dispatch])
+  }, [data, dispatch, params.show_info])
 
   useEffect(() => {
     if (warnings.length)

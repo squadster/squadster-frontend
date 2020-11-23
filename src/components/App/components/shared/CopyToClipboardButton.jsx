@@ -3,18 +3,22 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Button } from '@material-ui/core'
 
-export default function CopyToClipboardButton({text, tooltipText, buttonOptions, className, children}) {
+export default function CopyToClipboardButton({text, tooltipText, Element=Button, buttonOptions, className, children}) {
   const [copied, setCopied] = useState(false)
   const [show, setShow] = useState(false)
 
   const handleCopyTooltip = () => {
     setCopied(true)
+    setShow(true)
   };
 
   useEffect(() => {
     let timer
     if (copied)
-      timer = setTimeout(() => setCopied(false), 3000)
+      timer = setTimeout(() => {
+        setShow(false)
+        setCopied(false)
+      }, 3000)
    
     return () => clearTimeout(timer)
   }, [copied])
@@ -29,16 +33,16 @@ export default function CopyToClipboardButton({text, tooltipText, buttonOptions,
         disableFocusListener
         disableHoverListener
         disableTouchListener
-        title={copied ? 'Скопировано!' : tooltipText}
+        title={tooltipText ? (copied ? 'Скопировано!' : tooltipText) : 'Скопировано!'}
       >
         <CopyToClipboard text={text}
                         onCopy={handleCopyTooltip}>
-          <Button {...buttonOptions}
-                  onMouseEnter={() => setShow(true)}
+          <Element {...buttonOptions}
+                  onMouseEnter={() => (tooltipText || copied) && setShow(true)}
                   onMouseLeave={() => setShow(false)}
                   className={className}>
             { children || 'Копировать' }
-          </Button>
+          </Element>
         </CopyToClipboard>
       </Tooltip>
   </div>
