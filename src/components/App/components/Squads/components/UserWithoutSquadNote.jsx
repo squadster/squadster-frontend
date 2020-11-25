@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import SVG from 'react-inlinesvg'
 import { Paper, Typography } from '@material-ui/core'
 import SquadsStyles from '../Squads.styles'
 
