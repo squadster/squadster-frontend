@@ -12,9 +12,6 @@ export default function UserWithoutSquadNote() {
   return (
     <Paper className="p-3 mt-4">
       <div className='row'>
-        <div className="col-sm-2 text-center">
-          <SVG className={classes.squadIcon} src='icons/squad_spinner.svg'/>
-        </div>
         <div className='col-sm-10'>
           <Typography variant='h5' className={classes.typography}>
             Вы пока не вступили во взвод, создайте новый взвод или отправьте заявку в существующий!
