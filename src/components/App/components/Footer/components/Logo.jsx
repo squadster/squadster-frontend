@@ -8,14 +8,13 @@ const StyledImage = styled.img`
       top: 2px;
     }
 
-    width: 80px;
+    width: 70px;
     left: 20px;
     top: 14px;
-    transform: rotate(100deg);
     cursor: pointer;
     z-index: 1
 `
 
 export default function Logo(props) {
-  return <StyledImage onClick={props.onClick} src={`${window.origin}/icons/squad_spinner.svg`}/>
+  return <StyledImage onClick={props.onClick} src={`${window.origin}/icon_black.png`}/>
 }

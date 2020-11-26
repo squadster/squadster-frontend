@@ -74,6 +74,15 @@ const AppStyles = (theme) => ({
     minWidth: '180px',
     minHeight: '45px'
   },
+
+  logo: {
+    width: '80px',
+    paddingTop: '8px'
+  },
+
+  credo: {
+    padding: '20px'
+  }
 });
 
 
