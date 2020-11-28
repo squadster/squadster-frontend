@@ -1,7 +1,6 @@
 const ScheduleStyles = (theme) => ({
   avatarBorder: {
     borderRadius: '50%',
-    marginTop: '50px',
     height: '74px',
     width: '74px',
   },
@@ -9,9 +8,9 @@ const ScheduleStyles = (theme) => ({
   lessonType: {
     fontSize: '2rem',
     position: 'absolute',
-    top: '50%',
+    top: '26%',
     textAlign: 'center',
-    left: '14%',
+    left: '9%',
     color: 'white',
   },
 });
