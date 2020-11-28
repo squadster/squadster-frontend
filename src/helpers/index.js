@@ -124,6 +124,10 @@ function lessonTypeFormatter(type) {
   }
 }
 
+function sortBy (array, field) {
+  return array.sort((a,b) => (a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0));
+}
+
 export {
   apolloClient,
   setAxiosInterceptors,
@@ -136,4 +140,5 @@ export {
   getWeekDayByNumber,
   dateParser,
   lessonTypeFormatter,
+  sortBy,
 };
