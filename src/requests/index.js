@@ -24,6 +24,17 @@ const GET_CURRENT_USER = gql`
           classDay
           squadNumber
           linkInvitationsEnabled
+          timetables {
+            date
+            lessons {
+              name
+              teacher
+              index
+              note
+              type
+              classroom
+            }
+          }
           hashId
           requests {
             id
@@ -102,6 +113,17 @@ const GET_SQUADS = gql`
       id
       squadNumber
       linkInvitationsEnabled
+      timetables {
+        date
+        lessons {
+          name
+          teacher
+          index
+          note
+          type
+          classroom
+        }
+      }
       members {
         role
         user {
