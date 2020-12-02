@@ -1,5 +1,7 @@
 # Squadster frontend
 
+[![Build Status](https://travis-ci.com/squadster/squadster-frontend.svg?branch=master)](https://travis-ci.com/squadster/squadster-frontend)
+
 Frontend repository for Squadster. Check the [API repo](https://github.com/squadster/squadster-api) for more info.
 
 ## Installation guides
