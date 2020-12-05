@@ -14,6 +14,11 @@ const GET_CURRENT_USER = gql`
       vkUrl
       hashId
       birthDate
+      settings {
+        vkNotificationsEnabled
+        telegramNotificationsEnabled
+        emailNotificationsEnabled
+      }
       squadMember {
         id
         role

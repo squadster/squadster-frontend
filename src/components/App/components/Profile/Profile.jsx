@@ -35,17 +35,29 @@ export default function Profile() {
   const userId = useParams().id
   const user = userId ? findColleague(currentUser, userId) : currentUser
   const [notifications, setNotifications] = useState({
-    vk: true,
-    telegram: true,
-    email: true
+    vk: currentUser.settings.vkNotificationsEnabled,
+    telegram: currentUser.settings.telegramNotificationsEnabled,
+    email: currentUser.settings.emailNotificationsEnabled
   });
   const dispatch = useDispatch();
   const [updateNotifications] = useMutation(UPDATE_NOTIFICATIONS);
 
   const handleChangeNotifications = (event) => {
     setNotifications({ ...notifications, [event.target.name]: event.target.checked });
-    updateNotifications({ variables: { vk: notifications.vk, tg: notifications.telegram, email: notifications.email }})
-    dispatch(updateUserNotifications(notifications))
+
+    switch (event.target.name) {
+      case "telegram":
+        updateNotifications({ variables: { tg: event.target.checked }});
+        break;
+      case "vk":
+        updateNotifications({ variables: { vk: event.target.checked }});
+        break;
+      case "email":
+        updateNotifications({ variables: { email: event.target.checked }});
+        break;
+    }
+
+    dispatch(updateUserNotifications(notifications));
   };
   const [anchorEl, setAnchorEl] = useState(null);
 
