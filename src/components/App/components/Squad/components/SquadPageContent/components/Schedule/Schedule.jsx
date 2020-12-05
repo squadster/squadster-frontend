@@ -20,8 +20,9 @@ import AddIcon from '@material-ui/icons/Add';
 import { InputBase, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useMutation } from '@apollo/react-hooks'
-import { UPDATE_LESSONS, CREATE_LESSON } from 'requests'
+import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON } from 'requests'
 import { setSquadTimetable } from 'actions/squads_actions'
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const useStyles = makeStyles(ScheduleStyles);
@@ -98,6 +99,20 @@ export default function Schedule(props) {
         dispatch(setSquadTimetable(user.squad, timetables))
         setLessons([...lessons, data.createLesson])
         setModifyLessonMode(false)
+      }
+    }
+  );
+
+  const [deleteLesson] = useMutation(
+    DELETE_LESSON,
+    {
+      onCompleted: (data) => {
+        timetables[timetables.indexOf(timetableForDate)] = {
+          date: timetableForDate.date,
+          lessons: lessons.filter(l => l.id !== data.deleteLesson.id),
+        }
+        dispatch(setSquadTimetable(user.squad, timetables))
+        setLessons(lessons.filter(l => l.id !== data.deleteLesson.id))
       }
     }
   );
@@ -304,10 +319,28 @@ export default function Schedule(props) {
                                 </div>
                               </div>
                             </div>
-                            <div className='col-sm-6'>
+                            <div className='col-sm-5'>
                               <Typography>
                                 {lesson.note}
                               </Typography>
+                            </div>
+                            <div className='col-sm-1'>
+                              {
+                                COMMANDER_ROLES.includes(user.squadMember.role) &&
+                                  <IconButton
+                                    className={classes.buttonWithoutHover}
+                                    onClick={
+                                      () => deleteLesson({
+                                        variables: {
+                                          index: lesson.index,
+                                          timetableId: timetableForDate.id,
+                                        }
+                                      })
+                                    }
+                                  >
+                                    <DeleteIcon/>
+                                  </IconButton>
+                              }
                             </div>
                           </div>
                         </Paper>

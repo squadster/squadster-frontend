@@ -99,6 +99,15 @@ const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
   }
 }`
 
+const DELETE_LESSON = gql`mutation deleteLesson($index: Int, $timetableId: Int,) {
+  deleteLesson(
+    index: $index,
+    timetable_id: $timetableId
+  ) {
+    id
+  }
+}`
+
 const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: String, $quequeNumber: Int) {
   updateSquadMember(
     id: $id,
@@ -308,4 +317,5 @@ export {
   UPDATE_CLASS_DAY,
   UPDATE_LESSONS,
   CREATE_LESSON,
+  DELETE_LESSON,
 }
