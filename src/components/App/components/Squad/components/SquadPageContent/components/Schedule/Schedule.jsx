@@ -20,7 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { InputBase, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useMutation } from '@apollo/react-hooks'
-import { DELETE_SQUAD_MEMBER, UPDATE_SQUAD_MEMBER, UPDATE_LESSONS } from 'requests'
+import { UPDATE_LESSONS, CREATE_LESSON } from 'requests'
 import { setSquadTimetable } from 'actions/squads_actions'
 
 
@@ -60,6 +60,7 @@ export default function Schedule(props) {
       'index'
     ) : []
   );
+
   const [lesson, setLesson] = React.useState('');
   const [lessonType, setLessonType] = React.useState('');
   const [lessonName, setLessonName] = React.useState('');
@@ -86,6 +87,20 @@ export default function Schedule(props) {
     </div>
   }
   const [updateSquadTimetable] = useMutation(UPDATE_LESSONS)
+  const [createLesson] = useMutation(
+    CREATE_LESSON,
+    {
+      onCompleted: (data) => {
+        timetables[timetables.indexOf(timetableForDate)] = {
+          date: timetableForDate.date,
+          lessons: [...lessons, data.createLesson]
+        }
+        dispatch(setSquadTimetable(user.squad, timetables))
+        setLessons([...lessons, data.createLesson])
+        setModifyLessonMode(false)
+      }
+    }
+  );
 
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -101,137 +116,121 @@ export default function Schedule(props) {
     timetables[timetables.indexOf(timetableForDate)] = { date: timetableForDate.date, lessons: newLessons }
 
     dispatch(setSquadTimetable(user.squad, timetables))
+    setLessons(newLessons)
     updateSquadTimetable({ variables: { lessons: newLessons.map(({ id, index }) => ({ id, index }))}})
   }
 
 
-//   <FormControl className={classes.formControl}>
-//   <InputLabel htmlFor='number-native-simple'>Номер взвода</InputLabel>
-//   <InputBase
-//     classes={{
-//       root: classes.inputRoot,
-//       input: classes.inputInput,
-//     }}
-//     inputProps={{
-//       id: 'number-native-simple',
-//     }}
-//     onChange={e => setSquadNumber(e.target.value)}
-//   />
-// </FormControl>
-
-  // function createOrUpdateLesson (lesson = undefined) {
-  //   return (
-  //     <Paper className="position-relative squad-card-member" square variant='outlined'>
-  //       <div className={"row mx-auto py-2 w-75"}>
-  //         <div className='col-sm-6 d-flex flex-row justify-content-md-between'>
-  //           <div className='d-flex flex-md-row flex-column align-items-center'>
-  //              {/* <FormControl> */}
-  //             <div className='d-flex flex-row'>
-
-  //              <InputLabel
-  //                 htmlFor='type-native-simple'
-  //                 shrink={true}
-  //                 disableAnimation={false}>
-  //                   Тип занятия
-  //               </InputLabel>
-  //               <Select
-  //                 classes={{
-  //                   root: classes.selectRoot,
-  //                 }}
-  //                 value={lesson ? lesson.type : lessonType}
-  //                 onChange={e => setLessonType(e.target.value)}
-  //                 id='type-native-simple'
-  //                 displayEmpty
-  //                 className={classes.selectEmpty}
-  //               >
-  //                 <MenuItem value={'practical'}>ПЗ</MenuItem>
-  //                 <MenuItem value={'lecture'}>ЛК</MenuItem>
-  //                 <MenuItem value={'lab'}>ЛР</MenuItem>
-  //               </Select>
-  //               </div>
-
-  //             <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
-  //             <InputLabel htmlFor='name-native-simple'>Название предмета</InputLabel>
-  //               <InputBase
-  //                 classes={{
-  //                   root: classes.inputRoot,
-  //                   input: classes.inputInput,
-  //                 }}
-  //                 value={lesson ? lesson.name : lessonName}
-  //                 inputProps={{
-  //                   id: 'name-native-simple',
-  //                 }}
-  //                 onChange={e => setLessonName(e.target.value)}
-  //                 required
-  //               />
-  //             <InputLabel htmlFor='teacher-native-simple'>Преподаватель</InputLabel>
-  //               <InputBase
-  //                 classes={{
-  //                   root: classes.inputRoot,
-  //                   input: classes.inputInput,
-  //                 }}
-  //                 value={lesson ? lesson.teacher : lessonTeacher}
-  //                 inputProps={{
-  //                   id: 'teacher-native-simple',
-  //                 }}
-  //                 onChange={e => setLessonTeacher(e.target.value)}
-  //               />
-  //             <InputLabel htmlFor='classroom-native-simple'>Адитория</InputLabel>
-  //               <InputBase
-  //                 classes={{
-  //                   root: classes.inputRoot,
-  //                   input: classes.inputInput,
-  //                 }}
-  //                 value={lesson ? lesson.classroom : lessonClassroom}
-  //                 inputProps={{
-  //                   id: 'classroom-native-simple',
-  //                 }}
-  //                 onChange={e => setLessonClassroom(e.target.value)}
-  //               />
-  //             </div>
-  //           {/* </FormControl> */}
-  //         </div>
-  //         </div>
-  //         <div className='col-sm-6'>
-  //         <InputLabel htmlFor='note-native-simple'>Заметки</InputLabel>
-  //               <InputBase
-  //                 classes={{
-  //                   root: classes.inputRoot,
-  //                   input: classes.inputInput,
-  //                 }}
-  //                 value={lesson ? lesson.note : lessonNote}
-  //                 inputProps={{
-  //                   id: 'note-native-simple',
-  //                 }}
-  //                 onChange={e => setLessonNote(e.target.value)}
-  //               />
-  //             <Button
-  //             variant='contained'
-  //             color='primary'
-  //             size='large'
-  //             style={{ marginTop: '60px' }}
-  //             // className={classes.newSquadMessageLink}
-  //             // onClick={
-  //             //   () => sendRequest({
-  //             //     variables: {
-  //             //       squad_number: squadNumber,
-  //             //       class_day: day
-  //             //     }
-  //             //   })
-  //             // }
-  //             // disabled={!squadNumber || !day}
-  //           >
-  //             Добавить урок
-  //           </Button>
-  //           </div>
-
-  //       </div>
-  //     </Paper>
-  //   )
-  // }
-
-  console.log('lessons: ', lessons)
-  console.log('user: ', user)
+  function createOrUpdateLesson (lesson = undefined) {
+    return (
+      <Paper className="position-relative squad-card-member" square variant='outlined'>
+        <div className={"row mx-auto py-2 w-75"}>
+          <div className='col-sm-8 d-flex flex-row justify-content-md-between'>
+            <div className='d-flex flex-md-row flex-column align-items-center'>
+              <div className='d-flex flex-row'>
+               <InputLabel
+                  htmlFor='type-native-simple'
+                  shrink={true}
+                  disableAnimation={false}>
+                    Тип занятия
+                </InputLabel>
+                <Select
+                  classes={{
+                    root: classes.selectRoot,
+                  }}
+                  value={lesson ? lesson.type : lessonType}
+                  onChange={e => setLessonType(e.target.value)}
+                  id='type-native-simple'
+                  displayEmpty
+                  className={classes.selectEmpty}
+                >
+                  <MenuItem value={'practical'}>ПЗ</MenuItem>
+                  <MenuItem value={'lecture'}>ЛК</MenuItem>
+                  <MenuItem value={'lab'}>ЛР</MenuItem>
+                </Select>
+              </div>
+              <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
+                <InputLabel htmlFor='name-native-simple'>Название предмета</InputLabel>
+                <InputBase
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  value={lesson ? lesson.name : lessonName}
+                  inputProps={{
+                    id: 'name-native-simple',
+                  }}
+                  onChange={e => setLessonName(e.target.value)}
+                  required
+                />
+                <InputLabel htmlFor='teacher-native-simple'>Преподаватель</InputLabel>
+                <InputBase
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  value={lesson ? lesson.teacher : lessonTeacher}
+                  inputProps={{
+                    id: 'teacher-native-simple',
+                  }}
+                  onChange={e => setLessonTeacher(e.target.value)}
+                />
+                <InputLabel htmlFor='classroom-native-simple'>Адитория</InputLabel>
+                <InputBase
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  value={lesson ? lesson.classroom : lessonClassroom}
+                  inputProps={{
+                    id: 'classroom-native-simple',
+                  }}
+                  onChange={e => setLessonClassroom(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <div className='col-sm-4'>
+            <InputLabel htmlFor='note-native-simple'>Заметки</InputLabel>
+              <InputBase
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputMultiline
+                value={lesson ? lesson.note : lessonNote}
+                inputProps={{
+                  id: 'note-native-simple',
+                }}
+                onChange={e => setLessonNote(e.target.value)}
+              />
+            <Button
+              variant='contained'
+              color='primary'
+              size='large'
+              style={{ marginTop: '60px' }}
+              className={classes.newSquadMessageLink}
+              onClick={
+                () => createLesson({
+                  variables: {
+                    timetableId: timetableForDate.id,
+                    name: lessonName,
+                    teacher: lessonTeacher,
+                    index: timetableForDate.lessons.length + 1,
+                    note: lessonNote,
+                    classroom: lessonClassroom,
+                    type: lessonType
+                  }
+                })
+              }
+            >
+            Добавить урок
+          </Button>
+          </div>
+        </div>
+      </Paper>
+    )
+  }
 
   return (
     <Paper className={'d-flex flex-column mt-5 mb-5'} square variant="outlined">
@@ -323,12 +322,10 @@ export default function Schedule(props) {
           )}
         </Droppable>
       </DragDropContext>
-
-      {/* {createOrUpdateLesson()}
       {
         modifyLessonMode && createOrUpdateLesson()
-      } */}
-      {/* {
+      }
+      {
         COMMANDER_ROLES.includes(user.squadMember.role) &&
           <IconButton
             className={classes.buttonWithoutHover}
@@ -338,7 +335,7 @@ export default function Schedule(props) {
           >
             <AddIcon/>
           </IconButton>
-      } */}
+      }
     </Paper>
   )
 }
