@@ -27,6 +27,7 @@ const GET_CURRENT_USER = gql`
           timetables {
             date
             lessons {
+              id
               name
               teacher
               index
@@ -107,6 +108,14 @@ const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: Stri
   }
 }`
 
+const UPDATE_LESSONS = gql`mutation updateLessons($lessons: LessonsBatch) {
+  updateLessons(
+    batch: $lessons
+  ) {
+    id
+  }
+}`
+
 const GET_SQUADS = gql`
   {
     squads {
@@ -114,8 +123,10 @@ const GET_SQUADS = gql`
       squadNumber
       linkInvitationsEnabled
       timetables {
+        id
         date
         lessons {
+          id
           name
           teacher
           index
@@ -264,4 +275,5 @@ export {
   DELETE_SQUAD,
   UPDATE_LINK_OPTION,
   UPDATE_CLASS_DAY,
+  UPDATE_LESSONS,
 }
