@@ -82,6 +82,18 @@ const UPDATE_ADVERTISMENT = gql`mutation updateSquad($id: Int, $advertisment: St
   }
 }`
 
+const UPDATE_NOTIFICATIONS = gql`mutation updateUserSettings($vk: Boolean, $tg: Boolean, $email: Boolean) {
+  updateUserSettings(
+    vk_notifications_enabled: $vk,
+    telegram_notifications_enabled: $tg,
+    email_notifications_enabled: $email
+  ) {
+    vkNotificationsEnabled
+    telegramNotificationsEnabled
+    emailNotificationsEnabled
+  }
+}`
+
 const UPDATE_NUMBER = gql`mutation updateSquad($id: Int, $number: String) {
   updateSquad(
     id: $id,
@@ -371,4 +383,5 @@ export {
   DELETE_LESSON,
   UPDATE_LESSON,
   CREATE_TIMETABLE,
+  UPDATE_NOTIFICATIONS
 }
