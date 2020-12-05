@@ -16,7 +16,12 @@ import Popover from '@material-ui/core/Popover';
 import { updateUserNotifications } from 'actions/current_user_actions';
 import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_NOTIFICATIONS } from 'requests'
+import { UPDATE_NOTIFICATIONS } from 'requests';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles(ProfileStyles)
 
@@ -59,7 +64,21 @@ export default function Profile() {
 
     dispatch(updateUserNotifications(notifications));
   };
+
+  const [openVkPopup, setOpenVkPopup] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClickOpenVkPopup = () => {
+    setOpenVkPopup(true);
+  };
+
+  const handleCloseVkPopup = () => {
+    setOpenVkPopup(false);
+  };
+
+  const openVkGroup = () => {
+    window.open('https://vk.com/club183369373','_blank');
+  };
 
   const handleOpenPopover = (event) => {
     setAnchorEl(event.currentTarget);
@@ -106,15 +125,36 @@ export default function Profile() {
             </Typography>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.telegram} onChange={handleChangeNotifications} name="telegram" />} label="Telegram бот"/>
-              <HelpIcon fontSize='small'/>
+              <HelpIcon fontSize='small' style={{cursor:'pointer'}}/>
             </div>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.vk} onChange={handleChangeNotifications} name="vk" />} label="VK бот"/>
-              <HelpIcon fontSize='small'/>
+              <HelpIcon fontSize='small' onClick={handleClickOpenVkPopup} style={{cursor:'pointer'}}/>
+              <Dialog
+                open={openVkPopup}
+                onClose={handleCloseVkPopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Чтобы бот мог отправлять вам уведомления напишите ему.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseVkPopup} color="primary">
+                    Ок
+                  </Button>
+                  <Button onClick={openVkGroup} color="primary" autoFocus>
+                    Перейти к боту
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.email} onChange={handleChangeNotifications} name="email" />} label="Электронная почта"/>
-              <HelpIcon aria-describedby={id} onClick={handleOpenPopover} fontSize='small'/>
+              <HelpIcon aria-describedby={id} onClick={handleOpenPopover} fontSize='small' style={{cursor:'pointer'}}/>
               <Popover
                 id={id}
                 open={open}
