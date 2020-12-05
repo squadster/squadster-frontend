@@ -13,6 +13,13 @@ const ScheduleStyles = (theme) => ({
     left: '9%',
     color: 'white',
   },
+
+  buttonWithoutHover: {
+    '&:hover': {
+      backgroundColor: 'inherit',
+      boxShadow: 'inherit',
+    },
+  },
 });
 
 

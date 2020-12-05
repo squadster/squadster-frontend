@@ -37,42 +37,35 @@ export default function ClassDay(props) {
         }
       </div>
       {editMode ?
-      <div className="d-flex flex-column">
-        <Select
-          classes={{
-            root: classes.selectRoot,
-          }}
-          value={classDay}
-          onChange={e => setClassDay(e.target.value)}
-          id='day-native-simple'
-        >
-          <MenuItem value={1}>Понедельник</MenuItem>
-          <MenuItem value={2}>Вторник</MenuItem>
-          <MenuItem value={3}>Среда</MenuItem>
-          <MenuItem value={4}>Четверг</MenuItem>
-          <MenuItem value={5}>Пятница</MenuItem>
-          <MenuItem value={6}>Суббота</MenuItem>
-        </Select>
-       {/* <TextField
-          multiline
-          value={classDay}
-          className='w-100'
-          onChange={(e) => setClassDay(e.target.value)}
-          variant="outlined"
-        /> */}
-        <Button onClick={() => {
-            updateClassDay({ variables: { classDay: classDay, id: user.squad.id }})
-            dispatch(updateSquadClassDay(classDay))
-            setEditMode(false)
-          }}
-          className="mt-2"
-          color="primary">
-          Сохранить
-        </Button>
-        </div> :
-        <Typography variant='body1'>
-          { getWeekDayByNumber(classDay) || 'День занятий еще не назначен' }
-        </Typography>
+        <div className="d-flex flex-column">
+          <Select
+            classes={{
+              root: classes.selectRoot,
+            }}
+            value={classDay}
+            onChange={e => setClassDay(e.target.value)}
+            id='day-native-simple'
+          >
+            <MenuItem value={1}>Понедельник</MenuItem>
+            <MenuItem value={2}>Вторник</MenuItem>
+            <MenuItem value={3}>Среда</MenuItem>
+            <MenuItem value={4}>Четверг</MenuItem>
+            <MenuItem value={5}>Пятница</MenuItem>
+            <MenuItem value={6}>Суббота</MenuItem>
+          </Select>
+          <Button onClick={() => {
+              updateClassDay({ variables: { classDay: classDay, id: user.squad.id }})
+              dispatch(updateSquadClassDay(classDay))
+              setEditMode(false)
+            }}
+            className="mt-2"
+            color="primary">
+            Сохранить
+          </Button>
+          </div> :
+          <Typography variant='body1'>
+            { getWeekDayByNumber(classDay) || 'День занятий еще не назначен' }
+          </Typography>
       }
     </Paper>
 }
