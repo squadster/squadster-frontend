@@ -150,7 +150,7 @@ export default function SquadPageContent(props) {
                                    buttonOptions={{variant: 'contained', color: 'primary'}}
                                    tooltipText='Скопировать ссылку на приглашение'
                                    text={buildInvitationLink(user.squad.hashId)}>
-              Пригласить во взвод
+              Копировать приглашение
             </CopyToClipboardButton>
           }
         </div>
