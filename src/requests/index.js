@@ -156,6 +156,36 @@ const CREATE_LESSON = gql`
       }
     }`
 
+const UPDATE_LESSON = gql`
+  mutation updateLesson(
+    $timetableId: Int,
+    $name: String,
+    $teacher: String,
+    $index: Int,
+    $note: String,
+    $classroom: String,
+    $type: String
+  ) {
+      updateLesson(
+        timetable_id: $timetableId,
+        name: $name,
+        teacher: $teacher,
+        current_index: $index,
+        note: $note,
+        classroom: $classroom,
+        type: $type
+      )
+      {
+        id
+        name
+        teacher
+        index
+        note
+        type
+        classroom
+      }
+    }`
+
 const GET_SQUADS = gql`
   {
     squads {
@@ -318,4 +348,5 @@ export {
   UPDATE_LESSONS,
   CREATE_LESSON,
   DELETE_LESSON,
+  UPDATE_LESSON,
 }

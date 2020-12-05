@@ -1,27 +1,21 @@
 import React from 'react';
 import 'date-fns';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux'
-import { Typography, Paper, TextField, Button, Avatar, IconButton } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid';
+import { useDispatch } from 'react-redux';
+import { Typography, Paper, Button, IconButton, InputBase, InputLabel, MenuItem, Select, makeStyles } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { dateParser, sortBy } from '../../../../../../../../helpers/index'
-import ScheduleStyles from './Schedule.style'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { dateParser, sortBy } from '../../../../../../../../helpers/index';
+import ScheduleStyles from './Schedule.style';
 import LessonIcon from '../LessonIcon';
-import { Link } from 'react-router-dom'
+import { COMMANDER_ROLES } from 'static';
+import AddIcon from '@material-ui/icons/Add';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON, UPDATE_LESSON } from 'requests';
+import { setSquadTimetable } from 'actions/squads_actions';
+import EditIcon from '@material-ui/icons/Edit';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { COMMANDER_ROLES } from 'static'
-import AddIcon from '@material-ui/icons/Add';
-import { InputBase, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { useMutation } from '@apollo/react-hooks'
-import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON } from 'requests'
-import { setSquadTimetable } from 'actions/squads_actions'
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
@@ -62,21 +56,17 @@ export default function Schedule(props) {
     ) : []
   );
 
-  const [lesson, setLesson] = React.useState('');
   const [lessonType, setLessonType] = React.useState('');
   const [lessonName, setLessonName] = React.useState('');
   const [lessonTeacher, setLessonTeacher] = React.useState('');
   const [lessonClassroom, setLessonClassroom] = React.useState('');
   const [lessonNote, setLessonNote] = React.useState('');
+  const [lessonIndex, setLessonIndex] = React.useState('');
+  const [lessonId, setLessonId] = React.useState('');
   const [modifyLessonMode, setModifyLessonMode] = React.useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setLessons();
-  };
-
-  const handleModifyLessonMode = (lesson) => {
-    // setSelectedDate(date);
     setLessons();
   };
 
@@ -98,6 +88,22 @@ export default function Schedule(props) {
         }
         dispatch(setSquadTimetable(user.squad, timetables))
         setLessons([...lessons, data.createLesson])
+        setModifyLessonMode(false)
+      }
+    }
+  );
+
+  const [updateLesson] = useMutation(
+    UPDATE_LESSON,
+    {
+      onCompleted: (data) => {
+        console.log('data: ', data)
+        timetables[timetables.indexOf(timetableForDate)] = {
+          date: timetableForDate.date,
+          lessons: [...lessons, data.createLesson]
+        }
+        dispatch(setSquadTimetable(user.squad, timetables))
+        // setLessons([...lessons, data.createLesson])
         setModifyLessonMode(false)
       }
     }
@@ -135,8 +141,18 @@ export default function Schedule(props) {
     updateSquadTimetable({ variables: { lessons: newLessons.map(({ id, index }) => ({ id, index }))}})
   }
 
+  const setEditableLesson = (lesson) => {
+    setLessonType(lesson.type)
+    setLessonName(lesson.name)
+    setLessonTeacher(lesson.teacher)
+    setLessonClassroom(lesson.classroom)
+    setLessonNote(lesson.note)
+    setLessonIndex(lesson.index)
+    setLessonId(lesson.id)
+  }
 
-  function createOrUpdateLesson (lesson = undefined) {
+
+  function createOrUpdateLesson(operation) {
     return (
       <Paper className="position-relative squad-card-member" square variant='outlined'>
         <div className={"row mx-auto py-2 w-75"}>
@@ -153,7 +169,7 @@ export default function Schedule(props) {
                   classes={{
                     root: classes.selectRoot,
                   }}
-                  value={lesson ? lesson.type : lessonType}
+                  value={lessonType}
                   onChange={e => setLessonType(e.target.value)}
                   id='type-native-simple'
                   displayEmpty
@@ -171,7 +187,7 @@ export default function Schedule(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  value={lesson ? lesson.name : lessonName}
+                  value={lessonName}
                   inputProps={{
                     id: 'name-native-simple',
                   }}
@@ -184,7 +200,7 @@ export default function Schedule(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  value={lesson ? lesson.teacher : lessonTeacher}
+                  value={lessonTeacher}
                   inputProps={{
                     id: 'teacher-native-simple',
                   }}
@@ -196,7 +212,7 @@ export default function Schedule(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  value={lesson ? lesson.classroom : lessonClassroom}
+                  value={lessonClassroom}
                   inputProps={{
                     id: 'classroom-native-simple',
                   }}
@@ -213,7 +229,7 @@ export default function Schedule(props) {
                   input: classes.inputInput,
                 }}
                 inputMultiline
-                value={lesson ? lesson.note : lessonNote}
+                value={lessonNote}
                 inputProps={{
                   id: 'note-native-simple',
                 }}
@@ -226,7 +242,20 @@ export default function Schedule(props) {
               style={{ marginTop: '60px' }}
               className={classes.newSquadMessageLink}
               onClick={
-                () => createLesson({
+                () => operation === 'Update' ?
+                updateLesson({
+                  variables: {
+                    timetableId: timetableForDate.id,
+                    name: lessonName,
+                    teacher: lessonTeacher,
+                    index: lessonIndex,
+                    note: lessonNote,
+                    classroom: lessonClassroom,
+                    type: lessonType
+                  }
+                })
+                :
+                createLesson({
                   variables: {
                     timetableId: timetableForDate.id,
                     name: lessonName,
@@ -239,7 +268,7 @@ export default function Schedule(props) {
                 })
               }
             >
-            Добавить урок
+            {operation === 'Update' ? 'Сохранить' : 'Добавить урок'}
           </Button>
           </div>
         </div>
@@ -295,7 +324,7 @@ export default function Schedule(props) {
           >
             {lessons ?
               lessons.map((lesson, index) => {
-                return (
+                return lessonId === lesson.id ? createOrUpdateLesson('Update') : (
                   <Draggable isDragDisabled={!COMMANDER_ROLES.includes(user.squadMember.role)} key={lesson.id} draggableId={lesson.id} index={index}>
                     {(provided, snapshot) => (
                       <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -327,19 +356,27 @@ export default function Schedule(props) {
                             <div className='col-sm-1'>
                               {
                                 COMMANDER_ROLES.includes(user.squadMember.role) &&
-                                  <IconButton
-                                    className={classes.buttonWithoutHover}
-                                    onClick={
-                                      () => deleteLesson({
-                                        variables: {
-                                          index: lesson.index,
-                                          timetableId: timetableForDate.id,
-                                        }
-                                      })
-                                    }
-                                  >
-                                    <DeleteIcon/>
-                                  </IconButton>
+                                  <div>
+                                    <IconButton
+                                      className={classes.buttonWithoutHover}
+                                      onClick={
+                                        () => deleteLesson({
+                                          variables: {
+                                            index: lesson.index,
+                                            timetableId: timetableForDate.id,
+                                          }
+                                        })
+                                      }
+                                    >
+                                      <DeleteIcon/>
+                                    </IconButton>
+                                    <IconButton
+                                      className={classes.buttonWithoutHover}
+                                      onClick={() => setEditableLesson(lesson)}
+                                    >
+                                      <EditIcon/>
+                                    </IconButton>
+                                  </div>
                               }
                             </div>
                           </div>
@@ -356,7 +393,7 @@ export default function Schedule(props) {
         </Droppable>
       </DragDropContext>
       {
-        modifyLessonMode && createOrUpdateLesson()
+        modifyLessonMode && !lessonId && createOrUpdateLesson('Create')
       }
       {
         COMMANDER_ROLES.includes(user.squadMember.role) &&
