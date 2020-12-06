@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Paper, Avatar, Typography, Container, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ProfileStyles from './Profile.styles'
@@ -22,6 +22,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const useStyles = makeStyles(ProfileStyles)
 
@@ -46,7 +49,6 @@ export default function Profile() {
   });
   const dispatch = useDispatch();
   const [updateNotifications] = useMutation(UPDATE_NOTIFICATIONS);
-
   const handleChangeNotifications = (event) => {
     setNotifications({ ...notifications, [event.target.name]: event.target.checked });
 
@@ -66,8 +68,9 @@ export default function Profile() {
   };
 
   const [openVkPopup, setOpenVkPopup] = useState(false);
+  const [openTelegramPopup, setOpenTelegramPopup] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const textAreaRef = useRef(null);
   const handleClickOpenVkPopup = () => {
     setOpenVkPopup(true);
   };
@@ -76,12 +79,24 @@ export default function Profile() {
     setOpenVkPopup(false);
   };
 
+  const handleClickOpenTeleramPopup = () => {
+    setOpenTelegramPopup(true);
+  };
+
+  const handleCloseTelegramPopup = () => {
+    setOpenTelegramPopup(false);
+  };
+
   const openVkGroup = () => {
     window.open('https://vk.com/club183369373','_blank');
   };
 
   const handleOpenPopover = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const openTGBot = () => {
+    window.open('https://t.me/squadsterbot','_blank');
   };
 
   const handleClosePopover = () => {
@@ -125,7 +140,38 @@ export default function Profile() {
             </Typography>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.telegram} onChange={handleChangeNotifications} name="telegram" />} label="Telegram бот"/>
-              <HelpIcon fontSize='small' style={{cursor:'pointer'}}/>
+              <HelpIcon fontSize='small' style={{cursor:'pointer'}} onClick={handleClickOpenTeleramPopup}/>
+              <Dialog open={openTelegramPopup} onClose={handleCloseTelegramPopup} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Telegram бот</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Чтобы бот имел возможность отправлять вам уведомления отправьте ему свой ключ:
+                  </DialogContentText>
+                  <div className='d-flex align-items-center'>
+                    <TextField
+                      id="outlined-read-only-input"
+                      label="Ключ"
+                      defaultValue={currentUser.hashId}
+                      ref={textAreaRef}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      variant="outlined"
+                    />
+                    <CopyToClipboard text={currentUser.hashId}>
+                      <FileCopyIcon style={{cursor:'pointer'}} />
+                    </CopyToClipboard>
+                  </div>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseTelegramPopup} color="primary">
+                    Ок
+                  </Button>
+                  <Button onClick={openTGBot} color="primary">
+                    Перейти к боту
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.vk} onChange={handleChangeNotifications} name="vk" />} label="VK бот"/>
@@ -136,7 +182,7 @@ export default function Profile() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
               >
-                <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"ВК бот"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
                     Чтобы бот мог отправлять вам уведомления напишите ему.
