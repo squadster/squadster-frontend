@@ -69,6 +69,8 @@ export default function Profile() {
 
   const [openVkPopup, setOpenVkPopup] = useState(false);
   const [openTelegramPopup, setOpenTelegramPopup] = useState(false);
+  const [openEmailPopup, setOpenEmailPopup] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const textAreaRef = useRef(null);
   const handleClickOpenVkPopup = () => {
@@ -85,6 +87,14 @@ export default function Profile() {
 
   const handleCloseTelegramPopup = () => {
     setOpenTelegramPopup(false);
+  };
+
+  const handleOpenEmailPopup = () => {
+    setOpenEmailPopup(true);
+  };
+
+  const handleCloseEmailPopup = () => {
+    setOpenEmailPopup(false);
   };
 
   const openVkGroup = () => {
@@ -200,23 +210,25 @@ export default function Profile() {
             </div>
             <div className='d-flex flex-row align-items-baseline'>
               <FormControlLabel control={<Switch checked={notifications.email} onChange={handleChangeNotifications} name="email" />} label="Электронная почта"/>
-              <HelpIcon aria-describedby={id} onClick={handleOpenPopover} fontSize='small' style={{cursor:'pointer'}}/>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClosePopover}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
-                }}
+              <HelpIcon aria-describedby={id} onClick={handleOpenEmailPopup} fontSize='small' style={{cursor:'pointer'}}/>
+              <Dialog
+                open={openEmailPopup}
+                onClose={handleCloseEmailPopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
               >
-                <Typography className={classes.typography}>Чтобы получать уведомления по почте, убедитесь, что вы указали и подтвердили свою почту.</Typography>
-              </Popover>
+                <DialogTitle id="alert-dialog-title">{"Уведомления по электронной почте"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                  Чтобы получать уведомления по почте, убедитесь, что вы указали и подтвердили свою почту.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseEmailPopup} color="primary">
+                    Ок
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </div>
