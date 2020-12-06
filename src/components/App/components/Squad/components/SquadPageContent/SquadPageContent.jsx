@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Typography, Paper, Badge, IconButton } from '@material-ui/core'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { isCommander, canChangeClassDay } from 'helpers'
 import SquadMemberCard from './components/SquadMemberCard/SquadMemberCard'
 import Advertisment from './components/Advertisment'
@@ -162,17 +166,25 @@ export default function SquadPageContent(props) {
     <Advertisment manage={manage} user={user}/>
     <DragDropContext onDragEnd={onDragEnd}>
       <Paper className={'d-flex flex-column mt-5 mb-5'} square variant="outlined" style={{minHeight: '500px'}}>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography variant='h4' className='my-4 text-center'>
+              <b>Командный состав</b>
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className='flex-column p-0'>
+            { commanders.length ? commanders.map((member, index) => {
+              return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
+            }) : noMembers(user) }
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
         <div className='d-flex flex-column'>
-          <Typography variant='h4' className='my-4 text-center'>
-            <b>Командный состав</b>
-          </Typography>
-          { commanders.length ? commanders.map((member, index) => {
-            return <SquadMemberCard manage={manage} openModal={openModal} currentUser={user} key={index} member={member}/>
-          }) : noMembers(user) }
-        </div>
-        <div className='d-flex flex-column'>
-          <Typography variant='h4' className='my-4 text-center'>
-            <b>Состав</b>
+          <Typography variant='h4' className='my-4' style={{paddingLeft: "24px"}}>
+            <b>Очередь на дежурство</b>
           </Typography>
           <Droppable isDropDisabled={!manage} droppableId='members'>
             {(provided, snapshot) => (
