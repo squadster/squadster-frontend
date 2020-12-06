@@ -38,7 +38,6 @@ export default function Schedule(props) {
 
   const classes = useStyles();
   const user = props.user;
-  console.log('user: ', user)
   const timetables = sortBy(user.squad.timetables, 'index');
 
   const nearestLessonsDay = timetables.reduce(
@@ -84,7 +83,8 @@ export default function Schedule(props) {
       onCompleted: (data) => {
         timetables[timetables.indexOf(timetableForDate)] = {
           date: timetableForDate.date,
-          lessons: [...lessons, data.createLesson]
+          lessons: [...lessons, data.createLesson],
+          id: timetableForDate.id,
         }
         dispatch(setSquadTimetable(user.squad, timetables))
         setLessons([...lessons, data.createLesson])
@@ -97,13 +97,16 @@ export default function Schedule(props) {
     UPDATE_LESSON,
     {
       onCompleted: (data) => {
-        console.log('data: ', data)
+        const newLessons = lessons.map(l => l.id === data.updateLesson.id ? l = data.updateLesson : l);
+
         timetables[timetables.indexOf(timetableForDate)] = {
           date: timetableForDate.date,
-          lessons: [...lessons, data.createLesson]
+          lessons: newLessons,
+          id: timetableForDate.id,
         }
         dispatch(setSquadTimetable(user.squad, timetables))
-        // setLessons([...lessons, data.createLesson])
+        setLessonId('')
+        setLessons(newLessons)
         setModifyLessonMode(false)
       }
     }
@@ -113,12 +116,17 @@ export default function Schedule(props) {
     DELETE_LESSON,
     {
       onCompleted: (data) => {
+        const newLessons = lessons.filter(
+          l => l.id !== data.deleteLesson.id
+        ).map((lesson, index) => { lesson.index = index + 1; return lesson });
+
         timetables[timetables.indexOf(timetableForDate)] = {
           date: timetableForDate.date,
-          lessons: lessons.filter(l => l.id !== data.deleteLesson.id),
+          lessons: newLessons,
         }
         dispatch(setSquadTimetable(user.squad, timetables))
-        setLessons(lessons.filter(l => l.id !== data.deleteLesson.id))
+        setLessons(newLessons)
+        updateSquadTimetable({ variables: { lessons: newLessons.map(({ id, index }) => ({ id, index }))}})
       }
     }
   );
@@ -245,7 +253,7 @@ export default function Schedule(props) {
                 () => operation === 'Update' ?
                 updateLesson({
                   variables: {
-                    timetableId: timetableForDate.id,
+                    id: lessonId,
                     name: lessonName,
                     teacher: lessonTeacher,
                     index: lessonIndex,
