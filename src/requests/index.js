@@ -158,19 +158,17 @@ const CREATE_LESSON = gql`
 
 const UPDATE_LESSON = gql`
   mutation updateLesson(
-    $timetableId: Int,
+    $id: Int,
     $name: String,
     $teacher: String,
-    $index: Int,
     $note: String,
     $classroom: String,
     $type: String
   ) {
       updateLesson(
-        timetable_id: $timetableId,
+        id: $id,
         name: $name,
         teacher: $teacher,
-        current_index: $index,
         note: $note,
         classroom: $classroom,
         type: $type
