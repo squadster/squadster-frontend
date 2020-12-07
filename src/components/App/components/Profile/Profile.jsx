@@ -5,6 +5,7 @@ import ProfileStyles from './Profile.styles'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import NotFound from 'components/App/components/shared/NotFound'
+import NotificationSettings from './components/NotificationSettings'
 
 const useStyles = makeStyles(ProfileStyles)
 
@@ -49,6 +50,7 @@ export default function Profile() {
           </div>
         </div>
       </Paper>
+      <NotificationSettings classes={classes} user={currentUser}/>
       <Link className='d-flex justify-content-center' to='/'>
         <Button variant='contained' color='primary' className='mt-4 color-white'>
           Назад
