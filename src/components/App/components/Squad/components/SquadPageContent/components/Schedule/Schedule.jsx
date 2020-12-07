@@ -46,7 +46,11 @@ export default function Schedule(props) {
   const nearestDate = dateParser(nearestLessonsDay.date);
   const [selectedDate, setSelectedDate] = React.useState(nearestDate);
 
-  const timetableForDate = timetables.filter(t => dateParser(t.date).toDateString() === selectedDate.toDateString())[0];
+  const [timetableForDate, setTimetableForDate] = React.useState(
+    timetables.filter(
+      t => dateParser(t.date).toDateString() === selectedDate.toDateString()
+    )[0]
+  );
 
   const [lessons, setLessons] = React.useState(
     timetableForDate ? sortBy(
@@ -66,7 +70,11 @@ export default function Schedule(props) {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setLessons();
+    const newTimetable = timetables.filter(
+      t => dateParser(t.date).toDateString() === date.toDateString()
+    )[0];
+    setTimetableForDate(newTimetable);
+    setLessons(newTimetable ? sortBy(newTimetable.lessons, 'index') : []);
   };
 
   function noLessons() {
@@ -370,8 +378,7 @@ export default function Schedule(props) {
                                       onClick={
                                         () => deleteLesson({
                                           variables: {
-                                            index: lesson.index,
-                                            timetableId: timetableForDate.id,
+                                            id: lesson.id,
                                           }
                                         })
                                       }
