@@ -155,6 +155,30 @@ const CREATE_LESSON = gql`
       }
     }`
 
+const CREATE_TIMETABLE = gql`
+  mutation createTimetable(
+    $date: String,
+    $squad_id: Int
+  ) {
+      createTimetable(
+        date: $date,
+        squad_id: $squad_id
+      )
+      {
+        id
+        date
+        lessons {
+          id
+          name
+          teacher
+          index
+          note
+          type
+          classroom
+        }
+      }
+    }`
+
 const UPDATE_LESSON = gql`
   mutation updateLesson(
     $id: Int,
@@ -346,4 +370,5 @@ export {
   CREATE_LESSON,
   DELETE_LESSON,
   UPDATE_LESSON,
+  CREATE_TIMETABLE,
 }

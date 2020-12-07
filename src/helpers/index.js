@@ -112,6 +112,12 @@ function dateParser(date) {
   return new Date(date[2], (date[1] - 1), date[0]);
 }
 
+function toBeDateFormat(date) {
+  date = date.toLocaleDateString().split("/");
+
+  return [(date[1].length === 1 ? '0' + date[1] : date[1]), (date[0].length === 1 ? '0' + date[0] : date[0]), date[2]].join('.');
+}
+
 function lessonTypeFormatter(type) {
   switch (type) {
     case 'practical':
@@ -139,6 +145,7 @@ export {
   getWeekDayNumber,
   getWeekDayByNumber,
   dateParser,
+  toBeDateFormat,
   lessonTypeFormatter,
   sortBy,
 };
