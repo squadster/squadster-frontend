@@ -12,8 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON, UPDATE_LESSON, CREATE_TIMETABLE } from 'requests';
-import { setSquadTimetable } from 'actions/squads_actions';
-import EditIcon from '@material-ui/icons/Edit';
+import { setSquadTimetable } from 'actions/squads_actions';import EditIcon from '@material-ui/icons/Edit';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -285,6 +284,7 @@ export default function Schedule(props) {
               className={classes.newSquadMessageLink}
               onClick={() => {
                 if (!timetableForDate) return onCreateLessonNewTimetable()
+
                 operation === 'Update' ?
                   updateLesson({
                     variables: {

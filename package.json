@@ -62,7 +62,7 @@
     "react-scripts/**/minimist": "^1.2.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HOST=squadster.wtf react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
