@@ -303,7 +303,7 @@ export default function Schedule(props) {
                       timetableId: timetableForDate.id,
                       name: lessonName,
                       teacher: lessonTeacher,
-                      index: timetableForDate.lessons.length + 1,
+                      index: lessons.length + 1,
                       note: lessonNote,
                       classroom: lessonClassroom,
                       type: lessonType
