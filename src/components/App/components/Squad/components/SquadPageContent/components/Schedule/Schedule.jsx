@@ -39,10 +39,10 @@ export default function Schedule(props) {
   const user = props.user;
   const timetables = user.squad.timetables ? sortBy(user.squad.timetables, 'index') : [];
 
-  const nearestLessonsDay = timetables.reduce(
+  const nearestLessonsDay = timetables.length && timetables.reduce(
     (res, obj) => (new Date(obj.date) < new Date(res.date)) ? obj : res
   );
-  const nearestDate = dateParser(nearestLessonsDay.date);
+  const nearestDate = timetables.length ? dateParser(nearestLessonsDay.date) : new Date();
   const [selectedDate, setSelectedDate] = React.useState(nearestDate);
 
   const [timetableForDate, setTimetableForDate] = React.useState(
