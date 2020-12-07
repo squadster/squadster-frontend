@@ -44,7 +44,7 @@ export default function Profile() {
               <br/>
               {user.mobilePhone}
               <br/>
-              {`${user.university} ${user.faculty}`}
+              {user.university ? `${user.university} ${user.faculty}` : ``}
             </Typography>
           </div>
         </div>
