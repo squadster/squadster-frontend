@@ -62,7 +62,7 @@ function buildInvitationLink(hashId) {
   return `${window.origin}/invitation/${hashId}`
 }
 
-export default function SquadPageContent(props) {
+export default function SquadPageContent(_props) {
   const dispatch = useDispatch()
   const [deleteSquadMemberQuery] = useMutation(DELETE_SQUAD_MEMBER)
   const [updateSquadMemberQuery] = useMutation(UPDATE_SQUAD_MEMBER)
@@ -73,9 +73,9 @@ export default function SquadPageContent(props) {
   const user = useSelector(state => state.currentUser)
   const requests = useSelector(state => state.currentUser.squad.requests.filter((request) => !request.approvedAt))
 
-  const [manage, setManage] = useState(isCommander(user))
-
   const userMember= user.squad.members.find(member => member.user.id === user.id)
+  const [manage, setManage] = useState(isCommander(userMember))
+
   const classes = useStyles()
 
   const openModal = (member, message, operation) => {
@@ -161,7 +161,7 @@ export default function SquadPageContent(props) {
         </div>
       </div>
       <div className={classes.classDay}>
-        <ClassDay classDay={user.squad.classDay} manage={canChangeClassDay(user)} user={user}/>
+        <ClassDay classDay={user.squad.classDay} manage={canChangeClassDay(userMember)} user={user}/>
       </div>
     </div>
     <Advertisment manage={manage} user={user}/>
