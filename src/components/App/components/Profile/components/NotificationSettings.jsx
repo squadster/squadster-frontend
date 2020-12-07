@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, FormControlLabel, Switch, TextField, Button } from '@material-ui/core';
+import { Paper, Typography, FormControlLabel, Switch, TextField, Button, Tooltip, ClickAwayListener } from '@material-ui/core';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_NOTIFICATIONS } from 'requests';
@@ -21,6 +21,7 @@ export default function NotificationSettings(props) {
   const [openVkPopup, setOpenVkPopup] = useState(false);
   const [openTelegramPopup, setOpenTelegramPopup] = useState(false);
   const [openEmailPopup, setOpenEmailPopup] = useState(false);
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   const [updateNotifications] = useMutation(UPDATE_NOTIFICATIONS);
 
@@ -78,6 +79,14 @@ export default function NotificationSettings(props) {
     window.open('https://t.me/squadsterbot','_blank');
   };
 
+  const handleTooltipClose = () => {
+    setOpenTooltip(false);
+  };
+
+  const handleCopyTooltip = () => {
+    setOpenTooltip(true);
+  };
+
   return(
     <Paper className={classes.root} variant='outlined'>
       <div className='d-flex flex-column flex-sm-row'>
@@ -103,10 +112,25 @@ export default function NotificationSettings(props) {
                       readOnly: true,
                     }}
                     variant="outlined"
+                    style={{width:'472px'}}
                   />
-                  <CopyToClipboard text={currentUser.hashId}>
-                    <FileCopyIcon style={{cursor:'pointer'}} />
-                  </CopyToClipboard>
+                  <ClickAwayListener onClickAway={handleTooltipClose}>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true,
+                      }}
+                      onClose={handleTooltipClose}
+                      open={openTooltip}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="Скопировано"
+                    >
+                      <CopyToClipboard text={currentUser.hashId} onCopy={handleCopyTooltip}>
+                        <FileCopyIcon style={{cursor: 'pointer', marginLeft: '13px'}} />
+                      </CopyToClipboard>
+                    </Tooltip>
+                  </ClickAwayListener>
                 </div>
               </DialogContent>
               <DialogActions>
