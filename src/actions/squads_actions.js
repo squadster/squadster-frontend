@@ -18,4 +18,8 @@ const updateSquad = (squad, params) => {
   return { type: 'UPDATE SQUAD', squad: squad, params: params }
 }
 
-export { setSquads, deleteRequest, pushRequest, deleteSquad, updateSquad }
+const setSquadTimetable = (squad, timetables) => {
+  return { type: "SET SQUAD TIMETABLE", squad: squad, timetables: timetables }
+}
+
+export { setSquads, deleteRequest, pushRequest, deleteSquad, updateSquad, setSquadTimetable }

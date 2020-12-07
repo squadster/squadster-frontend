@@ -1,6 +1,6 @@
 const squadsReducer = (state, action) => {
   const { userRequest, squad } = action
-  
+
   switch (action.type) {
     case 'SET SQUAD':
       state.push(action.squad)
@@ -16,7 +16,7 @@ const squadsReducer = (state, action) => {
       state.forEach(squad => {
         squad.requests = squad.requests.filter((request) => request.user.id !== userRequest.user.id)
       })
-  
+
       squad.requests.push(userRequest)
       state[state.indexOf(squad)] = squad
       return state
@@ -30,6 +30,12 @@ const squadsReducer = (state, action) => {
         return state.filter((sq) => sq.id !== squad.id)
       else
         return state
+
+    case 'SET SQUAD TIMETABLE':
+      squad.timetables = action.timetables
+      state[state.indexOf(squad)] = squad
+
+      return state
     default:
       return state ? state : []
   }

@@ -105,6 +105,29 @@ function canChangeClassDay(user) {
   }
 }
 
+function dateParser(date) {
+  // dd.MM.YYYY
+  date = date.split(".");
+
+  return new Date(date[2], (date[1] - 1), date[0]);
+}
+
+function lessonTypeFormatter(type) {
+  switch (type) {
+    case 'practical':
+      return { name: 'ПЗ', color: '#a3d696' }
+    case 'lecture':
+      return { name: 'ЛК', color: '#edd482' }
+    case 'lab':
+      return { name: 'ЛР', color: '#eda8a8' }
+    default: break
+  }
+}
+
+function sortBy (array, field) {
+  return array.sort((a,b) => (a[field] > b[field]) ? 1 : ((b[field] > a[field]) ? -1 : 0));
+}
+
 export {
   apolloClient,
   setAxiosInterceptors,
@@ -115,4 +138,7 @@ export {
   isCommander,
   getWeekDayNumber,
   getWeekDayByNumber,
+  dateParser,
+  lessonTypeFormatter,
+  sortBy,
 };

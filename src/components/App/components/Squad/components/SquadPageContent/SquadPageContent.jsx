@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { isCommander, canChangeClassDay } from 'helpers'
 import SquadMemberCard from './components/SquadMemberCard/SquadMemberCard'
 import Advertisment from './components/Advertisment'
+import Schedule from './components/Schedule/Schedule'
 import ClassDay from './components/ClassDay'
 import SquadNumber from './components/SquadNumber'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
@@ -164,6 +165,7 @@ export default function SquadPageContent(props) {
       </div>
     </div>
     <Advertisment manage={manage} user={user}/>
+    <Schedule user={user}/>
     <DragDropContext onDragEnd={onDragEnd}>
       <Paper className={'d-flex flex-column mt-5 mb-5'} square variant="outlined" style={{minHeight: '500px'}}>
         <ExpansionPanel>

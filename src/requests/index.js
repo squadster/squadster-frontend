@@ -24,6 +24,19 @@ const GET_CURRENT_USER = gql`
           classDay
           squadNumber
           linkInvitationsEnabled
+          timetables {
+            id
+            date
+            lessons {
+              id
+              name
+              teacher
+              index
+              note
+              type
+              classroom
+            }
+          }
           hashId
           requests {
             id
@@ -86,6 +99,14 @@ const DELETE_SQUAD_MEMBER = gql`mutation deleteSquadMember($id: Int) {
   }
 }`
 
+const DELETE_LESSON = gql`mutation deleteLesson($id: Int) {
+  deleteLesson(
+    id: $id
+  ) {
+    id
+  }
+}`
+
 const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: String, $quequeNumber: Int) {
   updateSquadMember(
     id: $id,
@@ -96,12 +117,91 @@ const UPDATE_SQUAD_MEMBER = gql`mutation updateSquadMember($id: Int, $role: Stri
   }
 }`
 
+const UPDATE_LESSONS = gql`mutation updateLessons($lessons: LessonsBatch) {
+  updateLessons(
+    batch: $lessons
+  ) {
+    id
+  }
+}`
+
+const CREATE_LESSON = gql`
+  mutation createLesson(
+    $timetableId: Int,
+    $name: String,
+    $teacher: String,
+    $index: Int,
+    $note: String,
+    $classroom: String,
+    $type: String
+  ) {
+      createLesson(
+        timetable_id: $timetableId,
+        name: $name,
+        teacher: $teacher,
+        index: $index,
+        note: $note,
+        classroom: $classroom,
+        type: $type
+      )
+      {
+        id
+        name
+        teacher
+        index
+        note
+        type
+        classroom
+      }
+    }`
+
+const UPDATE_LESSON = gql`
+  mutation updateLesson(
+    $id: Int,
+    $name: String,
+    $teacher: String,
+    $note: String,
+    $classroom: String,
+    $type: String
+  ) {
+      updateLesson(
+        id: $id,
+        name: $name,
+        teacher: $teacher,
+        note: $note,
+        classroom: $classroom,
+        type: $type
+      )
+      {
+        id
+        name
+        teacher
+        index
+        note
+        type
+        classroom
+      }
+    }`
+
 const GET_SQUADS = gql`
   {
     squads {
       id
       squadNumber
       linkInvitationsEnabled
+      timetables {
+        id
+        date
+        lessons {
+          id
+          name
+          teacher
+          index
+          note
+          type
+          classroom
+        }
+      }
       members {
         role
         user {
@@ -242,4 +342,8 @@ export {
   DELETE_SQUAD,
   UPDATE_LINK_OPTION,
   UPDATE_CLASS_DAY,
+  UPDATE_LESSONS,
+  CREATE_LESSON,
+  DELETE_LESSON,
+  UPDATE_LESSON,
 }
