@@ -4,16 +4,15 @@ import { useDispatch } from 'react-redux';
 import { Typography, Paper, Button, IconButton, InputBase, InputLabel, MenuItem, Select, makeStyles } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { dateParser, sortBy } from '../../../../../../../../helpers/index';
+import { dateParser, toBeDateFormat, sortBy } from '../../../../../../../../helpers/index';
 import ScheduleStyles from './Schedule.style';
 import LessonIcon from '../LessonIcon';
 import { COMMANDER_ROLES } from 'static';
 import AddIcon from '@material-ui/icons/Add';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useMutation } from '@apollo/react-hooks';
-import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON, UPDATE_LESSON } from 'requests';
-import { setSquadTimetable } from 'actions/squads_actions';
-import EditIcon from '@material-ui/icons/Edit';
+import { UPDATE_LESSONS, CREATE_LESSON, DELETE_LESSON, UPDATE_LESSON, CREATE_TIMETABLE } from 'requests';
+import { setSquadTimetable } from 'actions/squads_actions';import EditIcon from '@material-ui/icons/Edit';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -38,12 +37,12 @@ export default function Schedule(props) {
 
   const classes = useStyles();
   const user = props.user;
-  const timetables = sortBy(user.squad.timetables, 'index');
+  const timetables = user.squad.timetables ? sortBy(user.squad.timetables, 'index') : [];
 
-  const nearestLessonsDay = timetables.reduce(
+  const nearestLessonsDay = timetables.length && timetables.reduce(
     (res, obj) => (new Date(obj.date) < new Date(res.date)) ? obj : res
   );
-  const nearestDate = dateParser(nearestLessonsDay.date);
+  const nearestDate = timetables.length ? dateParser(nearestLessonsDay.date) : new Date();
   const [selectedDate, setSelectedDate] = React.useState(nearestDate);
 
   const [timetableForDate, setTimetableForDate] = React.useState(
@@ -101,6 +100,16 @@ export default function Schedule(props) {
     }
   );
 
+  const [createTimetable] = useMutation(
+    CREATE_TIMETABLE,
+    {
+      onCompleted: (data) => {
+        dispatch(setSquadTimetable(user.squad, [...timetables, data.createTimetable]))
+        setTimetableForDate(data.createTimetable)
+      }
+    }
+  );
+
   const [updateLesson] = useMutation(
     UPDATE_LESSON,
     {
@@ -138,6 +147,22 @@ export default function Schedule(props) {
       }
     }
   );
+
+  const onCreateLessonNewTimetable = async () => {
+    const result = await createTimetable({ variables: { date: toBeDateFormat(selectedDate), squad_id: user.squad.id }})
+
+    createLesson({
+      variables: {
+        timetableId: result.data.createTimetable.id,
+        name: lessonName,
+        teacher: lessonTeacher,
+        index: 1,
+        note: lessonNote,
+        classroom: lessonClassroom,
+        type: lessonType
+      }
+    })
+  }
 
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -257,31 +282,34 @@ export default function Schedule(props) {
               size='large'
               style={{ marginTop: '60px' }}
               className={classes.newSquadMessageLink}
-              onClick={
-                () => operation === 'Update' ?
-                updateLesson({
-                  variables: {
-                    id: lessonId,
-                    name: lessonName,
-                    teacher: lessonTeacher,
-                    index: lessonIndex,
-                    note: lessonNote,
-                    classroom: lessonClassroom,
-                    type: lessonType
-                  }
-                })
-                :
-                createLesson({
-                  variables: {
-                    timetableId: timetableForDate.id,
-                    name: lessonName,
-                    teacher: lessonTeacher,
-                    index: timetableForDate.lessons.length + 1,
-                    note: lessonNote,
-                    classroom: lessonClassroom,
-                    type: lessonType
-                  }
-                })
+              onClick={() => {
+                if (!timetableForDate) return onCreateLessonNewTimetable()
+
+                operation === 'Update' ?
+                  updateLesson({
+                    variables: {
+                      id: lessonId,
+                      name: lessonName,
+                      teacher: lessonTeacher,
+                      index: lessonIndex,
+                      note: lessonNote,
+                      classroom: lessonClassroom,
+                      type: lessonType
+                    }
+                  })
+                  :
+                  createLesson({
+                    variables: {
+                      timetableId: timetableForDate.id,
+                      name: lessonName,
+                      teacher: lessonTeacher,
+                      index: timetableForDate.lessons.length + 1,
+                      note: lessonNote,
+                      classroom: lessonClassroom,
+                      type: lessonType
+                    }
+                  })
+                }
               }
             >
             {operation === 'Update' ? 'Сохранить' : 'Добавить урок'}
