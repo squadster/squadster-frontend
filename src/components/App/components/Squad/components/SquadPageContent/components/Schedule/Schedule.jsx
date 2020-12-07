@@ -38,7 +38,7 @@ export default function Schedule(props) {
 
   const classes = useStyles();
   const user = props.user;
-  const timetables = sortBy(user.squad.timetables, 'index');
+  const timetables = user.squad.timetables ? sortBy(user.squad.timetables, 'index') : [];
 
   const nearestLessonsDay = timetables.reduce(
     (res, obj) => (new Date(obj.date) < new Date(res.date)) ? obj : res
