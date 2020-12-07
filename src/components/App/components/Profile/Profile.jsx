@@ -5,6 +5,7 @@ import ProfileStyles from './Profile.styles'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import NotFound from 'components/App/components/shared/NotFound'
+import NotificationSettings from './components/NotificationSettings'
 
 const useStyles = makeStyles(ProfileStyles)
 
@@ -44,11 +45,12 @@ export default function Profile() {
               <br/>
               {user.mobilePhone}
               <br/>
-              {`${user.university} ${user.faculty}`}
+              {user.university ? `${user.university} ${user.faculty}` : ``}
             </Typography>
           </div>
         </div>
       </Paper>
+      <NotificationSettings classes={classes} user={currentUser}/>
       <Link className='d-flex justify-content-center' to='/'>
         <Button variant='contained' color='primary' className='mt-4 color-white'>
           Назад

@@ -43,3 +43,7 @@ export const updateSquadClassDay = (value) => {
 export const updateSquadNumber = (value) => {
   return { type: "UPDATE SQUAD NUMBER", value: value }
 }
+
+export const updateUserNotifications = (value) => {
+  return { type: "UPDATE USER NOTIFICATIONS", value: value }
+}
