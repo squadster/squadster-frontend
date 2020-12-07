@@ -42,7 +42,7 @@ export default function Navbar() {
         {currentUser ? (
           <Toolbar className={classes.toolbar}>
             <div className='d-flex flex-row mr-5 align-items-center'>
-              <img alt='Squadster new logo' src='icon.png' className={classes.logo} />
+              <img alt='Squadster new logo' src={`${window.origin}/icon.png`} className={classes.logo} />
               <Typography variant="h6" className={classes.credo}>
                 Make labs, not war
               </Typography>
@@ -50,10 +50,10 @@ export default function Navbar() {
             <div className='d-flex flex-row mr-auto my-auto'>
               <div className='d-flex flex-row mr-3'>
                 <a href={VK_BOT_URL} rel="noopener noreferrer" target='_blank'>
-                  <SVG src='VK_Blue_Logo.svg' width='50px'/>
+                  <SVG src={`${window.origin}/VK_Blue_Logo.svg`} width='50px'/>
                 </a>
                 <a href={TELEGRAM_BOT_URL} className='d-flex' rel="noopener noreferrer" target='_blank'>
-                  <SVG className='my-auto' src='telegram_logo.svg' width='25px'/>
+                  <SVG className='my-auto' src={`${window.origin}/telegram_logo.svg`} width='25px'/>
                 </a>
               </div>
               <span className='my-auto'>Получайте напоминания через ботов!</span>
@@ -104,13 +104,13 @@ export default function Navbar() {
           ) : (
           <Toolbar className={classes.toolbar}>
             <div className='d-flex flex-row mr-auto align-items-center'>
-              <img alt='Squadster new logo' src='icon.png' className={classes.logo} />
+              <img alt='Squadster new logo' src={`${window.origin}/icon.png`} className={classes.logo} />
               <Typography variant="h6" className={classes.credo}>
                 Make labs, not war
               </Typography>
             </div>
             <Button onClick={() => window.location.href = `${API_URL}/api/auth/vk`} color="inherit">
-              <SVG src='VK_Blue_Logo.svg' width='50px'/>
+              <SVG src={`${window.origin}/VK_Blue_Logo.svg`} width='50px'/>
               Войти
             </Button>
           </Toolbar>
