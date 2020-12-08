@@ -360,77 +360,80 @@ export default function Schedule(props) {
         </div>
       </MuiPickersUtilsProvider>
       <DragDropContext onDragEnd={onDragEnd}>
-        {lessons ?
-          lessons.map((lesson, index) => {
-            return lessonId === lesson.id ? createOrUpdateLesson('Update') : (
-              <Droppable isDropDisabled={!COMMANDER_ROLES.includes(user.squadMember.role)} droppableId='lessons'>
-                {(provided, snapshot) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    <Draggable isDragDisabled={!COMMANDER_ROLES.includes(user.squadMember.role)} key={lesson.id} draggableId={lesson.id} index={index}>
-                      {(provided, snapshot) => (
-                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <Paper className="position-relative squad-card-member" square variant='outlined'>
-                            <div className={"row mx-auto py-2 w-75"}>
-                              <div className='col-sm-6 d-flex flex-row justify-content-md-between'>
-                                <div className='d-flex flex-md-row flex-column align-items-center'>
-                                  <div className='d-flex flex-row'>
-                                    <LessonIcon lessonType={lesson.type} />
-                                  </div>
-                                  <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
-                                    <Typography variant="h4" component="h2">
-                                      {lesson.name}
-                                    </Typography>
-                                    <Typography className='mt-2' variant='subtitle1'>
-                                      {lesson.teacher}
-                                    </Typography>
-                                    <Typography>
-                                      {lesson.classroom}
-                                    </Typography>
-                                  </div>
+        <Droppable isDropDisabled={!COMMANDER_ROLES.includes(user.squadMember.role)} droppableId='lessons'>
+          {(provided, snapshot) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {lessons ?
+              lessons.map((lesson, index) => {
+                return lessonId === lesson.id ? createOrUpdateLesson('Update') : (
+                  <Draggable isDragDisabled={!COMMANDER_ROLES.includes(user.squadMember.role)} key={lesson.id} draggableId={lesson.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <Paper className="position-relative squad-card-member" square variant='outlined'>
+                          <div className={"row mx-auto py-2 w-75"}>
+                            <div className='col-sm-6 d-flex flex-row justify-content-md-between'>
+                              <div className='d-flex flex-md-row flex-column align-items-center'>
+                                <div className='d-flex flex-row'>
+                                  <LessonIcon lessonType={lesson.type} />
+                                </div>
+                                <div className='d-flex flex-column ml-md-5 ml-0 my-auto text-center text-md-left'>
+                                  <Typography variant="h4" component="h2">
+                                    {lesson.name}
+                                  </Typography>
+                                  <Typography className='mt-2' variant='subtitle1'>
+                                    {lesson.teacher}
+                                  </Typography>
+                                  <Typography>
+                                    {lesson.classroom}
+                                  </Typography>
                                 </div>
                               </div>
-                              <div className='col-sm-5'>
-                                <Typography>
-                                  {lesson.note}
-                                </Typography>
-                              </div>
-                              <div className='col-sm-1'>
-                                {
-                                  COMMANDER_ROLES.includes(user.squadMember.role) &&
-                                    <div>
-                                      <IconButton
-                                        className={classes.buttonWithoutHover}
-                                        onClick={
-                                          () => deleteLesson({
-                                            variables: {
-                                              id: lesson.id,
-                                            }
-                                          })
-                                        }
-                                      >
-                                        <DeleteIcon/>
-                                      </IconButton>
-                                      <IconButton
-                                        className={classes.buttonWithoutHover}
-                                        onClick={() => setEditableLesson(lesson)}
-                                      >
-                                        <EditIcon/>
-                                      </IconButton>
-                                    </div>
-                                }
-                              </div>
                             </div>
-                          </Paper>
-                        </div>
-                      )}
-                    </Draggable>
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            )
-          }) : noLessons()
-        }
+                            <div className='col-sm-5'>
+                              <Typography>
+                                {lesson.note}
+                              </Typography>
+                            </div>
+                            <div className='col-sm-1'>
+                              {
+                                COMMANDER_ROLES.includes(user.squadMember.role) &&
+                                  <div>
+                                    <IconButton
+                                      className={classes.buttonWithoutHover}
+                                      onClick={
+                                        () => deleteLesson({
+                                          variables: {
+                                            id: lesson.id,
+                                          }
+                                        })
+                                      }
+                                    >
+                                      <DeleteIcon/>
+                                    </IconButton>
+                                    <IconButton
+                                      className={classes.buttonWithoutHover}
+                                      onClick={() => setEditableLesson(lesson)}
+                                    >
+                                      <EditIcon/>
+                                    </IconButton>
+                                  </div>
+                              }
+                            </div>
+                          </div>
+                        </Paper>
+                      </div>
+                    )}
+                  </Draggable>
+                )
+              }) : noLessons()
+            }
+            {provided.placeholder}
+          </div>
+          )}
+        </Droppable>
       </DragDropContext>
       {
         modifyLessonMode && !lessonId && createOrUpdateLesson('Create')
