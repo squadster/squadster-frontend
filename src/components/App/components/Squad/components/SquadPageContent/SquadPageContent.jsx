@@ -49,11 +49,11 @@ function reorder(list, startIndex, endIndex) {
 function noMembers(currentUser) {
   return <div className='d-flex flex-column text-center py-4'>
     <Typography variant='subtitle1'>
-      Во взводе пока нет членов с такими ролями
+      Во взводе пока нет студентов
     </Typography>
     { currentUser.role === 'commander' || currentUser.role === 'deputy_commander' ?
       <Typography variant='subtitle2'>
-        Не забывайте обновлять роли членов взвода а также отсылайте приглашения
+        Обновляйте роли студентов а также отсылайте приглашения
       </Typography> : "" }
   </div>
 }
