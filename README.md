@@ -1,7 +1,7 @@
 # Squadster frontend
 
 [![Build Status](https://travis-ci.com/squadster/squadster-frontend.svg?branch=master)](https://travis-ci.com/squadster/squadster-frontend)
-[![Site status](https://img.shields.io/website?down_color=red&down_message=Offline&up_color=green&up_message=Up&url=http%3A%2F%2Fsquadster.wtf)](http://squadster.wtf)
+[![Site status](https://img.shields.io/website?down_color=red&down_message=Offline&up_color=green&up_message=Up&url=http%3A%2F%2Fsquadster.wtf)](https://squadster.wtf)
 
 Frontend repository for Squadster. Check the [API repo](https://github.com/squadster/squadster-api) for more info.
 
