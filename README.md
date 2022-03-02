@@ -1,5 +1,6 @@
 # Squadster frontend
 
+[![License](https://img.shields.io/github/license/squadster/squadster-frontend.svg)](https://github.com/squadster/squadster-frontend/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/squadster/squadster-frontend.svg?branch=master)](https://travis-ci.com/squadster/squadster-frontend)
 <!---
 [![Site status](https://img.shields.io/website?down_color=red&down_message=Offline&up_color=green&up_message=Up&url=http%3A%2F%2Fsquadster.wtf)](https://squadster.wtf)
@@ -51,13 +52,3 @@ Your ideas and wishes are welcome via [issues](https://github.com/squadster/squa
 Check [contributing guidelines](CONTRIBUTING.md) for more info.
 
 List of contributors available in the [main API repo](https://github.com/squadster/squadster-api).
-
-## License
-
-[![licensebuttons by-nc-sa](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0)
-
-* You cannot use this for commercial purposes.
-* If you make your own application based on this you must somehow link this repo on your pages.
-* You are not allowed to change license terms
-
-Check out the [LICENCE](LICENSE.md) file
